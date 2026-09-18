@@ -59,21 +59,19 @@ export default function Portfolio() {
             <li><a href="#experience">{t.nav.experience}</a></li>
             <li><a href="#contact" className="nav-cta">{t.nav.hire}</a></li>
             <li>
-              <button 
-                onClick={toggleLang}
-                className="ml-2 px-2 py-1 text-xs font-semibold rounded-md border border-[var(--border)] hover:border-[var(--primary)] text-[var(--muted)] hover:text-[var(--text)] transition-colors bg-white/5"
-              >
-                {lang === "en" ? "ID" : "EN"}
+              <button onClick={toggleLang} className="lang-toggle" aria-label="Toggle Language">
+                <span className={lang === "en" ? "active" : ""}>EN</span>
+                /
+                <span className={lang === "id" ? "active" : ""}>ID</span>
               </button>
             </li>
           </ul>
           
-          <div className="flex items-center gap-4 md:hidden">
-            <button 
-              onClick={toggleLang}
-              className="px-2 py-1 text-xs font-semibold rounded-md border border-[var(--border)] text-[var(--muted)] bg-white/5"
-            >
-              {lang === "en" ? "ID" : "EN"}
+          <div className="nav-mobile-actions">
+            <button onClick={toggleLang} className="lang-toggle" aria-label="Toggle Language">
+              <span className={lang === "en" ? "active" : ""}>EN</span>
+              /
+              <span className={lang === "id" ? "active" : ""}>ID</span>
             </button>
             <button className="nav-hamburger" aria-label="Menu">
               <span/><span/><span/>
