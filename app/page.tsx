@@ -175,25 +175,32 @@ export default function Home() {
                   {item.link && (
                     <a href={item.link} target="_blank" rel="noopener noreferrer" 
                        style={{ 
-                         marginLeft: '12px', 
-                         fontSize: '0.65em',
-                         padding: '4px 8px',
-                         borderRadius: '12px',
-                         background: 'rgba(56, 189, 248, 0.1)',
+                         marginLeft: '14px', 
+                         fontSize: '0.7rem',
+                         padding: '4px 10px',
+                         borderRadius: '6px',
+                         background: 'linear-gradient(135deg, rgba(56, 189, 248, 0.15) 0%, rgba(59, 130, 246, 0.15) 100%)',
                          color: '#38bdf8',
                          textDecoration: 'none',
                          display: 'inline-flex',
                          alignItems: 'center',
-                         border: '1px solid rgba(56, 189, 248, 0.2)',
-                         transition: 'all 0.2s ease'
+                         border: '1px solid rgba(56, 189, 248, 0.3)',
+                         boxShadow: '0 0 10px rgba(56, 189, 248, 0.1)',
+                         transition: 'all 0.2s ease',
+                         fontWeight: 600,
+                         letterSpacing: '0.3px'
                        }}
                        onMouseOver={(e) => {
-                         e.currentTarget.style.background = 'rgba(56, 189, 248, 0.2)';
-                         e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.4)';
+                         e.currentTarget.style.background = 'linear-gradient(135deg, rgba(56, 189, 248, 0.25) 0%, rgba(59, 130, 246, 0.25) 100%)';
+                         e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.5)';
+                         e.currentTarget.style.boxShadow = '0 0 15px rgba(56, 189, 248, 0.2)';
+                         e.currentTarget.style.transform = 'translateY(-1px)';
                        }}
                        onMouseOut={(e) => {
-                         e.currentTarget.style.background = 'rgba(56, 189, 248, 0.1)';
-                         e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.2)';
+                         e.currentTarget.style.background = 'linear-gradient(135deg, rgba(56, 189, 248, 0.15) 0%, rgba(59, 130, 246, 0.15) 100%)';
+                         e.currentTarget.style.borderColor = 'rgba(56, 189, 248, 0.3)';
+                         e.currentTarget.style.boxShadow = '0 0 10px rgba(56, 189, 248, 0.1)';
+                         e.currentTarget.style.transform = 'translateY(0)';
                        }}>
                       <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '4px' }}>
                         <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
