@@ -104,8 +104,7 @@ export const dict = {
             "Resolved hardware/software issues across departments, ensuring minimal operational downtime",
             "Developed and maintained the hotel's full-stack website (front-end + back-end) with Laravel 11",
             "Managed deployment and hosting on Linux production servers",
-            "Built responsive, mobile-first UI with vanilla JS/CSS",
-            "⚠️ Note: The live demo linked above is a portfolio replica for demonstration purposes. Admin Demo Login: admin@claro.com / admin123"
+            "Built responsive, mobile-first UI with vanilla JS/CSS"
           ]
         },
         {
@@ -238,8 +237,7 @@ export const dict = {
             "Menyelesaikan masalah perangkat keras/lunak di seluruh departemen, memastikan waktu operasional maksimal",
             "Mengembangkan dan mengelola situs web full-stack hotel (front-end + back-end) dengan Laravel 11",
             "Mengelola deployment dan hosting pada server produksi Linux",
-            "Membangun UI responsif & mobile-first menggunakan vanilla JS/CSS",
-            "⚠️ Catatan: Live demo yang ditautkan di atas adalah replika portofolio untuk tujuan demonstrasi. Login Admin: admin@claro.com / admin123"
+            "Membangun UI responsif & mobile-first menggunakan vanilla JS/CSS"
           ]
         },
         {
