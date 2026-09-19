@@ -402,6 +402,33 @@ export default function Portfolio() {
                 </div>
               </div>
             </div>
+
+            {/* PROJECT 4: Melody Similarity */}
+            <div className="project-card">
+              <div className="project-content">
+                <div className="project-meta">
+                  <span className="project-number">{t.projects.melodysimilarity.num}</span>
+                  <h3 className="project-title gradient-text">{t.projects.melodysimilarity.title}</h3>
+                  <h4 className="project-subtitle">{t.projects.melodysimilarity.sub}</h4>
+                </div>
+                <p className="project-desc">{t.projects.melodysimilarity.desc}</p>
+                
+                <div className="project-tags">
+                  <span className="tag">PyTorch</span>
+                  <span className="tag">CNN + BiLSTM</span>
+                  <span className="tag">Demucs</span>
+                  <span className="tag">FAISS</span>
+                  <span className="tag">Flask</span>
+                </div>
+                
+                <div className="project-actions">
+                  <a href="https://github.com/gryvnalvrdo/melody-similarity" target="_blank" rel="noopener noreferrer" className="btn-outline">
+                    {t.projects.melodysimilarity.btn1}
+                  </a>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>

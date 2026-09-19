@@ -81,6 +81,13 @@ export const dict = {
         sub: "n8n Job Hunt Automation Workflow",
         desc: "An n8n workflow that monitors job boards (LinkedIn RSS, Kalibrr, Glints) for matching listings, filters by keywords and location, then automatically sends new jobs to JobTrail via webhook. Also sends Telegram/email notifications so you never miss a relevant opportunity.",
         btn1: "📖 View Workflow Docs",
+      },
+      melodysimilarity: {
+        num: "Project 04 · Machine Learning",
+        title: "Melody Similarity",
+        sub: "AI Music Plagiarism & Cover Detector",
+        desc: "A machine learning system that finds songs with similar melodies. Uses Demucs for drum removal and a custom CRNN (CNN + BiLSTM + Attention) model trained with NT-Xent contrastive loss on 5,000+ YouTube song pairs. Includes a Flask web interface and FAISS vector search.",
+        btn1: "🎵 View GitHub Repo",
       }
     },
     skills: {
@@ -222,6 +229,13 @@ export const dict = {
         sub: "n8n Job Hunt Automation Workflow",
         desc: "Alur kerja n8n yang memantau portal kerja (LinkedIn RSS, Kalibrr, Glints) untuk daftar yang cocok, memfilter berdasarkan kata kunci & lokasi, lalu secara otomatis mengirimkan pekerjaan baru ke JobTrail via webhook. Juga mengirimkan notifikasi Telegram/email sehingga tidak terlewatkan.",
         btn1: "📖 Lihat Dok. Workflow",
+      },
+      melodysimilarity: {
+        num: "Proyek 04 · Machine Learning",
+        title: "Melody Similarity",
+        sub: "AI Pendeteksi Plagiarisme Musik & Cover",
+        desc: "Sistem machine learning yang menemukan lagu dengan melodi serupa. Menggunakan Demucs untuk menghapus suara drum dan model CRNN kustom (CNN + BiLSTM + Attention) yang dilatih dengan NT-Xent contrastive loss pada 5.000+ pasangan lagu YouTube. Dilengkapi antarmuka web Flask dan pencarian vektor FAISS.",
+        btn1: "🎵 Lihat Repositori GitHub",
       }
     },
     skills: {
