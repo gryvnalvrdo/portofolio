@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import "./globals.css";
+import Link from "next/link";
 import { dict } from "../lib/dictionary";
 
 export default function Portfolio() {
