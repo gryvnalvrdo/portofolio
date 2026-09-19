@@ -113,8 +113,11 @@ export default function CoverCraftPage() {
         const data = await res.json();
         if (data.text) {
           setBackground(data.text);
-          // Auto-extract name using a simple heuristic (usually the first non-empty line)
-          const lines = data.text.split('\n').map((l: string) => l.trim()).filter(Boolean);
+          // Auto-extract name using a simple heuristic
+          const lines = data.text.split(/[\r\n]+/)
+            .map((l: string) => l.trim())
+            .filter((l: string) => l.length > 0 && !l.includes("---Page") && !l.includes("----"));
+          
           if (lines.length > 0) {
             let possibleName = lines[0];
             // Skip headers like 'Resume' or 'CV'
@@ -123,8 +126,10 @@ export default function CoverCraftPage() {
             }
             // Remove email addresses or phone numbers if they are on the same line
             possibleName = possibleName.split(/[\w.-]+@[\w.-]+\.\w+/)[0].trim(); // strip email
+            possibleName = possibleName.split(/[0-9+()]/)[0].trim(); // strip phone numbers
+            
             // Just take a reasonable length
-            if (possibleName.length > 3 && possibleName.length <= 50) {
+            if (possibleName.length > 2 && possibleName.length <= 40) {
               setYourName(possibleName);
             }
           }
@@ -464,23 +469,11 @@ RULES:
                   <button className="cc-action-btn" onClick={downloadResult}>⬇️ Download</button>
                   {jobId && (
                     <button
+                      className={`cc-action-btn ${savedToJobTrail ? "success" : ""}`}
                       onClick={saveToJobTrail}
                       disabled={isSaving || savedToJobTrail}
-                      className="px-6 py-2 bg-[#16a34a] hover:bg-[#15803d] disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg transition-colors flex items-center gap-2"
-                      style={{ fontSize: '0.85rem', padding: '.5rem 1rem' }}
                     >
-                      {savedToJobTrail ? (
-                        <>✓ Saved to JobTrail</>
-                      ) : isSaving ? (
-                        <>Saving...</>
-                      ) : (
-                        <>
-                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
-                          </svg>
-                          Save to JobTrail
-                        </>
-                      )}
+                      {savedToJobTrail ? "✅ Saved to JobTrail" : isSaving ? "⏳ Saving..." : "💾 Save to JobTrail"}
                     </button>
                   )}
                   <button className="cc-action-btn" onClick={() => { setResult(""); generate(); }}>🔄 Regenerate</button>
