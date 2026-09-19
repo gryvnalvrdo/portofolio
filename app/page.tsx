@@ -47,7 +47,7 @@ export default function Home() {
                 <span className="stat-label">GPA / 4.00</span>
               </div>
               <div className="stat-item">
-                <span className="stat-val">5</span>
+                <span className="stat-val">3+</span>
                 <span className="stat-label">{t.hero.stats.projects}</span>
               </div>
               <div className="stat-item">
@@ -135,40 +135,6 @@ export default function Home() {
             <Link href="/autoapply" className="btn-primary" style={{ padding: "0.6rem 1.2rem", fontSize: "0.85rem" }}>
               {t.projects.autoapply.btn1}
             </Link>
-          </div>
-        </div>
-
-        {/* BOX 5B: PROJECT 4 (HOTEL) */}
-        <div className="bento-box box-project-4">
-          <span className="project-num">{t.projects.hotel.num}</span>
-          <h3 className="box-title">{t.projects.hotel.title}</h3>
-          <p className="box-desc" style={{ marginBottom: "1rem" }}>{t.projects.hotel.desc}</p>
-          <div className="project-tags">
-            <span className="project-tag">Laravel 11</span>
-            <span className="project-tag">MySQL</span>
-            <span className="project-tag">Full-Stack</span>
-          </div>
-          <div className="project-links">
-            <a href="https://github.com/gryvnalvrdo" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ padding: "0.6rem 1.2rem", fontSize: "0.85rem" }}>
-              {t.projects.hotel.btn1}
-            </a>
-          </div>
-        </div>
-
-        {/* BOX 5C: PROJECT 5 (MELODY) */}
-        <div className="bento-box box-project-5">
-          <span className="project-num">{t.projects.melody.num}</span>
-          <h3 className="box-title">{t.projects.melody.title}</h3>
-          <p className="box-desc" style={{ marginBottom: "1rem" }}>{t.projects.melody.desc}</p>
-          <div className="project-tags">
-            <span className="project-tag">Python</span>
-            <span className="project-tag">PyTorch</span>
-            <span className="project-tag">Librosa</span>
-          </div>
-          <div className="project-links">
-            <a href="https://github.com/gryvnalvrdo" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ padding: "0.6rem 1.2rem", fontSize: "0.85rem" }}>
-              {t.projects.melody.btn1}
-            </a>
           </div>
         </div>
 
