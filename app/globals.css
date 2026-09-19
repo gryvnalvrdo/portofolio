@@ -175,6 +175,8 @@ body::before {
 .box-project-1 { grid-column: span 2; grid-row: span 2; }
 .box-project-2 { grid-column: span 2; grid-row: span 2; }
 .box-project-3 { grid-column: span 2; grid-row: span 2; }
+.box-project-4 { grid-column: span 2; grid-row: span 2; }
+.box-project-5 { grid-column: span 2; grid-row: span 2; }
 .box-skills { grid-column: span 2; grid-row: span 2; }
 .box-experience { grid-column: span 4; grid-row: span 2; }
 .box-contact { grid-column: span 4; grid-row: span 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }

@@ -9,15 +9,26 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "No URL provided" }, { status: 400 });
     }
 
-    // Basic fetch
-    const response = await fetch(url, {
+    // Try standard fetch first
+    let response = await fetch(url, {
       headers: {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36"
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9"
       }
     });
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch: ${response.status} ${response.statusText}`);
+      console.log(`Standard fetch failed for ${url} with status ${response.status}. Trying proxy...`);
+      // Fallback for sites like WeWorkRemotely that block basic fetches
+      response = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`, {
+        headers: {
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+        }
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to fetch via proxy: ${response.status} ${response.statusText}`);
+      }
     }
 
     const html = await response.text();
