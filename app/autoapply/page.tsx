@@ -41,7 +41,7 @@ export default function AutoApplyPage() {
       pipe: "Pipa Otomatisasi",
       pipeDesc: "Setiap 6 jam, alur kerja berjalan otomatis. Lowongan pekerjaan mengalir dari penemuan hingga ke dasbor JobTrail Anda tanpa perlu repot."
     }
-  }[lang];
+  }[lang as "en" | "id"];
 
   return (
     <>

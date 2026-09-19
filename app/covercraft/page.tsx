@@ -58,7 +58,7 @@ Skills: Python, JavaScript, TypeScript, Next.js, Laravel, Flask, PyTorch, Postgr
       desc: "Tempelkan deskripsi pekerjaan dan AI akan menghasilkan surat lamaran (cover letter) ramah-ATS. Kunci API Anda tetap di browser — tidak pernah disimpan.",
       note: "🔗 Bagian dari Job Hunting Suite Gryven — sangat cocok dipadukan dengan"
     }
-  }[lang];
+  }[lang as "en" | "id"];
 
   const [copied, setCopied] = useState(false);
   const [prefilled, setPrefilled] = useState(false);
