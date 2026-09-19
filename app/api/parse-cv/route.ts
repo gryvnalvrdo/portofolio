@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const PDFParser = require("pdf2json");
 
 export async function POST(req: Request) {
   try {
@@ -13,12 +14,18 @@ export async function POST(req: Request) {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
     
-    const pdfParse = require("pdf-parse");
-    const data = await pdfParse(buffer);
+    const text = await new Promise<string>((resolve, reject) => {
+      const pdfParser = new PDFParser(null, 1);
+      pdfParser.on("pdfParser_dataError", (errData: any) => reject(errData.parserError));
+      pdfParser.on("pdfParser_dataReady", (pdfData: any) => {
+        resolve(pdfParser.getRawTextContent());
+      });
+      pdfParser.parseBuffer(buffer);
+    });
     
-    return NextResponse.json({ success: true, text: data.text }, { status: 200 });
-  } catch (error) {
+    return NextResponse.json({ success: true, text }, { status: 200 });
+  } catch (error: any) {
     console.error("PDF Parse Error:", error);
-    return NextResponse.json({ error: "Failed to parse PDF" }, { status: 500 });
+    return NextResponse.json({ error: error?.message || error || "Failed to parse PDF" }, { status: 500 });
   }
 }

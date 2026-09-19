@@ -109,7 +109,8 @@ export default function CoverCraftPage() {
           setBackground(data.text);
         }
       } else {
-        alert("Failed to parse PDF");
+        const data = await res.json();
+        alert(data.error || "Failed to parse PDF");
       }
     } catch (e) {
       console.error("Upload failed", e);
