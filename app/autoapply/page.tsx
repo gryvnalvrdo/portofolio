@@ -6,6 +6,28 @@ import { useState, useEffect } from "react";
 
 export default function AutoApplyPage() {
   const [lang, setLang] = useState("en");
+  const [liveJobs, setLiveJobs] = useState<any[]>([]);
+  const [isFetching, setIsFetching] = useState(true);
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const res = await fetch("https://jobtracker-kjmw.vercel.app/api/public/jobs");
+        const data = await res.json();
+        if (data.success && data.jobs) {
+          setLiveJobs(data.jobs);
+        }
+      } catch (err) {
+        console.error("Failed to fetch live jobs:", err);
+      } finally {
+        setIsFetching(false);
+      }
+    };
+    
+    fetchJobs();
+    const interval = setInterval(fetchJobs, 15000); // refresh every 15s
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const saved = localStorage.getItem("lang");
@@ -109,6 +131,27 @@ export default function AutoApplyPage() {
         .aa-table td:last-child { color:var(--muted); }
         .aa-table tr:last-child td { border-bottom:none; }
 
+        /* LIVE FEED */
+        .live-feed-container { background: #0b0f19; border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-top: 3rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; overflow: hidden; }
+        .live-feed-container::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--primary), transparent); animation: scan 3s linear infinite; }
+        @keyframes scan { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
+        .live-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem; }
+        .live-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 0.5rem; }
+        .live-indicator { display: inline-block; width: 10px; height: 10px; background-color: #ef4444; border-radius: 50%; box-shadow: 0 0 10px #ef4444; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); } 70% { opacity: 0.5; box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); } 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
+        .live-status-text { font-size: 0.8rem; color: #ef4444; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+        
+        .live-table { width: 100%; border-collapse: collapse; font-family: 'Courier New', monospace; font-size: 0.85rem; }
+        .live-table th { text-align: left; padding: 0.75rem 1rem; color: #64748b; font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .live-table td { padding: 1rem; color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .live-table tr:hover td { background: rgba(255,255,255,0.02); }
+        .live-company { color: #e2e8f0; font-weight: 600; font-family: 'Inter', sans-serif; }
+        .live-position { color: #38bdf8; }
+        .live-badge { display: inline-flex; align-items: center; padding: 0.25rem 0.6rem; border-radius: 100px; font-size: 0.75rem; font-weight: 600; font-family: 'Inter', sans-serif; }
+        .live-badge.saved { background: rgba(56, 189, 248, 0.1); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.2); }
+        .live-badge.applied { background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.2); }
+        .live-badge.rejected { background: rgba(244, 63, 94, 0.1); color: #f43f5e; border: 1px solid rgba(244, 63, 94, 0.2); }
+
         /* ECOSYSTEM */
         .aa-ecosystem { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:2rem; text-align:center; margin:2rem 0; }
         .aa-ecosystem h3 { font-family:'Inter',sans-serif; font-size:1.1rem; font-weight:600; margin-bottom:.65rem; color:var(--text); }
@@ -155,7 +198,54 @@ export default function AutoApplyPage() {
 
           {/* WORKFLOW DIAGRAM */}
           <section className="aa-section">
-            <p className="aa-section-label">{t.how}</p>
+            
+            {/* LIVE FEED WIDGET */}
+            <div className="live-feed-container">
+              <div className="live-header">
+                <div className="live-title">
+                  <span className="live-indicator"></span>
+                  Live Agent Activity
+                </div>
+                <div className="live-status-text">Monitoring 24/7</div>
+              </div>
+              
+              <div style={{ overflowX: "auto" }}>
+                <table className="live-table">
+                  <thead>
+                    <tr>
+                      <th>Time</th>
+                      <th>Company</th>
+                      <th>Position Found</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {isFetching && liveJobs.length === 0 ? (
+                      <tr><td colSpan={4} style={{ textAlign: "center", padding: "2rem" }}>Connecting to agent...</td></tr>
+                    ) : liveJobs.length === 0 ? (
+                      <tr><td colSpan={4} style={{ textAlign: "center", padding: "2rem" }}>No recent activity.</td></tr>
+                    ) : (
+                      liveJobs.map((job) => (
+                        <tr key={job.id}>
+                          <td style={{ whiteSpace: "nowrap" }}>
+                            {new Date(job.appliedDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                          </td>
+                          <td className="live-company">{job.companyName}</td>
+                          <td className="live-position">{job.position}</td>
+                          <td>
+                            <span className={`live-badge ${job.status.toLowerCase()}`}>
+                              {job.status}
+                            </span>
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <p className="aa-section-label" style={{ marginTop: "4rem" }}>{t.how}</p>
             <h2 className="aa-section-title">{t.pipe}</h2>
             <p className="aa-section-desc">
               {t.pipeDesc}
