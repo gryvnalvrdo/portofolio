@@ -159,12 +159,12 @@ Write ONLY the cover letter, starting with "Dear Hiring Manager,".`;
         .cc-input-row { display: flex; gap: .5rem; }
         .cc-input { width: 100%; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1); border-radius: 10px; padding: .7rem 1rem; font-size: .88rem; font-family: inherit; color: #e2e8f0; outline: none; transition: border-color .2s, box-shadow .2s; }
         .cc-input:focus { border-color: #7c3aed; box-shadow: 0 0 0 3px rgba(124,58,237,.15); }
-        .cc-textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+        .cc-textarea { resize: none; min-height: 120px; line-height: 1.6; }
         .cc-toggle-btn { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 8px; padding: .7rem .9rem; color: #94a3b8; cursor: pointer; font-size: .82rem; white-space: nowrap; transition: all .2s; flex-shrink: 0; }
         .cc-toggle-btn:hover { background: rgba(255,255,255,.1); color: #e2e8f0; }
         .cc-hint { font-size: .73rem; color: rgba(148,163,184,.6); margin-top: .25rem; }
-        .cc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: .85rem; }
-        @media (max-width: 600px) { .cc-grid { grid-template-columns: 1fr; } }
+        .cc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: .85rem; }
+        @media (max-width: 768px) { .cc-grid { grid-template-columns: 1fr; gap: 1rem; } }
         .cc-group { display: flex; flex-direction: column; gap: .35rem; }
         .cc-group.full { grid-column: 1/-1; }
         .cc-label { font-size: .8rem; font-weight: 500; color: #94a3b8; }

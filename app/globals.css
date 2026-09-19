@@ -30,7 +30,21 @@
 html {
   scroll-behavior: smooth;
   scrollbar-width: thin;
-  scrollbar-color: var(--primary) transparent;
+  scrollbar-color: var(--primary) var(--bg);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.3);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
 }
 
 body {
@@ -896,6 +910,7 @@ section + section {
   object-fit: cover;
   background: var(--surface2);
   display: block;
+  border-radius: 20px 20px 0 0;
 }
 
 .project-img-placeholder {
