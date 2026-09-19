@@ -139,7 +139,7 @@ export default function Portfolio() {
                   </svg>
                 </a>
                 <a
-                  href="mailto:gryvenalvrdo@gmail.com"
+                  href="mailto:gryvnalvrdo@gmail.com"
                   className="social-link"
                   title="Email"
                 >
@@ -487,12 +487,12 @@ export default function Portfolio() {
             <p>{t.contact.desc}</p>
 
             <div className="contact-links">
-              <a href="mailto:gryvenalvrdo@gmail.com" className="contact-link">✉️ gryvenalvrdo@gmail.com</a>
+              <a href="mailto:gryvnalvrdo@gmail.com" className="contact-link">✉️ gryvnalvrdo@gmail.com</a>
               <a href="https://www.linkedin.com/in/gryven-alverdo-7283ab262/" target="_blank" rel="noopener" className="contact-link">💼 LinkedIn</a>
               <a href="https://github.com/gryvnalvrdo" target="_blank" rel="noopener" className="contact-link">🐙 GitHub</a>
             </div>
 
-            <a href="mailto:gryvenalvrdo@gmail.com" className="btn-primary" style={{ display: "inline-flex", margin: "0 auto" }}>
+            <a href="mailto:gryvnalvrdo@gmail.com" className="btn-primary" style={{ display: "inline-flex", margin: "0 auto" }}>
               {t.contact.btn}
             </a>
           </div>

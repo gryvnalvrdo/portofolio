@@ -137,19 +137,27 @@ Write ONLY the cover letter, starting with "Dear Hiring Manager,".`;
         .cc-hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem,5vw,3rem); font-weight: 700; line-height: 1.1; margin-bottom: .9rem; }
         .cc-hero h1 span { background: linear-gradient(135deg, #a78bfa, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         .cc-hero p { color: #94a3b8; font-size: 1rem; max-width: 520px; margin: 0 auto 1.5rem; line-height: 1.7; }
-        .cc-ecosystem-note { display: inline-flex; align-items: center; gap: .6rem; background: rgba(124,58,237,.08); border: 1px solid rgba(139,92,246,.2); border-radius: 12px; padding: .65rem 1.2rem; font-size: .82rem; color: #94a3b8; }
-        .cc-ecosystem-note a { color: #a78bfa; text-decoration: none; font-weight: 500; }
+        .cc-nav { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 0; border-bottom: 1px solid var(--border); margin-bottom: 3rem; }
+        .cc-logo, .cc-nav-brand { font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: .5rem; }
+        .cc-badge { background: var(--surface2); color: var(--text); padding: .35rem .75rem; border-radius: 99px; font-size: .75rem; font-weight: 500; border: 1px solid var(--border); display: flex; align-items: center; gap: .5rem; }
+        .cc-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text); }
+        .cc-hero { text-align: center; margin-bottom: 3rem; }
+        .cc-hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: 2.75rem; font-weight: 700; color: var(--text); margin-bottom: .75rem; letter-spacing: -0.02em; }
+        .cc-hero p { color: var(--muted); font-size: 1.05rem; max-width: 500px; margin: 0 auto; line-height: 1.6; }
+        .cc-chip { display: inline-flex; align-items: center; gap: .5rem; background: var(--surface2); border: 1px solid var(--border); border-radius: 100px; padding: .35rem 1rem; font-size: .8rem; color: var(--text); font-weight: 500; margin-bottom: 1.25rem; }
+        .cc-ecosystem-note { display: inline-flex; align-items: center; gap: .6rem; background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: .65rem 1.2rem; font-size: .82rem; color: var(--muted); margin-top: 1rem; }
+        .cc-ecosystem-note a { color: var(--text); text-decoration: underline; font-weight: 500; }
         .cc-prefill { background: rgba(16,185,129,.1); border: 1px solid rgba(16,185,129,.3); border-radius: 10px; padding: .7rem 1rem; font-size: .82rem; color: #6ee7b7; margin-bottom: 1rem; }
-        .cc-card { background: #0f0f1a; border: 1px solid rgba(139,92,246,.18); border-radius: 20px; padding: 2rem; margin: 1.5rem 0; }
-        .cc-step-label { font-family: 'Space Grotesk', sans-serif; font-size: .68rem; font-weight: 600; text-transform: uppercase; letter-spacing: .15em; color: #a78bfa; margin-bottom: .85rem; }
-        .cc-apikey-box { background: rgba(6,182,212,.05); border: 1px solid rgba(6,182,212,.2); border-radius: 14px; padding: 1.2rem; margin-bottom: 1.5rem; }
+        .cc-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; margin: 1.5rem 0; }
+        .cc-step-label { font-family: 'Space Grotesk', sans-serif; font-size: .68rem; font-weight: 600; text-transform: uppercase; letter-spacing: .15em; color: var(--muted); margin-bottom: .85rem; }
+        .cc-apikey-box { background: var(--surface2); border: 1px solid var(--border); border-radius: 14px; padding: 1.2rem; margin-bottom: 1.5rem; }
         .cc-apikey-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: .65rem; }
-        .cc-apikey-hdr h3 { font-family: 'Space Grotesk', sans-serif; font-size: .9rem; font-weight: 600; color: #06b6d4; }
-        .cc-apikey-hdr a { font-size: .75rem; color: #94a3b8; text-decoration: none; }
-        .cc-apikey-hdr a:hover { color: #06b6d4; }
+        .cc-apikey-hdr h3 { font-family: 'Space Grotesk', sans-serif; font-size: .9rem; font-weight: 600; color: var(--text); }
+        .cc-apikey-hdr a { font-size: .75rem; color: var(--muted); text-decoration: none; }
+        .cc-apikey-hdr a:hover { color: var(--text); }
         .cc-input-row { display: flex; gap: .5rem; }
-        .cc-input { width: 100%; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1); border-radius: 10px; padding: .7rem 1rem; font-size: .88rem; font-family: inherit; color: #e2e8f0; outline: none; transition: border-color .2s, box-shadow .2s; }
-        .cc-input:focus { border-color: #7c3aed; box-shadow: 0 0 0 3px rgba(124,58,237,.15); }
+        .cc-input { width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: .7rem 1rem; font-size: .88rem; font-family: inherit; color: var(--text); outline: none; transition: border-color .2s, box-shadow .2s; }
+        .cc-input:focus { border-color: var(--text); box-shadow: 0 0 0 2px var(--border); }
         .cc-textarea { resize: none; min-height: 120px; line-height: 1.6; }
         .cc-toggle-btn { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); border-radius: 8px; padding: .7rem .9rem; color: #94a3b8; cursor: pointer; font-size: .82rem; white-space: nowrap; transition: all .2s; flex-shrink: 0; }
         .cc-toggle-btn:hover { background: rgba(255,255,255,.1); color: #e2e8f0; }
@@ -172,28 +180,27 @@ Write ONLY the cover letter, starting with "Dear Hiring Manager,".`;
         .cc-loading { text-align: center; padding: 2.5rem 0; }
         .cc-spinner { width: 44px; height: 44px; border: 3px solid rgba(124,58,237,.2); border-top-color: #7c3aed; border-radius: 50%; animation: spin .8s linear infinite; margin: 0 auto .75rem; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .cc-loading p { color: #94a3b8; font-size: .88rem; }
-        .cc-result { margin-top: 2rem; animation: fadeUp .5s ease; }
+        .cc-loading p { color: var(--muted); font-size: .9rem; }
+        .cc-result { margin-top: 2rem; animation: fadeUp .4s ease; }
         @keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
-        .cc-result-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: .85rem; flex-wrap: wrap; gap: .5rem; }
-        .cc-result-title { font-family: 'Space Grotesk', sans-serif; font-size: .95rem; font-weight: 600; color: #10b981; }
-        .cc-result-actions { display: flex; gap: .45rem; flex-wrap: wrap; }
-        .cc-action-btn { display: flex; align-items: center; gap: .35rem; padding: .48rem .95rem; border-radius: 8px; border: 1px solid rgba(139,92,246,.2); background: rgba(255,255,255,.04); color: #94a3b8; font-size: .8rem; cursor: pointer; transition: all .2s; font-family: inherit; }
-        .cc-action-btn:hover { background: rgba(255,255,255,.08); color: #e2e8f0; }
-        .cc-action-btn.success { border-color: #10b981; color: #10b981; }
-        .cc-result-content { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); border-radius: 14px; padding: 1.4rem; font-size: .88rem; line-height: 1.8; white-space: pre-wrap; color: #e2e8f0; max-height: 480px; overflow-y: auto; }
-        .cc-result-content::-webkit-scrollbar { width: 4px; }
-        .cc-result-content::-webkit-scrollbar-thumb { background: rgba(139,92,246,.3); border-radius: 4px; }
-        .cc-ecosystem { background: linear-gradient(135deg,rgba(124,58,237,.1),rgba(6,182,212,.04)); border: 1px solid rgba(139,92,246,.18); border-radius: 20px; padding: 2rem; margin: 2rem 0; text-align: center; }
-        .cc-ecosystem h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; font-weight: 700; margin-bottom: .65rem; }
-        .cc-ecosystem p { font-size: .85rem; color: #94a3b8; line-height: 1.7; max-width: 580px; margin: 0 auto 1.25rem; }
-        .cc-flow { display: flex; align-items: center; justify-content: center; gap: .45rem; flex-wrap: wrap; }
-        .cc-flow-item { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: 10px; padding: .45rem .95rem; font-size: .8rem; font-weight: 500; text-decoration: none; color: #e2e8f0; transition: all .2s; }
-        .cc-flow-item:hover { background: rgba(124,58,237,.15); border-color: #7c3aed; }
-        .cc-flow-item.active { background: rgba(124,58,237,.2); border-color: #7c3aed; color: #a78bfa; }
-        .cc-arrow { color: #64748b; }
-        footer { border-top: 1px solid rgba(255,255,255,.06); padding: 1.75rem 0; text-align: center; font-size: .8rem; color: #64748b; }
-        footer a { color: #a78bfa; text-decoration: none; }
+        .cc-result-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: .5rem; }
+        .cc-result-title { font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 600; color: var(--text); }
+        .cc-result-actions { display: flex; gap: .5rem; flex-wrap: wrap; }
+        .cc-action-btn { display: flex; align-items: center; gap: .4rem; padding: .5rem 1rem; border-radius: 8px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); font-size: .85rem; font-weight: 500; cursor: pointer; transition: all .2s; font-family: inherit; }
+        .cc-action-btn:hover { background: var(--border); }
+        .cc-action-btn.success { border-color: var(--emerald); color: var(--emerald); }
+        .cc-result-content { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; font-size: .9rem; line-height: 1.7; white-space: pre-wrap; color: var(--text); max-height: 500px; overflow-y: auto; }
+        
+        .cc-ecosystem { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .cc-ecosystem h3 { font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 600; margin-bottom: .75rem; color: var(--text); }
+        .cc-ecosystem p { font-size: .9rem; color: var(--muted); line-height: 1.6; max-width: 580px; margin: 0 auto 1.5rem; }
+        .cc-flow { display: flex; align-items: center; justify-content: center; gap: .5rem; flex-wrap: wrap; }
+        .cc-flow-item { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: .5rem 1rem; font-size: .85rem; font-weight: 500; text-decoration: none; color: var(--text); transition: all .2s; }
+        .cc-flow-item:hover { background: var(--border); }
+        .cc-flow-item.active { background: var(--primary); border-color: var(--primary); color: var(--bg); }
+        .cc-arrow { color: var(--muted-2); }
+        footer { border-top: 1px solid var(--border); padding: 2rem 0; text-align: center; font-size: .85rem; color: var(--muted); }
+        footer a { color: var(--text); text-decoration: underline; }
       `}</style>
 
       <div className="cc-body">
