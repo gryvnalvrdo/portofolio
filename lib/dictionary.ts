@@ -81,20 +81,6 @@ export const dict = {
         sub: "n8n Job Hunt Automation Workflow",
         desc: "An n8n workflow that monitors job boards (LinkedIn RSS, Kalibrr, Glints) for matching listings, filters by keywords and location, then automatically sends new jobs to JobTrail via webhook. Also sends Telegram/email notifications so you never miss a relevant opportunity.",
         btn1: "📖 View Workflow Docs",
-      },
-      hotel: {
-        num: "Project 04 · Web Application",
-        title: "Claro Hotel Management",
-        sub: "Laravel Full-Stack System",
-        desc: "A comprehensive hotel management and booking system built with Laravel 11. Includes features for room reservations, billing, and admin dashboard for staff to manage day-to-operations efficiently.",
-        btn1: "🏨 View Demo",
-      },
-      melody: {
-        num: "Project 05 · Machine Learning",
-        title: "Melody Similarity",
-        sub: "Deep Learning Music Analysis",
-        desc: "A deep learning model built with Python and PyTorch that analyzes and computes similarity between music tracks. Extracts audio features and uses a neural network to detect plagiarism and musical influences.",
-        btn1: "🎵 View Project",
       }
     },
     skills: {
@@ -225,20 +211,6 @@ export const dict = {
         sub: "n8n Job Hunt Automation Workflow",
         desc: "Alur kerja n8n yang memantau portal kerja (LinkedIn RSS, Kalibrr, Glints) untuk daftar yang cocok, memfilter berdasarkan kata kunci & lokasi, lalu secara otomatis mengirimkan pekerjaan baru ke JobTrail via webhook. Juga mengirimkan notifikasi Telegram/email sehingga tidak terlewatkan.",
         btn1: "📖 Lihat Dok. Workflow",
-      },
-      hotel: {
-        num: "Proyek 04 · Aplikasi Web",
-        title: "Sistem Manajemen Hotel Claro",
-        sub: "Sistem Full-Stack Laravel",
-        desc: "Sistem manajemen dan pemesanan hotel komprehensif yang dibangun dengan Laravel 11. Mencakup fitur untuk reservasi kamar, penagihan, dan dasbor admin agar staf dapat mengelola operasional harian secara efisien.",
-        btn1: "🏨 Lihat Demo",
-      },
-      melody: {
-        num: "Proyek 05 · Machine Learning",
-        title: "Kemiripan Melodi (Melody Similarity)",
-        sub: "Analisis Musik Deep Learning",
-        desc: "Model deep learning yang dibangun dengan Python dan PyTorch untuk menganalisis dan menghitung kemiripan antar trek musik. Mengekstrak fitur audio dan menggunakan jaringan saraf untuk mendeteksi plagiarisme serta pengaruh musikal.",
-        btn1: "🎵 Lihat Proyek",
       }
     },
     skills: {
