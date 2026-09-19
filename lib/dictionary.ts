@@ -81,13 +81,6 @@ export const dict = {
         sub: "n8n Job Hunt Automation Workflow",
         desc: "An n8n workflow that monitors job boards (LinkedIn RSS, Kalibrr, Glints) for matching listings, filters by keywords and location, then automatically sends new jobs to JobTrail via webhook. Also sends Telegram/email notifications so you never miss a relevant opportunity.",
         btn1: "📖 View Workflow Docs",
-      },
-      melodysimilarity: {
-        num: "Project 04 · Machine Learning",
-        title: "Melody Similarity",
-        sub: "AI Music Plagiarism & Cover Detector",
-        desc: "A machine learning system that finds songs with similar melodies. Uses Demucs for drum removal and a custom CRNN (CNN + BiLSTM + Attention) model trained with NT-Xent contrastive loss on 5,000+ YouTube song pairs. Includes a Flask web interface and FAISS vector search.",
-        btn1: "🎵 View GitHub Repo",
       }
     },
     skills: {
@@ -109,17 +102,6 @@ export const dict = {
             "Developed and maintained the hotel's full-stack website (front-end + back-end) with Laravel 11",
             "Managed deployment and hosting on Linux production servers",
             "Built responsive, mobile-first UI with vanilla JS/CSS",
-          ]
-        },
-        {
-          date: "Jan 2026 – Jul 2026",
-          title: "Melody Similarity Detector",
-          org: "Personal Project · ML Research",
-          desc: [
-            "Scraped and preprocessed 5,000+ song pairs (original vs. cover/remix) from YouTube",
-            "Designed custom CNN + BiLSTM architecture with attention pooling (4-3M parameters)",
-            "Used CQT features and MoCo-style momentum encoder, trained on GPU (NVIDIA RTX 3060)",
-            "Achieved 80%+ accuracy on 15 validated plagiarism cases with hard-negative mining",
           ]
         },
         {
@@ -229,13 +211,6 @@ export const dict = {
         sub: "n8n Job Hunt Automation Workflow",
         desc: "Alur kerja n8n yang memantau portal kerja (LinkedIn RSS, Kalibrr, Glints) untuk daftar yang cocok, memfilter berdasarkan kata kunci & lokasi, lalu secara otomatis mengirimkan pekerjaan baru ke JobTrail via webhook. Juga mengirimkan notifikasi Telegram/email sehingga tidak terlewatkan.",
         btn1: "📖 Lihat Dok. Workflow",
-      },
-      melodysimilarity: {
-        num: "Proyek 04 · Machine Learning",
-        title: "Melody Similarity",
-        sub: "AI Pendeteksi Plagiarisme Musik & Cover",
-        desc: "Sistem machine learning yang menemukan lagu dengan melodi serupa. Menggunakan Demucs untuk menghapus suara drum dan model CRNN kustom (CNN + BiLSTM + Attention) yang dilatih dengan NT-Xent contrastive loss pada 5.000+ pasangan lagu YouTube. Dilengkapi antarmuka web Flask dan pencarian vektor FAISS.",
-        btn1: "🎵 Lihat Repositori GitHub",
       }
     },
     skills: {
@@ -257,17 +232,6 @@ export const dict = {
             "Mengembangkan dan mengelola situs web full-stack hotel (front-end + back-end) dengan Laravel 11",
             "Mengelola deployment dan hosting pada server produksi Linux",
             "Membangun UI responsif & mobile-first menggunakan vanilla JS/CSS",
-          ]
-        },
-        {
-          date: "Jan 2026 – Jul 2026",
-          title: "Melody Similarity Detector",
-          org: "Proyek Pribadi · Riset ML",
-          desc: [
-            "Melakukan scraping dan prapemrosesan pada 5.000+ pasangan lagu (asli vs cover/remix) dari YouTube",
-            "Mendesain arsitektur CNN + BiLSTM kustom dengan attention pooling (4-3 juta parameter)",
-            "Menggunakan fitur CQT dan momentum encoder ala MoCo, dilatih pada GPU (NVIDIA RTX 3060)",
-            "Mencapai akurasi 80%+ pada 15 kasus plagiarisme tervalidasi menggunakan hard-negative mining",
           ]
         },
         {
