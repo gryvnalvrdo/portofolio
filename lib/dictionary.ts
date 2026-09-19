@@ -99,6 +99,7 @@ export const dict = {
           date: "Aug 2025 – Oct 2025",
           title: "IT Support Intern & Web Developer",
           org: "Hotel Claro Makassar · Makassar, Indonesia",
+          link: "https://hotel-web-iota-pink.vercel.app/",
           desc: [
             "Resolved hardware/software issues across departments, ensuring minimal operational downtime",
             "Developed and maintained the hotel's full-stack website (front-end + back-end) with Laravel 11",
@@ -231,6 +232,7 @@ export const dict = {
           date: "Ags 2025 – Okt 2025",
           title: "IT Support Intern & Web Developer",
           org: "Hotel Claro Makassar · Makassar, Indonesia",
+          link: "https://hotel-web-iota-pink.vercel.app/",
           desc: [
             "Menyelesaikan masalah perangkat keras/lunak di seluruh departemen, memastikan waktu operasional maksimal",
             "Mengembangkan dan mengelola situs web full-stack hotel (front-end + back-end) dengan Laravel 11",
