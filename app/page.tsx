@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import RevealWrapper from "@/components/RevealWrapper";
 import { useState, useEffect } from "react";
 import { dict } from "../lib/dictionary";
 
@@ -44,7 +45,7 @@ export default function Home() {
       <div className="bento-grid">
         
         {/* BOX 1: HERO */}
-        <div className="bento-box box-hero">
+        <RevealWrapper delay={0} className="bento-box box-hero">
           <div className="hero-content">
             <span className="hero-badge">{t.hero.badge}</span>
             <h1 className="hero-title">
@@ -82,10 +83,10 @@ export default function Home() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/photo.jpg" alt="Gryven" className="hero-photo" />
           </div>
-        </div>
+        </RevealWrapper>
 
         {/* BOX 2: ECOSYSTEM */}
-        <div className="bento-box box-ecosystem">
+        <RevealWrapper delay={100} className="bento-box box-ecosystem">
           <p className="box-label">{t.ecosystem.label}</p>
           <h2 className="box-title">{t.ecosystem.title1} <span className="gradient-text">{t.ecosystem.title2}</span></h2>
           <p className="box-desc">{t.ecosystem.desc}</p>
@@ -96,10 +97,10 @@ export default function Home() {
             <span className="eco-arrow">→</span>
             <div className="eco-node">CoverCraft</div>
           </div>
-        </div>
+        </RevealWrapper>
 
         {/* BOX 3: PROJECT 1 */}
-        <div className="bento-box box-project-1">
+        <RevealWrapper delay={200} className="bento-box box-project-1">
           <span className="project-num">{t.projects.jobtrail.num}</span>
           <h3 className="box-title">{t.projects.jobtrail.title}</h3>
           <p className="box-desc" style={{ marginBottom: "1rem" }}>{t.projects.jobtrail.desc}</p>
@@ -109,14 +110,14 @@ export default function Home() {
             <span className="project-tag">PostgreSQL</span>
           </div>
           <div className="project-links">
-            <a href="https://jobtracker-kjmw.vercel.app" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ padding: "0.6rem 1.2rem", fontSize: "0.85rem" }}>
+            <a href="https://jobtracker-kjmw.vercel.app/demo" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ padding: "0.6rem 1.25rem", fontSize: "0.85rem" }}>
               {t.projects.jobtrail.btn1}
             </a>
           </div>
-        </div>
+        </RevealWrapper>
 
         {/* BOX 4: PROJECT 2 */}
-        <div className="bento-box box-project-2">
+        <RevealWrapper delay={300} className="bento-box box-project-2">
           <span className="project-num">{t.projects.covercraft.num}</span>
           <h3 className="box-title">{t.projects.covercraft.title}</h3>
           <p className="box-desc" style={{ marginBottom: "1rem" }}>{t.projects.covercraft.desc}</p>
@@ -130,10 +131,10 @@ export default function Home() {
               {t.projects.covercraft.btn1}
             </Link>
           </div>
-        </div>
+        </RevealWrapper>
 
         {/* BOX 5: PROJECT 3 */}
-        <div className="bento-box box-project-3">
+        <RevealWrapper delay={400} className="bento-box box-project-3">
           <span className="project-num">{t.projects.autoapply.num}</span>
           <h3 className="box-title">{t.projects.autoapply.title}</h3>
           <p className="box-desc" style={{ marginBottom: "1rem" }}>{t.projects.autoapply.desc}</p>
@@ -147,10 +148,10 @@ export default function Home() {
               {t.projects.autoapply.btn1}
             </Link>
           </div>
-        </div>
+        </RevealWrapper>
 
         {/* BOX 6: SKILLS */}
-        <div className="bento-box box-skills">
+        <RevealWrapper delay={500} className="bento-box box-skills">
           <p className="box-label">{t.skills.label}</p>
           <h3 className="box-title">{t.skills.title1}<span className="gradient-text">{t.skills.title2}</span></h3>
           <div className="skills-grid">
@@ -158,10 +159,10 @@ export default function Home() {
               <div key={skill} className="skill-item">{skill}</div>
             ))}
           </div>
-        </div>
+        </RevealWrapper>
 
         {/* BOX 7: EXPERIENCE */}
-        <div className="bento-box box-experience">
+        <RevealWrapper delay={600} className="bento-box box-experience">
           <p className="box-label">{t.experience.label}</p>
           <h3 className="box-title">{t.experience.title1}<span className="gradient-text">{t.experience.title2}</span></h3>
           
@@ -179,10 +180,10 @@ export default function Home() {
               </div>
             ))}
           </div>
-        </div>
+        </RevealWrapper>
 
         {/* BOX 8: CONTACT */}
-        <div className="bento-box box-contact">
+        <RevealWrapper delay={700} className="bento-box box-contact">
           <h2 className="box-title" style={{ fontSize: "2rem" }}>
             {t.contact.title1}<span className="gradient-text">{t.contact.title2}</span>
           </h2>
@@ -198,7 +199,7 @@ export default function Home() {
               LinkedIn
             </a>
           </div>
-        </div>
+        </RevealWrapper>
 
       </div>
     </main>
