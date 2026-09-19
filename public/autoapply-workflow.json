@@ -48,20 +48,20 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://jobtracker-kjmw.vercel.app/api/webhooks/jobs",
+        "url": "https://jobtracker-kjmw.vercel.app/api/auto-apply",
         "sendBody": true,
         "bodyParameters": {
           "parameters": [
             {
-              "name": "title",
+              "name": "position",
               "value": "={{ $json.title }}"
             },
             {
-              "name": "company",
+              "name": "companyName",
               "value": "={{ $json.company }}"
             },
             {
-              "name": "url",
+              "name": "jobUrl",
               "value": "={{ $json.url }}"
             },
             {
@@ -70,7 +70,15 @@
             }
           ]
         },
-        "options": {}
+        "options": {},
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-autoapply-secret",
+              "value": "my-secret-key"
+            }
+          ]
+        }
       },
       "name": "Send to JobTrail",
       "type": "n8n-nodes-base.httpRequest",
