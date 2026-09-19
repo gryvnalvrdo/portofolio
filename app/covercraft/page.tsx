@@ -85,20 +85,17 @@ export default function CoverCraftPage() {
 - Role: ${jobTitle} at ${company}
 
 BACKGROUND:
-${background}
+${background || "A passionate professional ready to contribute."}
 
 JOB DESCRIPTION:
 ${jobDesc}
 
 RULES:
-1. Start with a compelling opening (not "I am writing to apply for")
-2. Match 2-3 key job requirements to specific skills/experiences
-3. Show genuine interest in ${company}
-4. End with confident call to action
-5. Keep to 3-4 paragraphs (250-350 words)
-6. Sound human and authentic
-
-Write ONLY the cover letter, starting with "Dear Hiring Manager,".`;
+1. You MUST write a complete, professional cover letter consisting of 3-4 paragraphs.
+2. DO NOT output the rules, just write the letter itself.
+3. Start with "Dear Hiring Manager,".
+4. If the background or job description is very short, creatively expand on it to make a compelling 250-word letter.
+5. Sound human, authentic, and confident.`;
 
     try {
       const res = await fetch("/api/generate", {
