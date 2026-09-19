@@ -170,10 +170,15 @@ export default function CoverCraftPage() {
         const data = await res.json();
         if (data.text) {
           setJobDesc(data.text);
+        } else {
+           alert(lang === "id" ? "Gagal mengambil teks dari URL ini. Silakan copy-paste manual." : "Failed to extract text from this URL. Please copy-paste manually.");
         }
+      } else {
+         alert(lang === "id" ? "Website ini diblokir (Cloudflare/Bot Protection). Silakan copy-paste deskripsi manual." : "This website blocks automated scraping. Please copy-paste the description manually.");
       }
     } catch (e) {
       console.error("Scraping failed", e);
+      alert("Error connecting to scraping service.");
     }
     setIsScraping(false);
   }
