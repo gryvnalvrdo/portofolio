@@ -195,7 +195,7 @@ export default function Home() {
             <a href="https://github.com/gryvnalvrdo" target="_blank" rel="noopener noreferrer" className="btn-outline">
               GitHub
             </a>
-            <a href="https://www.linkedin.com/in/gryven-alverdo-7283ab262/" target="_blank" rel="noopener noreferrer" className="btn-outline">
+            <a href="https://www.linkedin.com/in/gryven-alverdo-gunawan-7283ab262/" target="_blank" rel="noopener noreferrer" className="btn-outline">
               LinkedIn
             </a>
           </div>
