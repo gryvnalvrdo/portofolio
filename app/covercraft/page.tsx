@@ -195,24 +195,28 @@ export default function CoverCraftPage() {
         const data = await res.json();
         if (data.text) {
           setBackground(data.text);
-          // Auto-extract name using a simple heuristic
-          const lines = data.text.split(/[\r\n]+/)
-            .map((l: string) => l.trim())
-            .filter((l: string) => l.length > 0 && !l.includes("---Page") && !l.includes("----"));
-          
-          if (lines.length > 0) {
-            let possibleName = lines[0];
-            // Skip headers like 'Resume' or 'CV'
-            if (possibleName.toLowerCase().includes("resume") || possibleName.toLowerCase().includes("curriculum vitae")) {
-              if (lines.length > 1) possibleName = lines[1];
-            }
-            // Remove email addresses or phone numbers if they are on the same line
-            possibleName = possibleName.split(/[\w.-]+@[\w.-]+\.\w+/)[0].trim(); // strip email
-            possibleName = possibleName.split(/[0-9+()]/)[0].trim(); // strip phone numbers
+          if (data.name) {
+            setYourName(data.name);
+          } else {
+            // Auto-extract name using a simple heuristic
+            const lines = data.text.split(/[\r\n]+/)
+              .map((l: string) => l.trim())
+              .filter((l: string) => l.length > 0 && !l.includes("---Page") && !l.includes("----"));
             
-            // Just take a reasonable length
-            if (possibleName.length > 2 && possibleName.length <= 40) {
-              setYourName(possibleName);
+            if (lines.length > 0) {
+              let possibleName = lines[0];
+              // Skip headers like 'Resume' or 'CV'
+              if (possibleName.toLowerCase().includes("resume") || possibleName.toLowerCase().includes("curriculum vitae")) {
+                if (lines.length > 1) possibleName = lines[1];
+              }
+              // Remove email addresses or phone numbers if they are on the same line
+              possibleName = possibleName.split(/[\w.-]+@[\w.-]+\.\w+/)[0].trim(); // strip email
+              possibleName = possibleName.split(/[|,-]/)[0].trim(); // strip separators often used for phone numbers
+              
+              // Just take a reasonable length
+              if (possibleName.length > 2 && possibleName.length <= 40) {
+                setYourName(possibleName);
+              }
             }
           }
         }
@@ -258,9 +262,10 @@ ${jobDesc}
 RULES:
 1. You MUST write a complete, professional cover letter consisting of 3-4 paragraphs.
 2. DO NOT output the rules, just write the letter itself.
-3. Start with "Dear Hiring Manager,".
+3. IMPORTANT: DO NOT include any sender address or contact info header at the top. The VERY FIRST text you output must be "Dear Hiring Manager,".
 4. If the background or job description is very short, creatively expand on it to make a compelling 250-word letter.
-5. Sound human, authentic, and confident.`;
+5. Sound human, authentic, and confident.
+6. Sign off with the applicant's name at the bottom.`;
 
     try {
       const res = await fetch("/api/generate", {
