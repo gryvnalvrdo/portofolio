@@ -217,6 +217,8 @@ body::before {
 .exp-org { font-size: 0.9rem; color: var(--muted-2); margin-bottom: 0.75rem; }
 .exp-desc { color: var(--muted); font-size: 0.9rem; }
 
+.contact-btns { display: flex; gap: 1rem; justify-content: center; align-items: center; width: 100%; }
+
 /* Responsive */
 @media (max-width: 1024px) {
   .bento-grid { grid-template-columns: repeat(2, 1fr); }
@@ -226,9 +228,16 @@ body::before {
   .exp-list { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) {
-  .bento-grid { grid-template-columns: 1fr; }
+  .bento-wrapper { padding: 1.5rem 1rem 4rem; }
+  .bento-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .bento-box { padding: 1.5rem; }
+  .bento-box:active { transform: scale(0.98); } /* Tap feedback */
   .box-hero, .box-ecosystem, .box-project-1, .box-project-2, .box-project-3, .box-skills, .box-experience, .box-contact { grid-column: span 1; }
-  .hero-title { font-size: 2.5rem; }
+  .hero-title { font-size: 2.25rem; }
+  .hero-photo-wrap { width: 160px; height: 160px; margin: 0 auto; }
   .eco-flow { flex-direction: column; }
   .eco-arrow { transform: rotate(90deg); }
+  .contact-btns { flex-direction: column; width: 100%; gap: 0.75rem; }
+  .project-links { flex-direction: column; width: 100%; gap: 0.75rem; }
+  .btn-primary, .btn-outline { width: 100%; text-align: center; justify-content: center; padding: 1rem; }
 }

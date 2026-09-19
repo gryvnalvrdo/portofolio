@@ -187,7 +187,7 @@ export default function Home() {
             {t.contact.title1}<span className="gradient-text">{t.contact.title2}</span>
           </h2>
           <p className="box-desc" style={{ maxWidth: "500px", margin: "1rem auto 2rem" }}>{t.contact.desc}</p>
-          <div style={{ display: "flex", gap: "1rem" }}>
+          <div className="contact-btns">
             <a href="mailto:gryvnalvrdo@gmail.com" target="_blank" rel="noopener noreferrer" className="btn-primary">
               {t.contact.btn}
             </a>
