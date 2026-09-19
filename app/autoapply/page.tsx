@@ -225,20 +225,29 @@ export default function AutoApplyPage() {
                     ) : liveJobs.length === 0 ? (
                       <tr><td colSpan={4} style={{ textAlign: "center", padding: "2rem" }}>No recent activity.</td></tr>
                     ) : (
-                      liveJobs.map((job) => (
-                        <tr key={job.id}>
-                          <td style={{ whiteSpace: "nowrap" }}>
-                            {new Date(job.appliedDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                          </td>
-                          <td className="live-company">{job.companyName}</td>
-                          <td className="live-position">{job.position}</td>
-                          <td>
-                            <span className={`live-badge ${job.status.toLowerCase()}`}>
-                              {job.status}
-                            </span>
-                          </td>
-                        </tr>
-                      ))
+                      liveJobs.map((job) => {
+                        let displayCompany = job.companyName;
+                        let displayPosition = job.position;
+                        if (displayCompany === "Company" && displayPosition.includes(":")) {
+                          const parts = displayPosition.split(":");
+                          displayCompany = parts[0].trim();
+                          displayPosition = parts.slice(1).join(":").trim();
+                        }
+                        return (
+                          <tr key={job.id}>
+                            <td style={{ whiteSpace: "nowrap" }}>
+                              {new Date(job.appliedDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                            </td>
+                            <td className="live-company">{displayCompany}</td>
+                            <td className="live-position">{displayPosition}</td>
+                            <td>
+                              <span className={`live-badge ${job.status.toLowerCase()}`}>
+                                {job.status}
+                              </span>
+                            </td>
+                          </tr>
+                        );
+                      })
                     )}
                   </tbody>
                 </table>
