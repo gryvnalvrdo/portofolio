@@ -55,6 +55,17 @@ export default function Home() {
                 <span className="stat-label">{t.hero.stats.years}</span>
               </div>
             </div>
+            <div style={{ marginTop: "1.5rem" }}>
+              <a 
+                href={lang === "id" ? "https://drive.google.com/file/d/1IBG1j5z5CY1x_6139-bURoyCCEjZkwEQ/view?usp=sharing" : "https://drive.google.com/file/d/1h_s4sBnCvEn8VgMihjvjM5f4Gp8cO6Qc/view?usp=sharing"}
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="btn-primary" 
+                style={{ padding: "0.8rem 1.5rem", fontSize: "0.9rem", display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "linear-gradient(135deg, #a78bfa, #06b6d4)", color: "white", borderRadius: "10px", textDecoration: "none", fontWeight: 600 }}
+              >
+                📄 {lang === "id" ? "Lihat CV Saya" : "View My Resume"}
+              </a>
+            </div>
           </div>
           <div className="hero-photo-wrap">
             {/* eslint-disable-next-line @next/next/no-img-element */}

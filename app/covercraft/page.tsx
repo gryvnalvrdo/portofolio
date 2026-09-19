@@ -11,6 +11,8 @@ export default function CoverCraftPage() {
   const [jobDesc, setJobDesc] = useState("");
   const [yourName, setYourName] = useState("");
   const [background, setBackground] = useState("");
+  const [isScraping, setIsScraping] = useState(false);
+  const [isParsingPdf, setIsParsingPdf] = useState(false);
 
   const [tone, setTone] = useState("professional");
   const [result, setResult] = useState("");
@@ -62,7 +64,61 @@ export default function CoverCraftPage() {
       if (co) setCompany(co);
       setPrefilled(true);
     }
+    const url = params.get("url");
+    if (url) {
+      scrapeUrl(url);
+    }
   }, []);
+
+  async function scrapeUrl(url: string) {
+    setIsScraping(true);
+    try {
+      const res = await fetch("/api/scrape", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.text) {
+          setJobDesc(data.text);
+        }
+      }
+    } catch (e) {
+      console.error("Scraping failed", e);
+    }
+    setIsScraping(false);
+  }
+
+  async function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    
+    setIsParsingPdf(true);
+    const formData = new FormData();
+    formData.append("cv", file);
+
+    try {
+      const res = await fetch("/api/parse-cv", {
+        method: "POST",
+        body: formData,
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.text) {
+          setBackground(data.text);
+        }
+      } else {
+        alert("Failed to parse PDF");
+      }
+    } catch (e) {
+      console.error("Upload failed", e);
+      alert("Error uploading file");
+    }
+    setIsParsingPdf(false);
+    // Reset input so the same file can be selected again
+    e.target.value = "";
+  }
 
   const toneMap: Record<string, string> = {
     professional: "formal, confident, and results-oriented",
@@ -268,8 +324,18 @@ RULES:
                 <input className="cc-input" placeholder="e.g. Google" value={company} onChange={(e) => setCompany(e.target.value)} />
               </div>
               <div className="cc-group full">
-                <label className="cc-label">Job Description <span>*</span></label>
-                <textarea className="cc-input cc-textarea" rows={6} placeholder="Paste the full job description here..." value={jobDesc} onChange={(e) => setJobDesc(e.target.value)} />
+                <label className="cc-label">
+                  Job Description <span>*</span> 
+                  {isScraping && <span style={{ color: "#a78bfa", marginLeft: "10px", fontWeight: "normal", fontSize: "0.75rem" }}>Fetching from URL...</span>}
+                </label>
+                <textarea 
+                  className="cc-input cc-textarea" 
+                  rows={6} 
+                  placeholder={isScraping ? "Scraping URL..." : "Paste the full job description here..."} 
+                  value={jobDesc} 
+                  onChange={(e) => setJobDesc(e.target.value)} 
+                  disabled={isScraping}
+                />
               </div>
             </div>
 
@@ -285,8 +351,37 @@ RULES:
                 <input className="cc-input" placeholder="Software Engineer" />
               </div>
               <div className="cc-group full">
-                <label className="cc-label">Your Background &amp; Key Skills</label>
-                <textarea className="cc-input cc-textarea" rows={5} placeholder="e.g. Fresh graduate in Informatics Engineering (GPA 3.88)... Experience as Web Developer..." value={background} onChange={(e) => setBackground(e.target.value)} />
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "0.35rem" }}>
+                  <label className="cc-label" style={{ marginBottom: 0 }}>Your Background &amp; Key Skills</label>
+                  <label style={{ 
+                    cursor: "pointer", 
+                    fontSize: "0.75rem", 
+                    color: "#a78bfa", 
+                    background: "rgba(124,58,237,.1)", 
+                    padding: "0.3rem 0.6rem", 
+                    borderRadius: "6px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.3rem"
+                  }}>
+                    {isParsingPdf ? "Reading PDF..." : "📄 Upload CV (PDF)"}
+                    <input 
+                      type="file" 
+                      accept=".pdf" 
+                      style={{ display: "none" }} 
+                      onChange={handleFileUpload} 
+                      disabled={isParsingPdf}
+                    />
+                  </label>
+                </div>
+                <textarea 
+                  className="cc-input cc-textarea" 
+                  rows={5} 
+                  placeholder="Paste your Resume text here, or upload a PDF above..." 
+                  value={background} 
+                  onChange={(e) => setBackground(e.target.value)} 
+                  disabled={isParsingPdf}
+                />
               </div>
             </div>
 
