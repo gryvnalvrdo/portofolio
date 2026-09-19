@@ -49,7 +49,6 @@ Skills: Python, JavaScript, TypeScript, Next.js, Laravel, Flask, PyTorch, Postgr
 
   async function generate() {
     setErrorMsg("");
-    if (!apiKey) return setErrorMsg("Please enter your Gemini API key.");
     if (!jobTitle) return setErrorMsg("Please enter the job title.");
     if (!company) return setErrorMsg("Please enter the company name.");
     if (!jobDesc) return setErrorMsg("Please paste the job description.");
@@ -78,25 +77,17 @@ RULES:
 Write ONLY the cover letter, starting with "Dear Hiring Manager,".`;
 
     try {
-      const res = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: prompt }] }],
-            generationConfig: { temperature: 0.8, maxOutputTokens: 1024 },
-          }),
-        }
-      );
+      const res = await fetch("/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt }),
+      });
       if (!res.ok) {
         const err = await res.json();
-        throw new Error(err.error?.message || `API Error ${res.status}`);
+        throw new Error(err.error || `API Error ${res.status}`);
       }
       const data = await res.json();
-      const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-      if (!text) throw new Error("No response received. Try again.");
-      setResult(text);
+      setResult(data.result);
     } catch (err: unknown) {
       setErrorMsg(`Error: ${err instanceof Error ? err.message : "Unknown error"}`);
     }
@@ -232,29 +223,7 @@ Write ONLY the cover letter, starting with "Dear Hiring Manager,".`;
           )}
 
           <div className="cc-card">
-            <p className="cc-step-label">Step 1 — Your Gemini API Key</p>
-            <div className="cc-apikey-box">
-              <div className="cc-apikey-hdr">
-                <h3>🔑 Gemini API Key</h3>
-                <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">Get free key →</a>
-              </div>
-              <div className="cc-input-row">
-                <input
-                  type={showKey ? "text" : "password"}
-                  className="cc-input"
-                  placeholder="AIza..."
-                  value={apiKey}
-                  onChange={(e) => setApiKey(e.target.value)}
-                />
-                <button className="cc-toggle-btn" onClick={() => setShowKey(!showKey)}>
-                  {showKey ? "Hide" : "Show"}
-                </button>
-              </div>
-              <p className="cc-hint">Your key is only used in your browser and never sent to our servers.</p>
-            </div>
-
-            <hr className="cc-divider" />
-            <p className="cc-step-label">Step 2 — Job Details</p>
+            <p className="cc-step-label">Step 1 — Job Details</p>
             <div className="cc-grid">
               <div className="cc-group">
                 <label className="cc-label">Job Title <span>*</span></label>
@@ -271,7 +240,7 @@ Write ONLY the cover letter, starting with "Dear Hiring Manager,".`;
             </div>
 
             <hr className="cc-divider" />
-            <p className="cc-step-label">Step 3 — About You</p>
+            <p className="cc-step-label">Step 2 — About You</p>
             <div className="cc-grid">
               <div className="cc-group">
                 <label className="cc-label">Your Name</label>
@@ -288,7 +257,7 @@ Write ONLY the cover letter, starting with "Dear Hiring Manager,".`;
             </div>
 
             <hr className="cc-divider" />
-            <p className="cc-step-label">Step 4 — Tone &amp; Style</p>
+            <p className="cc-step-label">Step 3 — Tone &amp; Style</p>
             <div className="cc-tone-row">
               {tones.map((t) => (
                 <span key={t.id}>
