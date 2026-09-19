@@ -19,6 +19,9 @@ export default function CoverCraftPage() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [lang, setLang] = useState("en");
+  const [jobId, setJobId] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
+  const [savedToJobTrail, setSavedToJobTrail] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem("lang");
@@ -58,13 +61,16 @@ export default function CoverCraftPage() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const job = params.get("job");
-    const co = params.get("company");
-    if (job || co) {
+    const comp = params.get("company");
+    const url = params.get("url");
+    const id = params.get("id");
+
+    if (id) setJobId(id);
+    if (job || comp || id) {
       if (job) setJobTitle(job);
-      if (co) setCompany(co);
+      if (comp) setCompany(comp);
       setPrefilled(true);
     }
-    const url = params.get("url");
     if (url) {
       scrapeUrl(url);
     }
@@ -107,6 +113,21 @@ export default function CoverCraftPage() {
         const data = await res.json();
         if (data.text) {
           setBackground(data.text);
+          // Auto-extract name using a simple heuristic (usually the first non-empty line)
+          const lines = data.text.split('\n').map((l: string) => l.trim()).filter(Boolean);
+          if (lines.length > 0) {
+            let possibleName = lines[0];
+            // Skip headers like 'Resume' or 'CV'
+            if (possibleName.toLowerCase().includes("resume") || possibleName.toLowerCase().includes("curriculum vitae")) {
+              if (lines.length > 1) possibleName = lines[1];
+            }
+            // Remove email addresses or phone numbers if they are on the same line
+            possibleName = possibleName.split(/[\w.-]+@[\w.-]+\.\w+/)[0].trim(); // strip email
+            // Just take a reasonable length
+            if (possibleName.length > 3 && possibleName.length <= 50) {
+              setYourName(possibleName);
+            }
+          }
         }
       } else {
         const data = await res.json();
@@ -193,6 +214,27 @@ RULES:
     { id: "concise", label: "⚡ Concise" },
     { id: "creative", label: "🎨 Creative" },
   ];
+
+  async function saveToJobTrail() {
+    if (!jobId || !result) return;
+    setIsSaving(true);
+    try {
+      const res = await fetch(`https://jobtracker-kjmw.vercel.app/api/public/applications/${jobId}/cover-letter`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ coverLetter: result })
+      });
+      if (res.ok) {
+        setSavedToJobTrail(true);
+      } else {
+        alert("Failed to save to JobTrail.");
+      }
+    } catch (e) {
+      console.error(e);
+      alert("Error saving to JobTrail.");
+    }
+    setIsSaving(false);
+  }
 
   return (
     <>
@@ -420,6 +462,27 @@ RULES:
                     {copied ? "✅ Copied!" : "📋 Copy"}
                   </button>
                   <button className="cc-action-btn" onClick={downloadResult}>⬇️ Download</button>
+                  {jobId && (
+                    <button
+                      onClick={saveToJobTrail}
+                      disabled={isSaving || savedToJobTrail}
+                      className="px-6 py-2 bg-[#16a34a] hover:bg-[#15803d] disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg transition-colors flex items-center gap-2"
+                      style={{ fontSize: '0.85rem', padding: '.5rem 1rem' }}
+                    >
+                      {savedToJobTrail ? (
+                        <>✓ Saved to JobTrail</>
+                      ) : isSaving ? (
+                        <>Saving...</>
+                      ) : (
+                        <>
+                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+                          </svg>
+                          Save to JobTrail
+                        </>
+                      )}
+                    </button>
+                  )}
                   <button className="cc-action-btn" onClick={() => { setResult(""); generate(); }}>🔄 Regenerate</button>
                 </div>
               </div>
