@@ -1,0 +1,152 @@
+{
+  "name": "AutoApply Flow (Job Discovery)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      },
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://www.linkedin.com/jobs/search/?keywords=software%20engineer&location=Indonesia",
+        "options": {}
+      },
+      "name": "Fetch LinkedIn Jobs",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        450,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const keywords = ['Next.js', 'React', 'Python', 'Full Stack'];\nconst jobs = items[0].json.data;\nconst matchedJobs = [];\n\nfor (const job of jobs) {\n  const desc = job.description.toLowerCase();\n  const isMatch = keywords.some(kw => desc.includes(kw.toLowerCase()));\n  if (isMatch) {\n    matchedJobs.push(job);\n  }\n}\n\nreturn matchedJobs.map(job => ({ json: job }));"
+      },
+      "name": "Filter Matches",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        650,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://jobtracker-kjmw.vercel.app/api/webhooks/jobs",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "title",
+              "value": "={{ $json.title }}"
+            },
+            {
+              "name": "company",
+              "value": "={{ $json.company }}"
+            },
+            {
+              "name": "url",
+              "value": "={{ $json.url }}"
+            },
+            {
+              "name": "source",
+              "value": "AutoApply Flow"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Send to JobTrail",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        850,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "YOUR_TELEGRAM_CHAT_ID",
+        "text": "=New Job Match Found!\n{{ $json.title }} at {{ $json.company }}\nLink: {{ $json.url }}",
+        "additionalFields": {}
+      },
+      "name": "Telegram Alert",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [
+        1050,
+        300
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "telegram_bot",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Fetch LinkedIn Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch LinkedIn Jobs": {
+      "main": [
+        [
+          {
+            "node": "Filter Matches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Matches": {
+      "main": [
+        [
+          {
+            "node": "Send to JobTrail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send to JobTrail": {
+      "main": [
+        [
+          {
+            "node": "Telegram Alert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {}
+}

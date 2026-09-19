@@ -144,7 +144,7 @@ export default function AutoApplyPage() {
             <h1>{t.title1} <span>{t.title2}</span></h1>
             <p>{t.desc}</p>
             <div className="aa-hero-actions">
-              <a href="https://github.com/gryvnalvrdo/autoapply-flow" target="_blank" rel="noopener" className="aa-btn-primary">
+              <a href="/autoapply-workflow.json" download="autoapply-workflow.json" className="aa-btn-primary">
                 {t.btn1}
               </a>
               <a href="https://jobtracker-kjmw.vercel.app" target="_blank" rel="noopener" className="aa-btn-outline">

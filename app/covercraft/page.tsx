@@ -9,19 +9,9 @@ export default function CoverCraftPage() {
   const [jobTitle, setJobTitle] = useState("");
   const [company, setCompany] = useState("");
   const [jobDesc, setJobDesc] = useState("");
-  const [yourName, setYourName] = useState("Gryven Alverdo Gunawan");
-  const [background, setBackground] = useState(
-    `Fresh graduate in Informatics Engineering (GPA 3.88/4.00) from Universitas Atma Jaya Makassar.
+  const [yourName, setYourName] = useState("");
+  const [background, setBackground] = useState("");
 
-Experience: IT Support Intern & Web Developer at Hotel Claro Makassar (Aug-Oct 2025).
-
-Key Projects:
-- JobTrail: Full-stack job tracker (Next.js 15, Prisma, PostgreSQL, NextAuth.js)
-- Melody Similarity Detector: ML plagiarism detection (PyTorch, CNN+BiLSTM, audio)
-- Hotel Booking System: Full-stack reservation platform (Laravel 11, MySQL)
-
-Skills: Python, JavaScript, TypeScript, Next.js, Laravel, Flask, PyTorch, PostgreSQL, Git`
-  );
   const [tone, setTone] = useState("professional");
   const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
@@ -291,7 +281,7 @@ Write ONLY the cover letter, starting with "Dear Hiring Manager,".`;
             <div className="cc-grid">
               <div className="cc-group">
                 <label className="cc-label">Your Name</label>
-                <input className="cc-input" value={yourName} onChange={(e) => setYourName(e.target.value)} />
+                <input className="cc-input" placeholder="e.g. Gryven Alverdo Gunawan" value={yourName} onChange={(e) => setYourName(e.target.value)} />
               </div>
               <div className="cc-group">
                 <label className="cc-label">Target Role</label>
@@ -299,7 +289,7 @@ Write ONLY the cover letter, starting with "Dear Hiring Manager,".`;
               </div>
               <div className="cc-group full">
                 <label className="cc-label">Your Background &amp; Key Skills</label>
-                <textarea className="cc-input cc-textarea" rows={5} value={background} onChange={(e) => setBackground(e.target.value)} />
+                <textarea className="cc-input cc-textarea" rows={5} placeholder="e.g. Fresh graduate in Informatics Engineering (GPA 3.88)... Experience as Web Developer..." value={background} onChange={(e) => setBackground(e.target.value)} />
               </div>
             </div>
 
