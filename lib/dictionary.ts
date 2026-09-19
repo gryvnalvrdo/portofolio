@@ -18,7 +18,9 @@ export const dict = {
       location: "📍 Makassar · Open to Remote",
       stats: {
         projects: "Major Projects",
-        years: "Years Coding"
+        years: "Years Coding",
+        applications: "Applications Sent",
+        interviews: "Interviews Secured"
       }
     },
     about: {
@@ -148,7 +150,9 @@ export const dict = {
       location: "📍 Makassar · Siap Remote",
       stats: {
         projects: "Proyek Utama",
-        years: "Tahun Ngoding"
+        years: "Tahun Ngoding",
+        applications: "Lamaran Terkirim",
+        interviews: "Wawancara Didapat"
       }
     },
     about: {

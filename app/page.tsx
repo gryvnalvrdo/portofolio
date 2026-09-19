@@ -8,11 +8,22 @@ type Lang = "en" | "id";
 
 export default function Home() {
   const [lang, setLang] = useState<Lang>("en");
+  const [jobStats, setJobStats] = useState({ applications: 0, interviews: 0 });
   const t = dict[lang];
 
   useEffect(() => {
     const saved = localStorage.getItem("lang") as Lang;
     if (saved === "id" || saved === "en") setLang(saved);
+
+    // Fetch live job tracking stats
+    fetch("https://jobtracker-kjmw.vercel.app/api/public/stats")
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.applications !== undefined) {
+          setJobStats({ applications: data.applications, interviews: data.interviews || 0 });
+        }
+      })
+      .catch(err => console.error("Failed to fetch job stats:", err));
   }, []);
 
   const toggleLang = () => {
@@ -47,12 +58,12 @@ export default function Home() {
                 <span className="stat-label">GPA / 4.00</span>
               </div>
               <div className="stat-item">
-                <span className="stat-val">3+</span>
-                <span className="stat-label">{t.hero.stats.projects}</span>
+                <span className="stat-val">{jobStats.applications > 0 ? jobStats.applications : "3+"}</span>
+                <span className="stat-label">{jobStats.applications > 0 ? t.hero.stats.applications : t.hero.stats.projects}</span>
               </div>
               <div className="stat-item">
-                <span className="stat-val">2</span>
-                <span className="stat-label">{t.hero.stats.years}</span>
+                <span className="stat-val">{jobStats.interviews > 0 ? jobStats.interviews : "2"}</span>
+                <span className="stat-label">{jobStats.interviews > 0 ? t.hero.stats.interviews : t.hero.stats.years}</span>
               </div>
             </div>
             <div style={{ marginTop: "1.5rem" }}>

@@ -42,7 +42,48 @@ export default function CoverCraftPage() {
       title2: "Standout Cover Letters",
       title3: "in Seconds",
       desc: "Paste a job description and AI generates a personalized, ATS-friendly cover letter. Your API key stays in your browser — never stored.",
-      note: "🔗 Part of Gryven's Job Hunting Suite — works best with"
+      note: "🔗 Part of Gryven's Job Hunting Suite — works best with",
+      prefilled: "✅ Job details pre-filled from JobTrail. Review and hit Generate!",
+      step1: "Step 1 — Job Details",
+      jobTitleLabel: "Job Title",
+      jobTitlePh: "e.g. Software Engineer",
+      companyLabel: "Company Name",
+      companyPh: "e.g. Google",
+      jobDescLabel: "Job Description",
+      scraping: "Fetching from URL...",
+      scrapingPh: "Scraping URL...",
+      jobDescPh: "Paste the full job description here...",
+      step2: "Step 2 — About You",
+      nameLabel: "Your Name",
+      namePh: "e.g. Gryven Alverdo Gunawan",
+      roleLabel: "Target Role",
+      rolePh: "Software Engineer",
+      bgLabel: "Your Background & Key Skills",
+      parsing: "Reading PDF...",
+      upload: "📄 Upload CV (PDF)",
+      bgPh: "Paste your Resume text here, or upload a PDF above...",
+      step3: "Step 3 — Tone & Style",
+      btnGen: "✨ Generate Cover Letter",
+      btnLoading: "Crafting your letter...",
+      loadingMsg: "Analyzing job description and crafting your letter...",
+      resReady: "✅ Your Cover Letter is Ready",
+      copy: "📋 Copy",
+      copied: "✅ Copied!",
+      download: "⬇️ Download",
+      saveBtn: "💾 Save to JobTrail",
+      savingBtn: "⏳ Saving...",
+      savedBtn: "✅ Saved to JobTrail",
+      regen: "🔄 Regenerate",
+      ecoTitle: "🔗 Part of the Job Hunting Suite",
+      ecoDesc1: "CoverCraft works alongside",
+      ecoDesc2: "and",
+      ecoDesc3: "— three tools built by one developer actively engineering his job search.",
+      ecoBtn1: "🤖 AutoApply Flow",
+      ecoBtn2: "📋 JobTrail",
+      ecoBtn3: "✨ CoverCraft",
+      ecoBtn4: "🎯 You Get Hired",
+      footer1: "Built by",
+      footer2: "Part of the Job Hunting Suite"
     },
     id: {
       back: "← Kembali ke Portofolio",
@@ -51,7 +92,48 @@ export default function CoverCraftPage() {
       title2: "Cover Letter Memukau",
       title3: "dalam Hitungan Detik",
       desc: "Tempelkan deskripsi pekerjaan dan AI akan menghasilkan surat lamaran (cover letter) ramah-ATS. Kunci API Anda tetap di browser — tidak pernah disimpan.",
-      note: "🔗 Bagian dari Job Hunting Suite Gryven — sangat cocok dipadukan dengan"
+      note: "🔗 Bagian dari Job Hunting Suite Gryven — sangat cocok dipadukan dengan",
+      prefilled: "✅ Detail pekerjaan terisi otomatis dari JobTrail. Periksa lalu klik Generate!",
+      step1: "Langkah 1 — Detail Pekerjaan",
+      jobTitleLabel: "Posisi Pekerjaan",
+      jobTitlePh: "contoh: Software Engineer",
+      companyLabel: "Nama Perusahaan",
+      companyPh: "contoh: Google",
+      jobDescLabel: "Deskripsi Pekerjaan",
+      scraping: "Mengambil dari URL...",
+      scrapingPh: "Sedang mengambil data...",
+      jobDescPh: "Tempelkan deskripsi pekerjaan selengkapnya di sini...",
+      step2: "Langkah 2 — Tentang Anda",
+      nameLabel: "Nama Anda",
+      namePh: "contoh: Gryven Alverdo Gunawan",
+      roleLabel: "Peran yang Dituju",
+      rolePh: "Software Engineer",
+      bgLabel: "Latar Belakang & Keahlian Utama",
+      parsing: "Membaca PDF...",
+      upload: "📄 Unggah CV (PDF)",
+      bgPh: "Tempel teks Resume Anda di sini, atau unggah PDF di atas...",
+      step3: "Langkah 3 — Gaya & Nada",
+      btnGen: "✨ Buat Cover Letter",
+      btnLoading: "Sedang merangkai surat...",
+      loadingMsg: "Menganalisis deskripsi pekerjaan dan merangkai surat Anda...",
+      resReady: "✅ Cover Letter Anda Siap",
+      copy: "📋 Salin",
+      copied: "✅ Tersalin!",
+      download: "⬇️ Unduh",
+      saveBtn: "💾 Simpan ke JobTrail",
+      savingBtn: "⏳ Menyimpan...",
+      savedBtn: "✅ Tersimpan ke JobTrail",
+      regen: "🔄 Buat Ulang",
+      ecoTitle: "🔗 Bagian dari Job Hunting Suite",
+      ecoDesc1: "CoverCraft bekerja berdampingan dengan",
+      ecoDesc2: "dan",
+      ecoDesc3: "— tiga alat yang dibangun oleh seorang developer untuk mengotomatisasi pencarian kerjanya.",
+      ecoBtn1: "🤖 AutoApply Flow",
+      ecoBtn2: "📋 JobTrail",
+      ecoBtn3: "✨ CoverCraft",
+      ecoBtn4: "🎯 Anda Diterima",
+      footer1: "Dibuat oleh",
+      footer2: "Bagian dari Job Hunting Suite"
     }
   }[lang as "en" | "id"];
 
@@ -214,10 +296,10 @@ RULES:
   }
 
   const tones = [
-    { id: "professional", label: "💼 Professional" },
-    { id: "enthusiastic", label: "🔥 Enthusiastic" },
-    { id: "concise", label: "⚡ Concise" },
-    { id: "creative", label: "🎨 Creative" },
+    { id: "professional", label: lang === "id" ? "💼 Profesional" : "💼 Professional" },
+    { id: "enthusiastic", label: lang === "id" ? "🔥 Antusias" : "🔥 Enthusiastic" },
+    { id: "concise", label: lang === "id" ? "⚡ Singkat" : "⚡ Concise" },
+    { id: "creative", label: lang === "id" ? "🎨 Kreatif" : "🎨 Creative" },
   ];
 
   async function saveToJobTrail() {
@@ -357,29 +439,29 @@ RULES:
           </section>
 
           {prefilled && (
-            <div className="cc-prefill">✅ Job details pre-filled from JobTrail. Review and hit Generate!</div>
+            <div className="cc-prefill">{t.prefilled}</div>
           )}
 
           <div className="cc-card">
-            <p className="cc-step-label">Step 1 — Job Details</p>
+            <p className="cc-step-label">{t.step1}</p>
             <div className="cc-grid">
               <div className="cc-group">
-                <label className="cc-label">Job Title <span>*</span></label>
-                <input className="cc-input" placeholder="e.g. Software Engineer" value={jobTitle} onChange={(e) => setJobTitle(e.target.value)} />
+                <label className="cc-label">{t.jobTitleLabel} <span>*</span></label>
+                <input className="cc-input" placeholder={t.jobTitlePh} value={jobTitle} onChange={(e) => setJobTitle(e.target.value)} />
               </div>
               <div className="cc-group">
-                <label className="cc-label">Company Name <span>*</span></label>
-                <input className="cc-input" placeholder="e.g. Google" value={company} onChange={(e) => setCompany(e.target.value)} />
+                <label className="cc-label">{t.companyLabel} <span>*</span></label>
+                <input className="cc-input" placeholder={t.companyPh} value={company} onChange={(e) => setCompany(e.target.value)} />
               </div>
               <div className="cc-group full">
                 <label className="cc-label">
-                  Job Description <span>*</span> 
-                  {isScraping && <span style={{ color: "#a78bfa", marginLeft: "10px", fontWeight: "normal", fontSize: "0.75rem" }}>Fetching from URL...</span>}
+                  {t.jobDescLabel} <span>*</span> 
+                  {isScraping && <span style={{ color: "#a78bfa", marginLeft: "10px", fontWeight: "normal", fontSize: "0.75rem" }}>{t.scraping}</span>}
                 </label>
                 <textarea 
                   className="cc-input cc-textarea" 
                   rows={6} 
-                  placeholder={isScraping ? "Scraping URL..." : "Paste the full job description here..."} 
+                  placeholder={isScraping ? t.scrapingPh : t.jobDescPh} 
                   value={jobDesc} 
                   onChange={(e) => setJobDesc(e.target.value)} 
                   disabled={isScraping}
@@ -388,19 +470,19 @@ RULES:
             </div>
 
             <hr className="cc-divider" />
-            <p className="cc-step-label">Step 2 — About You</p>
+            <p className="cc-step-label">{t.step2}</p>
             <div className="cc-grid">
               <div className="cc-group">
-                <label className="cc-label">Your Name</label>
-                <input className="cc-input" placeholder="e.g. Gryven Alverdo Gunawan" value={yourName} onChange={(e) => setYourName(e.target.value)} />
+                <label className="cc-label">{t.nameLabel}</label>
+                <input className="cc-input" placeholder={t.namePh} value={yourName} onChange={(e) => setYourName(e.target.value)} />
               </div>
               <div className="cc-group">
-                <label className="cc-label">Target Role</label>
-                <input className="cc-input" placeholder="Software Engineer" />
+                <label className="cc-label">{t.roleLabel}</label>
+                <input className="cc-input" placeholder={t.rolePh} />
               </div>
               <div className="cc-group full">
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "0.35rem" }}>
-                  <label className="cc-label" style={{ marginBottom: 0 }}>Your Background &amp; Key Skills</label>
+                  <label className="cc-label" style={{ marginBottom: 0 }}>{t.bgLabel}</label>
                   <label style={{ 
                     cursor: "pointer", 
                     fontSize: "0.75rem", 
@@ -412,7 +494,7 @@ RULES:
                     alignItems: "center",
                     gap: "0.3rem"
                   }}>
-                    {isParsingPdf ? "Reading PDF..." : "📄 Upload CV (PDF)"}
+                    {isParsingPdf ? t.parsing : t.upload}
                     <input 
                       type="file" 
                       accept=".pdf" 
@@ -425,7 +507,7 @@ RULES:
                 <textarea 
                   className="cc-input cc-textarea" 
                   rows={5} 
-                  placeholder="Paste your Resume text here, or upload a PDF above..." 
+                  placeholder={t.bgPh} 
                   value={background} 
                   onChange={(e) => setBackground(e.target.value)} 
                   disabled={isParsingPdf}
@@ -434,12 +516,12 @@ RULES:
             </div>
 
             <hr className="cc-divider" />
-            <p className="cc-step-label">Step 3 — Tone &amp; Style</p>
+            <p className="cc-step-label">{t.step3}</p>
             <div className="cc-tone-row">
-              {tones.map((t) => (
-                <span key={t.id}>
-                  <input type="radio" name="tone" id={`tone-${t.id}`} className="cc-tone-opt" checked={tone === t.id} onChange={() => setTone(t.id)} />
-                  <label htmlFor={`tone-${t.id}`} className="cc-tone-label">{t.label}</label>
+              {tones.map((toneOpt) => (
+                <span key={toneOpt.id}>
+                  <input type="radio" name="tone" id={`tone-${toneOpt.id}`} className="cc-tone-opt" checked={tone === toneOpt.id} onChange={() => setTone(toneOpt.id)} />
+                  <label htmlFor={`tone-${toneOpt.id}`} className="cc-tone-label">{toneOpt.label}</label>
                 </span>
               ))}
             </div>
@@ -447,36 +529,36 @@ RULES:
             {errorMsg && <div className="cc-error">{errorMsg}</div>}
 
             <button className="cc-btn-generate" onClick={generate} disabled={loading}>
-              {loading ? "Crafting your letter..." : "✨ Generate Cover Letter"}
+              {loading ? t.btnLoading : t.btnGen}
             </button>
           </div>
 
           {loading && (
             <div className="cc-loading">
               <div className="cc-spinner"></div>
-              <p>Analyzing job description and crafting your letter...</p>
+              <p>{t.loadingMsg}</p>
             </div>
           )}
 
           {result && !loading && (
             <div className="cc-result">
               <div className="cc-result-header">
-                <div className="cc-result-title">✅ Your Cover Letter is Ready</div>
+                <div className="cc-result-title">{t.resReady}</div>
                 <div className="cc-result-actions">
                   <button className={`cc-action-btn ${copied ? "success" : ""}`} onClick={copyResult}>
-                    {copied ? "✅ Copied!" : "📋 Copy"}
+                    {copied ? t.copied : t.copy}
                   </button>
-                  <button className="cc-action-btn" onClick={downloadResult}>⬇️ Download</button>
+                  <button className="cc-action-btn" onClick={downloadResult}>{t.download}</button>
                   {jobId && (
                     <button
                       className={`cc-action-btn ${savedToJobTrail ? "success" : ""}`}
                       onClick={saveToJobTrail}
                       disabled={isSaving || savedToJobTrail}
                     >
-                      {savedToJobTrail ? "✅ Saved to JobTrail" : isSaving ? "⏳ Saving..." : "💾 Save to JobTrail"}
+                      {savedToJobTrail ? t.savedBtn : isSaving ? t.savingBtn : t.saveBtn}
                     </button>
                   )}
-                  <button className="cc-action-btn" onClick={() => { setResult(""); generate(); }}>🔄 Regenerate</button>
+                  <button className="cc-action-btn" onClick={() => { setResult(""); generate(); }}>{t.regen}</button>
                 </div>
               </div>
               <div className="cc-result-content">{result}</div>
@@ -484,25 +566,25 @@ RULES:
           )}
 
           <div className="cc-ecosystem">
-            <h3>🔗 Part of the Job Hunting Suite</h3>
-            <p>CoverCraft works alongside <strong>JobTrail</strong> and <strong>AutoApply Flow</strong> — three tools built by one developer actively engineering his job search.</p>
+            <h3>{t.ecoTitle}</h3>
+            <p>{t.ecoDesc1} <strong>JobTrail</strong> {t.ecoDesc2} <strong>AutoApply Flow</strong> {t.ecoDesc3}</p>
             <div className="cc-flow">
-              <Link href="/autoapply" className="cc-flow-item">🤖 AutoApply Flow</Link>
+              <Link href="/autoapply" className="cc-flow-item">{t.ecoBtn1}</Link>
               <span className="cc-arrow">→</span>
-              <a href="https://jobtracker-kjmw.vercel.app" target="_blank" rel="noopener" className="cc-flow-item">📋 JobTrail</a>
+              <a href="https://jobtracker-kjmw.vercel.app" target="_blank" rel="noopener" className="cc-flow-item">{t.ecoBtn2}</a>
               <span className="cc-arrow">→</span>
-              <span className="cc-flow-item active">✨ CoverCraft</span>
+              <span className="cc-flow-item active">{t.ecoBtn3}</span>
               <span className="cc-arrow">→</span>
-              <span className="cc-flow-item">🎯 You Get Hired</span>
+              <span className="cc-flow-item">{t.ecoBtn4}</span>
             </div>
           </div>
         </div>
 
         <footer>
           <div className="cc-container">
-            Built by <a href="/">Gryven Alverdo Gunawan</a> ·{" "}
+            {t.footer1} <a href="/">Gryven Alverdo Gunawan</a> ·{" "}
             <a href="https://github.com/gryvnalvrdo" target="_blank" rel="noopener">GitHub</a> ·
-            Part of the Job Hunting Suite
+            {t.footer2}
           </div>
         </footer>
       </div>
