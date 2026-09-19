@@ -37,8 +37,8 @@ export default function Home() {
           <div className="hero-content">
             <span className="hero-badge">{t.hero.badge}</span>
             <h1 className="hero-title">
-              {t.hero.hi} Gryven,<br />
-              <span className="gradient-text">{t.hero.role}.</span>
+              {t.hero.hi}<br />
+              <span className="gradient-text">Gryven Alverdo Gunawan.</span>
             </h1>
             <p className="hero-desc">{t.hero.sub}</p>
             <div className="hero-stats">
@@ -166,7 +166,7 @@ export default function Home() {
           </h2>
           <p className="box-desc" style={{ maxWidth: "500px", margin: "1rem auto 2rem" }}>{t.contact.desc}</p>
           <div style={{ display: "flex", gap: "1rem" }}>
-            <a href="mailto:gryvnalvrdo@gmail.com" className="btn-primary">
+            <a href="mailto:gryvnalvrdo@gmail.com" target="_blank" rel="noopener noreferrer" className="btn-primary">
               {t.contact.btn}
             </a>
             <a href="https://github.com/gryvnalvrdo" target="_blank" rel="noopener noreferrer" className="btn-outline">

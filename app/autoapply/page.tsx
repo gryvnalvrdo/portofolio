@@ -1,17 +1,53 @@
-import type { Metadata } from "next";
+"use client";
+
 import Link from "next/link";
 
-export const metadata: Metadata = {
-  title: "AutoApply Flow — n8n Job Hunt Automation | Gryven's Job Hunting Suite",
-  description: "An n8n automation workflow that monitors job boards and automatically adds matching jobs to JobTrail. Part of Gryven's Job Hunting Suite.",
-};
+import { useState, useEffect } from "react";
 
 export default function AutoApplyPage() {
+  const [lang, setLang] = useState("en");
+
+  useEffect(() => {
+    const saved = localStorage.getItem("lang");
+    if (saved === "id" || saved === "en") setLang(saved);
+  }, []);
+
+  const toggleLang = () => {
+    const next = lang === "en" ? "id" : "en";
+    setLang(next);
+    localStorage.setItem("lang", next);
+  };
+
+  const t = {
+    en: {
+      back: "← Back to Portfolio",
+      title1: "Automate Your ",
+      title2: "Job Discovery",
+      desc: "An n8n workflow that monitors LinkedIn, Glints, and Kalibrr every 6 hours, filters jobs by your criteria, and automatically adds matching listings to JobTrail — so you never miss a relevant opportunity.",
+      btn1: "📥 Download Workflow JSON",
+      btn2: "View in JobTrail ↗",
+      how: "How It Works",
+      pipe: "The Automation Pipeline",
+      pipeDesc: "Every 6 hours, the workflow runs automatically. Jobs flow from discovery to your JobTrail dashboard without you lifting a finger."
+    },
+    id: {
+      back: "← Kembali ke Portofolio",
+      title1: "Otomatisasi ",
+      title2: "Pencarian Loker",
+      desc: "Alur kerja n8n yang memantau LinkedIn, Glints, dan Kalibrr setiap 6 jam, memfilter loker sesuai kriteria Anda, dan otomatis menambahkannya ke JobTrail — agar tidak ada peluang yang terlewat.",
+      btn1: "📥 Unduh Workflow JSON",
+      btn2: "Lihat di JobTrail ↗",
+      how: "Cara Kerjanya",
+      pipe: "Pipa Otomatisasi",
+      pipeDesc: "Setiap 6 jam, alur kerja berjalan otomatis. Lowongan pekerjaan mengalir dari penemuan hingga ke dasbor JobTrail Anda tanpa perlu repot."
+    }
+  }[lang];
+
   return (
     <>
       <style>{`
         .aa-body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; }
-        .aa-nav { position:sticky; top:0; z-index:100; background:rgba(0,0,0,0.85); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); padding:.9rem 0; }
+        .aa-nav { position:sticky; top:0; z-index:100; background:rgba(2,6,23,0.85); backdrop-filter:blur(20px); border:none; padding:.9rem 0; }
         .aa-nav-inner { max-width:1000px; margin:0 auto; padding:0 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
         .aa-logo { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.1rem; text-decoration:none; color:var(--text); }
         .aa-nav-links { display:flex; gap:.5rem; }
@@ -89,10 +125,14 @@ export default function AutoApplyPage() {
       <div className="aa-body">
         <nav className="aa-nav">
           <div className="aa-nav-inner">
-            <a href="/" className="aa-logo">🤖 AutoApply Flow</a>
-            <div className="aa-nav-links">
-              <Link href="/covercraft" className="aa-nav-link">✨ CoverCraft</Link>
-              <a href="https://jobtracker-kjmw.vercel.app" target="_blank" rel="noopener" className="aa-nav-link">📋 JobTrail ↗</a>
+            <Link href="/" style={{ color: "var(--muted)", textDecoration: "none", fontSize: "0.9rem", fontWeight: 500 }}>
+              {t.back}
+            </Link>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <div className="aa-logo">🤖 AutoApply Flow</div>
+              <button onClick={toggleLang} className="lang-toggle" style={{ background: 'transparent', border: '1px solid var(--border)', color: 'var(--text)', padding: '0.3rem 0.6rem', borderRadius: '6px', fontSize: '0.75rem', cursor: 'pointer' }}>
+                {lang === "en" ? "EN / ID" : "ID / EN"}
+              </button>
             </div>
           </div>
         </nav>
@@ -101,29 +141,24 @@ export default function AutoApplyPage() {
           {/* HERO */}
           <section className="aa-hero">
             <div className="aa-chip">🤖 n8n Workflow · Open Source · Import-Ready</div>
-            <h1>Automate Your <span>Job Discovery</span></h1>
-            <p>
-              An n8n workflow that monitors LinkedIn, Glints, and Kalibrr every 6 hours, filters
-              jobs by your criteria, and automatically adds matching listings to JobTrail — so you
-              never miss a relevant opportunity.
-            </p>
+            <h1>{t.title1} <span>{t.title2}</span></h1>
+            <p>{t.desc}</p>
             <div className="aa-hero-actions">
               <a href="https://github.com/gryvnalvrdo/autoapply-flow" target="_blank" rel="noopener" className="aa-btn-primary">
-                📥 Download Workflow JSON
+                {t.btn1}
               </a>
               <a href="https://jobtracker-kjmw.vercel.app" target="_blank" rel="noopener" className="aa-btn-outline">
-                View in JobTrail ↗
+                {t.btn2}
               </a>
             </div>
           </section>
 
           {/* WORKFLOW DIAGRAM */}
           <section className="aa-section">
-            <p className="aa-section-label">How It Works</p>
-            <h2 className="aa-section-title">The Automation Pipeline</h2>
+            <p className="aa-section-label">{t.how}</p>
+            <h2 className="aa-section-title">{t.pipe}</h2>
             <p className="aa-section-desc">
-              Every 6 hours, the workflow runs automatically. Jobs flow from discovery to your JobTrail
-              dashboard without you lifting a finger.
+              {t.pipeDesc}
             </p>
 
             <div className="aa-flow">

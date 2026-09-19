@@ -26,6 +26,40 @@ Skills: Python, JavaScript, TypeScript, Next.js, Laravel, Flask, PyTorch, Postgr
   const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [lang, setLang] = useState("en");
+
+  useEffect(() => {
+    const saved = localStorage.getItem("lang");
+    if (saved === "id" || saved === "en") setLang(saved);
+  }, []);
+
+  const toggleLang = () => {
+    const next = lang === "en" ? "id" : "en";
+    setLang(next);
+    localStorage.setItem("lang", next);
+  };
+
+  const t = {
+    en: {
+      back: "← Back to Portfolio",
+      chip: "⚡ Powered by Gemini AI · Free · No Sign-up",
+      title1: "Write ",
+      title2: "Standout Cover Letters",
+      title3: "in Seconds",
+      desc: "Paste a job description and AI generates a personalized, ATS-friendly cover letter. Your API key stays in your browser — never stored.",
+      note: "🔗 Part of Gryven's Job Hunting Suite — works best with"
+    },
+    id: {
+      back: "← Kembali ke Portofolio",
+      chip: "⚡ Ditenagai Gemini AI · Gratis · Tanpa Daftar",
+      title1: "Tulis ",
+      title2: "Cover Letter Memukau",
+      title3: "dalam Hitungan Detik",
+      desc: "Tempelkan deskripsi pekerjaan dan AI akan menghasilkan surat lamaran (cover letter) ramah-ATS. Kunci API Anda tetap di browser — tidak pernah disimpan.",
+      note: "🔗 Bagian dari Job Hunting Suite Gryven — sangat cocok dipadukan dengan"
+    }
+  }[lang];
+
   const [copied, setCopied] = useState(false);
   const [prefilled, setPrefilled] = useState(false);
 
@@ -125,7 +159,7 @@ Write ONLY the cover letter, starting with "Dear Hiring Manager,".`;
           background: radial-gradient(ellipse 80% 60% at 20% -10%, rgba(124,58,237,.15) 0%, transparent 60%),
                       radial-gradient(ellipse 60% 50% at 80% 110%, rgba(6,182,212,.1) 0%, transparent 60%);
         }
-        .cc-nav { position: sticky; top: 0; z-index: 100; background: rgba(7,7,15,.85); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(139,92,246,.18); padding: .9rem 0; }
+        .cc-nav-fixed { position: sticky; top: 0; z-index: 100; background: rgba(7,7,15,.85); backdrop-filter: blur(20px); padding: .9rem 0; }
         .cc-nav-inner { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; }
         .cc-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.2rem; background: linear-gradient(135deg, #a78bfa, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
         .cc-badge { display: flex; align-items: center; gap: .5rem; font-size: .75rem; color: #94a3b8; background: rgba(124,58,237,.1); border: 1px solid rgba(139,92,246,.2); border-radius: 100px; padding: .3rem .8rem; }
@@ -137,7 +171,7 @@ Write ONLY the cover letter, starting with "Dear Hiring Manager,".`;
         .cc-hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem,5vw,3rem); font-weight: 700; line-height: 1.1; margin-bottom: .9rem; }
         .cc-hero h1 span { background: linear-gradient(135deg, #a78bfa, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         .cc-hero p { color: #94a3b8; font-size: 1rem; max-width: 520px; margin: 0 auto 1.5rem; line-height: 1.7; }
-        .cc-nav { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 0; border-bottom: 1px solid var(--border); margin-bottom: 3rem; }
+        .cc-nav { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 0; margin-bottom: 3rem; border: none; }
         .cc-logo, .cc-nav-brand { font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: .5rem; }
         .cc-badge { background: var(--surface2); color: var(--text); padding: .35rem .75rem; border-radius: 99px; font-size: .75rem; font-weight: 500; border: 1px solid var(--border); display: flex; align-items: center; gap: .5rem; }
         .cc-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text); }
@@ -204,23 +238,29 @@ Write ONLY the cover letter, starting with "Dear Hiring Manager,".`;
       `}</style>
 
       <div className="cc-body">
-        <nav className="cc-nav">
+        <nav className="cc-nav-fixed" style={{ borderBottom: 'none' }}>
           <div className="cc-nav-inner">
-            <a href="/covercraft" className="cc-logo">✨ CoverCraft</a>
-            <div className="cc-badge">
-              <div className="dot"></div>
-              Part of the Job Hunting Suite
+            <Link href="/" style={{ color: "var(--muted)", textDecoration: "none", fontSize: "0.9rem", fontWeight: 500 }}>
+              {t.back}
+            </Link>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <div className="cc-badge" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'var(--surface2)', padding: '0.35rem 0.75rem', borderRadius: '99px', fontSize: '0.75rem', border: '1px solid var(--border)' }}>
+                <div className="dot" style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--text)' }}></div>
+                CoverCraft
+              </div>
+              <button onClick={toggleLang} className="lang-toggle" style={{ background: 'transparent', border: '1px solid var(--border)', color: 'var(--text)', padding: '0.3rem 0.6rem', borderRadius: '6px', fontSize: '0.75rem', cursor: 'pointer' }}>
+                {lang === "en" ? "EN / ID" : "ID / EN"}
+              </button>
             </div>
           </div>
         </nav>
-
         <div className="cc-container">
           <section className="cc-hero">
-            <div className="cc-chip">⚡ Powered by Gemini AI · Free · No Sign-up</div>
-            <h1>Write <span>Standout Cover Letters</span><br />in Seconds</h1>
-            <p>Paste a job description and AI generates a personalized, ATS-friendly cover letter. Your API key stays in your browser — never stored.</p>
+            <div className="cc-chip">{t.chip}</div>
+            <h1>{t.title1} <span>{t.title2}</span><br />{t.title3}</h1>
+            <p>{t.desc}</p>
             <div className="cc-ecosystem-note">
-              🔗 Part of <a href="/">Gryven&apos;s Job Hunting Suite</a> — works best with{" "}
+              {t.note}{" "}
               <a href="https://jobtracker-kjmw.vercel.app" target="_blank" rel="noopener">JobTrail ↗</a>
             </div>
           </section>
