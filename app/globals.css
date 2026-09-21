@@ -187,9 +187,119 @@ body::before {
 .hero-stats { display: flex; gap: 2rem; margin-top: 2rem; }
 .stat-val { display: block; font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--text); }
 .stat-label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
-.hero-photo-wrap { width: 220px; height: 220px; flex-shrink: 0; border-radius: 50%; overflow: hidden; border: 4px solid var(--border); }
-.hero-photo { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) contrast(1.2); transition: filter 0.3s; }
-.hero-photo-wrap:hover .hero-photo { filter: grayscale(0%); }
+/* Hero photo — premium portrait card */
+.hero-photo-wrap {
+  flex-shrink: 0;
+  position: relative;
+  width: 220px;
+}
+
+/* Ambient glow bloom behind the card */
+.hero-photo-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  border-radius: 28px;
+  background: radial-gradient(ellipse at center,
+    rgba(139, 92, 246, 0.35) 0%,
+    rgba(6, 182, 212, 0.2) 50%,
+    transparent 70%
+  );
+  filter: blur(18px);
+  z-index: 0;
+  animation: glowPulse 4s ease-in-out infinite;
+}
+
+/* Animated gradient border via ::after pseudo-element */
+.hero-photo-wrap::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #a78bfa, #06b6d4, #7c3aed, #a78bfa);
+  background-size: 300% 300%;
+  animation: borderRotate 4s linear infinite;
+  z-index: 0;
+}
+
+.hero-photo-inner {
+  position: relative;
+  z-index: 1;
+  border-radius: 22px;
+  overflow: hidden;
+  background: var(--surface);
+  animation: floatPhoto 6s ease-in-out infinite;
+}
+
+.hero-photo {
+  width: 220px;
+  height: 280px;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  filter: grayscale(20%) contrast(1.05) brightness(1.02);
+  transition: filter 0.5s ease, transform 0.5s ease;
+}
+
+.hero-photo-wrap:hover .hero-photo {
+  filter: grayscale(0%) contrast(1.08) brightness(1.05);
+  transform: scale(1.03);
+}
+
+/* Status badge */
+.hero-photo-badge {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(6, 182, 212, 0.15);
+  border: 1px solid rgba(6, 182, 212, 0.4);
+  backdrop-filter: blur(10px);
+  color: #67e8f9;
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 100px;
+  white-space: nowrap;
+  z-index: 2;
+  letter-spacing: 0.4px;
+}
+
+.hero-photo-badge::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #06b6d4;
+  margin-right: 5px;
+  animation: statusBlink 2s ease-in-out infinite;
+  vertical-align: middle;
+  position: relative;
+  top: -1px;
+}
+
+@keyframes borderRotate {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes floatPhoto {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.05); }
+}
+
+@keyframes statusBlink {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(6,182,212,0.5); }
+  50%       { opacity: 0.6; box-shadow: 0 0 0 4px rgba(6,182,212,0); }
+}
+
 
 /* Box: Ecosystem */
 .box-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--text); }
@@ -234,7 +344,9 @@ body::before {
   .bento-box:active { transform: scale(0.98); } /* Tap feedback */
   .box-hero, .box-ecosystem, .box-project-1, .box-project-2, .box-project-3, .box-skills, .box-experience, .box-contact { grid-column: span 1; }
   .hero-title { font-size: 2.25rem; }
-  .hero-photo-wrap { width: 160px; height: 160px; margin: 0 auto; }
+  .hero-photo-wrap { width: 180px; margin: 0 auto; }
+  .hero-photo { width: 180px; height: 230px; }
+
   .eco-flow { flex-direction: column; }
   .eco-arrow { transform: rotate(90deg); }
   .contact-btns { flex-direction: column; width: 100%; gap: 0.75rem; }
