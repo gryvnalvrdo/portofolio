@@ -53,7 +53,13 @@ export default function Home() {
     <>
       <main className="bento-wrapper">
         <header className="bento-header">
-          <span className="bento-brand">GA.</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <span className="bento-brand">GA.</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(16, 185, 129, 0.1)', padding: '0.35rem 0.85rem', borderRadius: '100px', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
+              <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#10b981', boxShadow: '0 0 10px #10b981', animation: 'pulse-green 2s infinite' }}></div>
+              <span style={{ fontSize: '0.72rem', color: '#10b981', fontWeight: 600, letterSpacing: '0.02em' }}>{lang === 'en' ? 'Available for Work' : 'Siap Bekerja'}</span>
+            </div>
+          </div>
           <button onClick={toggleLang} className="lang-toggle">
             {lang === "en" ? "EN / ID" : "ID / EN"}
           </button>
