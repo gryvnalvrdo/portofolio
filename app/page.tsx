@@ -116,7 +116,6 @@ export default function Home() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/photo.jpeg" alt="Gryven Alverdo Gunawan" className="hero-photo" />
               </div>
-              <span className="hero-photo-badge">Open to Work</span>
             </div>
           </RevealWrapper>
 
