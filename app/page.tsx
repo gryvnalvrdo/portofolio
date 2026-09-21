@@ -10,6 +10,7 @@ type Lang = "en" | "id";
 export default function Home() {
   const [lang, setLang] = useState<Lang>("en");
   const [jobStats, setJobStats] = useState({ applications: 0, interviews: 0 });
+  const [isPhotoPopupOpen, setIsPhotoPopupOpen] = useState(false);
   const t = dict[lang];
 
   useEffect(() => {
@@ -65,7 +66,7 @@ export default function Home() {
               </a>
             </div>
           </div>
-          <div className="hero-photo-wrap">
+          <div className="hero-photo-wrap" onClick={() => setIsPhotoPopupOpen(true)} style={{ cursor: "pointer" }}>
             <div className="hero-photo-inner">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/photo.jpeg" alt="Gryven Alverdo Gunawan" className="hero-photo" />
@@ -230,6 +231,15 @@ export default function Home() {
           </div>
         </RevealWrapper>
 
+      </div>
+
+      {/* Photo Popup Overlay */}
+      <div className={`photo-popup-overlay ${isPhotoPopupOpen ? "active" : ""}`} onClick={() => setIsPhotoPopupOpen(false)}>
+        <div className="photo-popup-content" onClick={(e) => e.stopPropagation()}>
+          <button className="photo-popup-close" onClick={() => setIsPhotoPopupOpen(false)}>×</button>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/photo.jpeg" alt="Gryven Alverdo Gunawan" className="photo-popup-img" />
+        </div>
       </div>
     </main>
   );

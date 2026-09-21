@@ -362,6 +362,78 @@ body::before {
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+/* ============================================
+   PHOTO POPUP
+============================================= */
+.photo-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  padding: 20px;
+}
+.photo-popup-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+.photo-popup-content {
+  position: relative;
+  background: var(--surface);
+  border-radius: 20px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  max-width: 95vw;
+  max-height: 90vh;
+  display: flex;
+  transform: scale(0.95);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.photo-popup-overlay.active .photo-popup-content {
+  transform: scale(1);
+}
+.photo-popup-close {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+.photo-popup-close:hover {
+  background: var(--text);
+  color: var(--bg);
+  transform: scale(1.1);
+}
+.photo-popup-img {
+  max-width: 100%;
+  max-height: calc(90vh - 16px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  display: block;
+}
 .bento-wrapper {
   animation: pageFadeIn 0.5s ease both;
 }
