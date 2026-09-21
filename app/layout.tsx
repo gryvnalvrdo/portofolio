@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     images: [
       {
-        url: "https://portofolio-seven-lac-56.vercel.app/photo.jpg",
+        url: "https://portofolio-seven-lac-56.vercel.app/photo.jpeg",
         width: 800,
         height: 800,
         alt: "Gryven Alverdo Gunawan — Software Engineer",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     title: "Gryven Alverdo Gunawan — Software Engineer",
     description:
       "I'm not just job hunting — I'm engineering the process. Explore my Job Hunting Suite: JobTrail, CoverCraft & AutoApply Flow.",
-    images: ["https://portofolio-seven-lac-56.vercel.app/photo.jpg"],
+    images: ["https://portofolio-seven-lac-56.vercel.app/photo.jpeg"],
   },
 };
 
@@ -55,7 +55,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
         {/* Preload hero photo for faster LCP */}
-        <link rel="preload" as="image" href="/photo.jpg" />
+        <link rel="preload" as="image" href="/photo.jpeg" />
       </head>
       <body>
         {children}
