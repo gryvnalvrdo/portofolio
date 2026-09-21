@@ -165,10 +165,16 @@ export default function Home() {
           <RevealWrapper delay={500} className="bento-box box-skills">
             <p className="box-label">{t.skills.label}</p>
             <h3 className="box-title">{t.skills.title1}<span className="gradient-text">{t.skills.title2}</span></h3>
-            <div className="skills-grid">
-              {["Next.js", "TypeScript", "Python", "PyTorch", "Laravel", "PostgreSQL", "Prisma", "n8n", "Tailwind"].map(skill => (
-                <div key={skill} className="skill-item">{skill}</div>
-              ))}
+            <div className="marquee-container">
+              <div className="marquee-content">
+                {["Next.js", "TypeScript", "Python", "PyTorch", "Laravel", "PostgreSQL", "Prisma", "n8n", "Tailwind"].map(skill => (
+                  <div key={skill} className="skill-item">{skill}</div>
+                ))}
+                {/* Duplicate for infinite scroll */}
+                {["Next.js", "TypeScript", "Python", "PyTorch", "Laravel", "PostgreSQL", "Prisma", "n8n", "Tailwind"].map(skill => (
+                  <div key={`dup-${skill}`} className="skill-item">{skill}</div>
+                ))}
+              </div>
             </div>
           </RevealWrapper>
 
