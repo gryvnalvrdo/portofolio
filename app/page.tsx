@@ -59,12 +59,12 @@ export default function Home() {
                 <span className="stat-label">GPA / 4.00</span>
               </div>
               <div className="stat-item">
-                <span className="stat-val">{jobStats.applications > 0 ? jobStats.applications : "3+"}</span>
-                <span className="stat-label">{jobStats.applications > 0 ? t.hero.stats.applications : t.hero.stats.projects}</span>
+                <span className="stat-val">3+</span>
+                <span className="stat-label">{t.hero.stats.projects}</span>
               </div>
               <div className="stat-item">
-                <span className="stat-val">{jobStats.interviews > 0 ? jobStats.interviews : "2"}</span>
-                <span className="stat-label">{jobStats.interviews > 0 ? t.hero.stats.interviews : t.hero.stats.years}</span>
+                <span className="stat-val">4</span>
+                <span className="stat-label">{t.hero.stats.years}</span>
               </div>
             </div>
             <div style={{ marginTop: "1.5rem" }}>
