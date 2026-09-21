@@ -53,20 +53,6 @@ export default function Home() {
               <span className="gradient-text">Gryven Alverdo Gunawan.</span>
             </h1>
             <p className="hero-desc">{t.hero.sub}</p>
-            <div className="hero-stats">
-              <div className="stat-item">
-                <span className="stat-val">3.88</span>
-                <span className="stat-label">GPA / 4.00</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-val">3+</span>
-                <span className="stat-label">{t.hero.stats.projects}</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-val">4</span>
-                <span className="stat-label">{t.hero.stats.years}</span>
-              </div>
-            </div>
             <div style={{ marginTop: "1.5rem" }}>
               <a 
                 href={lang === "id" ? "https://drive.google.com/file/d/1IBG1j5z5CY1x_6139-bURoyCCEjZkwEQ/view?usp=sharing" : "https://drive.google.com/file/d/1h_s4sBnCvEn8VgMihjvjM5f4Gp8cO6Qc/view?usp=sharing"}
