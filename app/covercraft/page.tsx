@@ -344,6 +344,11 @@ RULES:
         }
         .cc-nav-fixed { position: sticky; top: 0; z-index: 100; background: rgba(7,7,15,.85); backdrop-filter: blur(20px); padding: .9rem 0; }
         .cc-nav-inner { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+        @media (max-width: 600px) {
+          .cc-nav-inner { padding: 0 1rem; }
+          .cc-back-text { display: none; }
+          .cc-badge, .lang-toggle { font-size: 0.7rem; padding: 0.25rem 0.5rem; }
+        }
         .cc-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.2rem; background: linear-gradient(135deg, #a78bfa, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
         .cc-badge { display: flex; align-items: center; gap: .5rem; font-size: .75rem; color: #94a3b8; background: rgba(124,58,237,.1); border: 1px solid rgba(139,92,246,.2); border-radius: 100px; padding: .3rem .8rem; }
         .cc-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: #a78bfa; animation: pulse 2s infinite; }
@@ -423,15 +428,15 @@ RULES:
       <div className="cc-body">
         <nav className="cc-nav-fixed" style={{ borderBottom: 'none' }}>
           <div className="cc-nav-inner">
-            <Link href="/" style={{ color: "var(--muted)", textDecoration: "none", fontSize: "0.9rem", fontWeight: 500 }}>
-              {t.back}
+            <Link href="/" style={{ color: "var(--muted)", textDecoration: "none", fontSize: "0.9rem", fontWeight: 500, display: "flex", alignItems: "center", gap: "0.25rem" }}>
+              <span>←</span> <span className="cc-back-text">{lang === 'en' ? 'Back to Portfolio' : 'Kembali ke Portofolio'}</span>
             </Link>
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-              <div className="cc-badge" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'var(--surface2)', padding: '0.35rem 0.75rem', borderRadius: '99px', fontSize: '0.75rem', border: '1px solid var(--border)' }}>
+              <div className="cc-badge" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', background: 'var(--surface2)', borderRadius: '99px', border: '1px solid var(--border)' }}>
                 <div className="dot" style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--text)' }}></div>
                 CoverCraft
               </div>
-              <button onClick={toggleLang} className="lang-toggle" style={{ background: 'transparent', border: '1px solid var(--border)', color: 'var(--text)', padding: '0.3rem 0.6rem', borderRadius: '6px', fontSize: '0.75rem', cursor: 'pointer' }}>
+              <button onClick={toggleLang} className="lang-toggle" style={{ background: 'transparent', border: '1px solid var(--border)', color: 'var(--text)', borderRadius: '6px', cursor: 'pointer' }}>
                 {lang === "en" ? "EN / ID" : "ID / EN"}
               </button>
             </div>

@@ -71,6 +71,12 @@ export default function AutoApplyPage() {
         .aa-body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; }
         .aa-nav { position:sticky; top:0; z-index:100; background:rgba(2,6,23,0.85); backdrop-filter:blur(20px); border:none; padding:.9rem 0; }
         .aa-nav-inner { max-width:1000px; margin:0 auto; padding:0 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+        @media (max-width: 600px) {
+          .aa-nav-inner { padding: 0 1rem; }
+          .aa-back-text { display: none; }
+          .aa-logo { font-size: 0.85rem !important; }
+          .lang-toggle { font-size: 0.7rem !important; padding: 0.25rem 0.5rem !important; }
+        }
         .aa-logo { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.1rem; text-decoration:none; color:var(--text); }
         .aa-nav-links { display:flex; gap:.5rem; }
         .aa-nav-link { display:flex; align-items:center; gap:.35rem; padding:.4rem .85rem; border-radius:8px; border:1px solid var(--border); background:var(--surface2); color:var(--text); text-decoration:none; font-size:.8rem; font-weight:500; transition:all .2s; white-space:nowrap; }
@@ -168,8 +174,8 @@ export default function AutoApplyPage() {
       <div className="aa-body">
         <nav className="aa-nav">
           <div className="aa-nav-inner">
-            <Link href="/" style={{ color: "var(--muted)", textDecoration: "none", fontSize: "0.9rem", fontWeight: 500 }}>
-              {t.back}
+            <Link href="/" style={{ color: "var(--muted)", textDecoration: "none", fontSize: "0.9rem", fontWeight: 500, display: "flex", alignItems: "center", gap: "0.25rem" }}>
+              <span>←</span> <span className="aa-back-text">{lang === 'en' ? 'Back to Portfolio' : 'Kembali ke Portofolio'}</span>
             </Link>
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
               <div className="aa-logo">🤖 AutoApply Flow</div>
