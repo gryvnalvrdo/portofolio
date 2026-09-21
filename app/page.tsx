@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import RevealWrapper from "@/components/RevealWrapper";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { dict } from "../lib/dictionary";
 
 type Lang = "en" | "id";
@@ -12,6 +12,28 @@ export default function Home() {
   const [jobStats, setJobStats] = useState({ applications: 0, interviews: 0 });
   const [isPhotoPopupOpen, setIsPhotoPopupOpen] = useState(false);
   const t = dict[lang];
+
+  // Drag-to-scroll logic
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isDown, setIsDown] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!scrollRef.current) return;
+    setIsDown(true);
+    setStartX(e.pageX - scrollRef.current.offsetLeft);
+    setScrollLeft(scrollRef.current.scrollLeft);
+  };
+  const handleMouseLeave = () => setIsDown(false);
+  const handleMouseUp = () => setIsDown(false);
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDown || !scrollRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5; 
+    scrollRef.current.scrollLeft = scrollLeft - walk;
+  };
 
   useEffect(() => {
     const saved = localStorage.getItem("lang") as Lang;
@@ -165,8 +187,16 @@ export default function Home() {
           <RevealWrapper delay={500} className="bento-box box-skills">
             <p className="box-label">{t.skills.label}</p>
             <h3 className="box-title">{t.skills.title1}<span className="gradient-text">{t.skills.title2}</span></h3>
-            <div className="marquee-container">
-              <div className="marquee-content">
+            <div 
+              className="marquee-container"
+              ref={scrollRef}
+              onMouseDown={handleMouseDown}
+              onMouseLeave={handleMouseLeave}
+              onMouseUp={handleMouseUp}
+              onMouseMove={handleMouseMove}
+              style={{ cursor: isDown ? 'grabbing' : 'grab', overflowX: 'auto', scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              <div className="marquee-content" style={{ animation: 'none' }}>
                 {["Next.js", "TypeScript", "Python", "PyTorch", "Laravel", "PostgreSQL", "Prisma", "n8n", "Tailwind"].map(skill => (
                   <div key={skill} className="skill-item">{skill}</div>
                 ))}
