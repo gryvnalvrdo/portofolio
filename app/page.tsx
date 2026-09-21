@@ -28,35 +28,6 @@ export default function Home() {
       .catch(err => console.error("Failed to fetch job stats:", err));
   }, []);
 
-"use client";
-
-import Link from "next/link";
-import RevealWrapper from "@/components/RevealWrapper";
-import { useState, useEffect } from "react";
-import { dict } from "../lib/dictionary";
-
-type Lang = "en" | "id";
-
-export default function Home() {
-  const [lang, setLang] = useState<Lang>("en");
-  const [jobStats, setJobStats] = useState({ applications: 0, interviews: 0 });
-  const [isPhotoPopupOpen, setIsPhotoPopupOpen] = useState(false);
-  const t = dict[lang];
-
-  useEffect(() => {
-    const saved = localStorage.getItem("lang") as Lang;
-    if (saved === "id" || saved === "en") setLang(saved);
-
-    // Fetch live job tracking stats
-    fetch("https://jobtracker-kjmw.vercel.app/api/public/stats")
-      .then(res => res.json())
-      .then(data => {
-        if (data && data.applications !== undefined) {
-          setJobStats({ applications: data.applications, interviews: data.interviews || 0 });
-        }
-      })
-      .catch(err => console.error("Failed to fetch job stats:", err));
-  }, []);
 
   const toggleLang = () => {
     const next = lang === "en" ? "id" : "en";
