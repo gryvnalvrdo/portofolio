@@ -190,7 +190,7 @@ export default function AutoApplyPage() {
               <a href="/autoapply-workflow.json" download="autoapply-workflow.json" className="aa-btn-primary">
                 {t.btn1}
               </a>
-              <a href="https://jobtracker-kjmw.vercel.app" target="_blank" rel="noopener" className="aa-btn-outline">
+              <a href="https://jobtracker-kjmw.vercel.app/public/live" target="_blank" rel="noopener" className="aa-btn-outline">
                 {t.btn2}
               </a>
             </div>
