@@ -19,6 +19,24 @@ export const metadata: Metadata = {
     description:
       "I'm not just job hunting — I'm engineering the process. Explore my Job Hunting Suite portfolio.",
     type: "website",
+    url: "https://portofolio-seven-lac-56.vercel.app",
+    siteName: "Gryven Alverdo Gunawan",
+    locale: "en_US",
+    images: [
+      {
+        url: "https://portofolio-seven-lac-56.vercel.app/photo.jpg",
+        width: 800,
+        height: 800,
+        alt: "Gryven Alverdo Gunawan — Software Engineer",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Gryven Alverdo Gunawan — Software Engineer",
+    description:
+      "I'm not just job hunting — I'm engineering the process. Explore my Job Hunting Suite: JobTrail, CoverCraft & AutoApply Flow.",
+    images: ["https://portofolio-seven-lac-56.vercel.app/photo.jpg"],
   },
 };
 
