@@ -6,9 +6,10 @@ interface RevealWrapperProps {
   children: ReactNode;
   className?: string;
   delay?: number;
+  style?: React.CSSProperties;
 }
 
-export default function RevealWrapper({ children, className = "", delay = 0 }: RevealWrapperProps) {
+export default function RevealWrapper({ children, className = "", delay = 0, style }: RevealWrapperProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -38,7 +39,7 @@ export default function RevealWrapper({ children, className = "", delay = 0 }: R
   }, [delay]);
 
   return (
-    <div ref={ref} className={`reveal ${className}`}>
+    <div ref={ref} className={`reveal ${className}`} style={style}>
       {children}
     </div>
   );
