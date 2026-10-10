@@ -313,8 +313,18 @@ body::before {
 .box-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.5rem; }
 .box-desc { color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
 .eco-flow { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
-.eco-node { background: var(--surface2); border: 1px solid var(--border); padding: 1rem 1.5rem; border-radius: 12px; font-weight: 600; font-size: 0.9rem; }
-.eco-arrow { color: var(--muted); font-size: 1.2rem; }
+.eco-node { background: var(--surface2); border: 1px solid var(--border); padding: 1rem 1.5rem; border-radius: 12px; font-weight: 600; font-size: 0.9rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1); position: relative; overflow: hidden; }
+.eco-node::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, transparent, rgba(167, 139, 250, 0.8), transparent); animation: scanline 3s linear infinite; }
+.eco-arrow { font-size: 1.5rem; color: #a78bfa; animation: pulse-arrow 1.5s infinite; }
+
+@keyframes scanline {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+@keyframes pulse-arrow {
+  0%, 100% { opacity: 0.5; transform: translateX(0); }
+  50% { opacity: 1; transform: translateX(5px); filter: drop-shadow(0 0 5px rgba(167, 139, 250, 0.5)); }
+}
 
 /* Box: Projects */
 .project-num { font-size: 0.75rem; font-weight: 600; color: var(--muted); margin-bottom: 0.5rem; display: block; }

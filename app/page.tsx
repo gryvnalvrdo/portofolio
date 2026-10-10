@@ -133,9 +133,12 @@ export default function Home() {
           </RevealWrapper>
 
           {/* BOX 3: PROJECT 1 */}
-          <RevealWrapper delay={200} className="bento-box box-project-1">
+          <RevealWrapper delay={200} className="bento-box box-project-1" style={{ background: 'linear-gradient(to bottom right, rgba(6, 182, 212, 0.05), var(--surface))' }}>
             <span className="project-num">{t.projects.jobtrail.num}</span>
-            <h3 className="box-title">{t.projects.jobtrail.title}</h3>
+            <h3 className="box-title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              {t.projects.jobtrail.title}
+            </h3>
             <p className="box-desc" style={{ marginBottom: "1rem" }}>{t.projects.jobtrail.desc}</p>
             <div className="project-tags">
               <span className="project-tag">Next.js 15</span>
@@ -143,16 +146,19 @@ export default function Home() {
               <span className="project-tag">PostgreSQL</span>
             </div>
             <div className="project-links">
-              <a href="https://jobtracker-kjmw.vercel.app/demo" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ padding: "0.6rem 1.25rem", fontSize: "0.85rem" }}>
+              <a href="https://jobtracker-kjmw.vercel.app/demo" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ padding: "0.6rem 1.25rem", fontSize: "0.85rem", background: 'rgba(6, 182, 212, 0.1)', color: '#06b6d4', border: '1px solid rgba(6, 182, 212, 0.3)' }}>
                 {t.projects.jobtrail.btn1}
               </a>
             </div>
           </RevealWrapper>
 
           {/* BOX 4: PROJECT 2 */}
-          <RevealWrapper delay={300} className="bento-box box-project-2">
+          <RevealWrapper delay={300} className="bento-box box-project-2" style={{ background: 'linear-gradient(to bottom right, rgba(167, 139, 250, 0.05), var(--surface))' }}>
             <span className="project-num">{t.projects.covercraft.num}</span>
-            <h3 className="box-title">{t.projects.covercraft.title}</h3>
+            <h3 className="box-title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="m9 15 2 2 4-4"/></svg>
+              {t.projects.covercraft.title}
+            </h3>
             <p className="box-desc" style={{ marginBottom: "1rem" }}>{t.projects.covercraft.desc}</p>
             <div className="project-tags">
               <span className="project-tag">AI/Gemini</span>
@@ -160,16 +166,19 @@ export default function Home() {
               <span className="project-tag">Prompt Engineering</span>
             </div>
             <div className="project-links">
-              <Link href="/covercraft" className="btn-primary" style={{ padding: "0.6rem 1.2rem", fontSize: "0.85rem" }}>
+              <Link href="/covercraft" className="btn-primary" style={{ padding: "0.6rem 1.2rem", fontSize: "0.85rem", background: 'rgba(167, 139, 250, 0.1)', color: '#a78bfa', border: '1px solid rgba(167, 139, 250, 0.3)' }}>
                 {t.projects.covercraft.btn1}
               </Link>
             </div>
           </RevealWrapper>
 
           {/* BOX 5: PROJECT 3 */}
-          <RevealWrapper delay={400} className="bento-box box-project-3">
+          <RevealWrapper delay={400} className="bento-box box-project-3" style={{ background: 'linear-gradient(to bottom right, rgba(16, 185, 129, 0.05), var(--surface))' }}>
             <span className="project-num">{t.projects.autoapply.num}</span>
-            <h3 className="box-title">{t.projects.autoapply.title}</h3>
+            <h3 className="box-title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              {t.projects.autoapply.title}
+            </h3>
             <p className="box-desc" style={{ marginBottom: "1rem" }}>{t.projects.autoapply.desc}</p>
             <div className="project-tags">
               <span className="project-tag">n8n</span>
@@ -177,7 +186,7 @@ export default function Home() {
               <span className="project-tag">APIs & Webhooks</span>
             </div>
             <div className="project-links">
-              <Link href="/autoapply" className="btn-primary" style={{ padding: "0.6rem 1.2rem", fontSize: "0.85rem" }}>
+              <Link href="/autoapply" className="btn-primary" style={{ padding: "0.6rem 1.2rem", fontSize: "0.85rem", background: 'rgba(16, 185, 129, 0.1)', color: '#10b981', border: '1px solid rgba(16, 185, 129, 0.3)' }}>
                 {t.projects.autoapply.btn1}
               </Link>
             </div>
@@ -194,9 +203,9 @@ export default function Home() {
               onMouseLeave={handleMouseLeave}
               onMouseUp={handleMouseUp}
               onMouseMove={handleMouseMove}
-              style={{ cursor: isDown ? 'grabbing' : 'grab', overflowX: 'auto', scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              style={{ cursor: isDown ? 'grabbing' : 'grab', overflowX: 'hidden' }}
             >
-              <div className="marquee-content" style={{ animation: 'none' }}>
+              <div className="marquee-content">
                 {["Next.js", "TypeScript", "Python", "PyTorch", "Laravel", "PostgreSQL", "Prisma", "n8n", "Tailwind"].map(skill => (
                   <div key={skill} className="skill-item">{skill}</div>
                 ))}
