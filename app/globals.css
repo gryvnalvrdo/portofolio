@@ -7,11 +7,11 @@
 }
 
 :root {
-  --bg:           #020617; /* Slate 950 */
-  --surface:      #0f172a; /* Slate 900 */
-  --surface2:     #1e293b; /* Slate 800 */
-  --border:       #334155; /* Slate 700 */
-  --border-hover: #475569; /* Slate 600 */
+  --bg:           #030014; /* Deep Obsidian Purple */
+  --surface:      rgba(15, 23, 42, 0.45); /* Glassmorphic */
+  --surface2:     rgba(30, 41, 59, 0.6);
+  --border:       rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.2);
   --primary:      #ffffff;
   --primary-l:    #f8fafc;
   --primary-d:    #94a3b8;
@@ -28,22 +28,13 @@
 html {
   scroll-behavior: smooth;
   scrollbar-width: thin;
-  scrollbar-color: var(--border) var(--bg);
+  scrollbar-color: rgba(255,255,255,0.2) var(--bg);
 }
 
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--border-hover);
-}
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.3); }
 
 body {
   font-family: 'Inter', sans-serif;
@@ -62,6 +53,25 @@ body::before {
   background-size: 32px 32px;
   pointer-events: none;
   z-index: 0;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: -20%;
+  left: -10%;
+  width: 50vw;
+  height: 50vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, transparent 70%);
+  z-index: -1;
+  pointer-events: none;
+  animation: floatOrb 15s ease-in-out infinite alternate;
+}
+
+@keyframes floatOrb {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(10vw, 10vh); }
 }
 
 /* Utility */
@@ -153,6 +163,8 @@ body::before {
 
 .bento-box {
   background: var(--surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border);
   border-radius: 24px;
   padding: 2.5rem;
