@@ -65,17 +65,7 @@ export default function Home() {
         <div className="site-header-inner">
           <div className="site-nav-brand">
             <span style={{ fontWeight: 800, letterSpacing: "-0.03em" }}>GA.</span>
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.4rem",
-                background: "rgba(16, 185, 129, 0.1)",
-                padding: "0.25rem 0.7rem",
-                borderRadius: "100px",
-                border: "1px solid rgba(16, 185, 129, 0.25)",
-              }}
-            >
+            <div className="site-nav-status-pill">
               <div
                 style={{
                   width: "6px",
@@ -227,6 +217,7 @@ export default function Home() {
                   <span>{lang === "id" ? "Makassar · Terbuka Relokasi" : "Makassar · Open to Relocate"}</span>
                 </div>
               </div>
+              <div className="hero-avatar-online-dot" />
             </div>
           </RevealWrapper>
         </section>
