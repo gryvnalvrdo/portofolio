@@ -74,7 +74,7 @@ export const dict = {
         num: "Project 02 · AI-Powered",
         title: "CoverCraft",
         sub: "AI Cover Letter Generator",
-        desc: "A privacy-first AI tool that generates personalized, ATS-friendly cover letters from any job description. Uses Gemini API (your own key — never stored). Supports 4 tones: Professional, Enthusiastic, Concise, and Creative. Pre-fills automatically when opened from JobTrail.",
+        desc: "An AI-powered tool that generates personalized, ATS-friendly cover letters from any job description. Built with Gemini AI (ready to use — no sign-up or API key needed). Supports 4 tones: Professional, Enthusiastic, Concise, and Creative. Pre-fills automatically when opened from JobTrail.",
         btn1: "🚀 Try CoverCraft",
       },
       autoapply: {
@@ -85,6 +85,16 @@ export const dict = {
         btn1: "📖 View Workflow Docs",
       }
     },
+    liveStats: {
+      badge: "Live Suite Pulse",
+      source: "Real-time sync from JobTrail database",
+      apps: "Applications Tracked",
+      interviews: "Active Interviews",
+      automation: "Automated via n8n",
+      automationSub: "Every 6 Hours",
+      speed: "Gemini AI Engine",
+      speedSub: "< 3s Generation",
+    },
     skills: {
       label: "Tech Stack",
       title1: "What I ",
@@ -94,6 +104,7 @@ export const dict = {
       label: "Experience & Education",
       title1: "My ",
       title2: "Journey",
+      liveDemo: "Live Demo",
       items: [
         {
           date: "Aug 2025 – Oct 2025",
@@ -207,7 +218,7 @@ export const dict = {
         num: "Proyek 02 · Bertenaga AI",
         title: "CoverCraft",
         sub: "AI Cover Letter Generator",
-        desc: "Alat AI mengutamakan privasi yang menghasilkan cover letter (surat lamaran) personalisasi & ramah-ATS. Menggunakan Gemini API (kunci Anda sendiri — tidak pernah disimpan). Mendukung 4 nada: Profesional, Antusias, Singkat, & Kreatif. Terisi otomatis ketika dibuka dari JobTrail.",
+        desc: "Alat bertenaga AI yang menghasilkan cover letter personalisasi & ramah-ATS dari deskripsi lowongan kerja. Ditenagai Gemini AI (langsung pakai — tanpa perlu daftar atau API key). Mendukung 4 nada: Profesional, Antusias, Singkat, & Kreatif. Terisi otomatis ketika dibuka dari JobTrail.",
         btn1: "🚀 Coba CoverCraft",
       },
       autoapply: {
@@ -218,6 +229,16 @@ export const dict = {
         btn1: "📖 Lihat Dok. Workflow",
       }
     },
+    liveStats: {
+      badge: "Denyut Ekosistem Live",
+      source: "Sinkronisasi real-time dari database JobTrail",
+      apps: "Lamaran Terlacak",
+      interviews: "Wawancara Aktif",
+      automation: "Otomatisasi via n8n",
+      automationSub: "Setiap 6 Jam",
+      speed: "Mesin AI Gemini",
+      speedSub: "< 3 Detik Generasi",
+    },
     skills: {
       label: "Tumpukan Teknologi",
       title1: "Teknologi yang ",
@@ -227,6 +248,7 @@ export const dict = {
       label: "Pengalaman & Pendidikan",
       title1: "Perjalanan ",
       title2: "Saya",
+      liveDemo: "Lihat Website",
       items: [
         {
           date: "Ags 2025 – Okt 2025",

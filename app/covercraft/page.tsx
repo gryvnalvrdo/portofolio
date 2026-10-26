@@ -10,9 +10,11 @@ export default function CoverCraftPage() {
   const [company, setCompany] = useState("");
   const [jobDesc, setJobDesc] = useState("");
   const [yourName, setYourName] = useState("");
+  const [targetRole, setTargetRole] = useState("");
   const [background, setBackground] = useState("");
   const [isScraping, setIsScraping] = useState(false);
   const [isParsingPdf, setIsParsingPdf] = useState(false);
+  const [notification, setNotification] = useState<{ type: "success" | "error" | "info"; msg: string } | null>(null);
 
   const [tone, setTone] = useState("professional");
   const [result, setResult] = useState("");
@@ -37,11 +39,12 @@ export default function CoverCraftPage() {
   const t = {
     en: {
       back: "← Back to Portfolio",
-      chip: "⚡ Powered by Gemini AI · Free · No Sign-up",
+      chip: "⚡ Powered by Gemini AI · Free & Instant · No Sign-up",
       title1: "Write ",
       title2: "Standout Cover Letters",
       title3: "in Seconds",
-      desc: "Paste a job description and AI generates a personalized, ATS-friendly cover letter. Your API key stays in your browser — never stored.",
+      desc: "Paste a job description and Gemini AI generates a personalized, ATS-friendly cover letter in seconds. Integrated with JobTrail for seamless one-click workflows.",
+      sampleBtn: "💡 Fill Sample Job",
       note: "🔗 Part of Gryven's Job Hunting Suite — works best with",
       prefilled: "✅ Job details pre-filled from JobTrail. Review and hit Generate!",
       step1: "Step 1 — Job Details",
@@ -87,11 +90,12 @@ export default function CoverCraftPage() {
     },
     id: {
       back: "← Kembali ke Portofolio",
-      chip: "⚡ Ditenagai Gemini AI · Gratis · Tanpa Daftar",
+      chip: "⚡ Ditenagai Gemini AI · Gratis & Instan · Tanpa Daftar",
       title1: "Tulis ",
       title2: "Cover Letter Memukau",
       title3: "dalam Hitungan Detik",
-      desc: "Tempelkan deskripsi pekerjaan dan AI akan menghasilkan surat lamaran (cover letter) ramah-ATS. Kunci API Anda tetap di browser — tidak pernah disimpan.",
+      desc: "Tempelkan deskripsi pekerjaan dan Gemini AI akan menghasilkan cover letter personalisasi yang ramah-ATS dalam hitungan detik. Terintegrasi langsung dengan JobTrail.",
+      sampleBtn: "💡 Isi Contoh Loker",
       note: "🔗 Bagian dari Job Hunting Suite Gryven — sangat cocok dipadukan dengan",
       prefilled: "✅ Detail pekerjaan terisi otomatis dari JobTrail. Periksa lalu klik Generate!",
       step1: "Langkah 1 — Detail Pekerjaan",
@@ -142,14 +146,25 @@ export default function CoverCraftPage() {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const job = params.get("job");
-    const comp = params.get("company");
+    let job = params.get("job") || "";
+    let comp = params.get("company") || "";
     const url = params.get("url");
     const id = params.get("id");
 
     if (id) setJobId(id);
+
+    // Smart heuristic: If company passed as generic "Company" and job string is "RealCompany: Role"
+    if ((comp.toLowerCase() === "company" || !comp) && job.includes(":")) {
+      const parts = job.split(":");
+      comp = parts[0].trim();
+      job = parts.slice(1).join(":").trim();
+    }
+
     if (job || comp || id) {
-      if (job) setJobTitle(job);
+      if (job) {
+        setJobTitle(job);
+        setTargetRole(job);
+      }
       if (comp) setCompany(comp);
       setPrefilled(true);
     }
@@ -157,6 +172,24 @@ export default function CoverCraftPage() {
       scrapeUrl(url);
     }
   }, []);
+
+  function fillSampleData() {
+    setJobTitle("Full-Stack Software Engineer");
+    setCompany("Tech Company / Startup");
+    setTargetRole("Software Engineer");
+    setYourName("Gryven Alverdo Gunawan");
+    setBackground(
+      "Fresh graduate in Informatics Engineering (GPA 3.88/4.00) with hands-on experience in Next.js 15, TypeScript, PostgreSQL, Prisma, Python, and automated webhook workflows with n8n. Previously served as IT Support & Web Developer at Hotel Claro Makassar, maintaining full-stack production systems."
+    );
+    setJobDesc(
+      "We are seeking a Full-Stack Software Engineer to build high-performance web applications and resilient backend services. Responsibilities include designing scalable React/Next.js frontends, building APIs, and optimizing database queries on PostgreSQL. Qualifications: Strong proficiency in TypeScript, React, Next.js, and SQL."
+    );
+    setNotification({
+      type: "info",
+      msg: lang === "id" ? "Contoh data lowongan berhasil diisi! Silakan klik Buat Cover Letter." : "Sample job data filled! Click Generate Cover Letter to test.",
+    });
+    setTimeout(() => setNotification(null), 5000);
+  }
 
   async function scrapeUrl(url: string) {
     setIsScraping(true);
@@ -170,15 +203,17 @@ export default function CoverCraftPage() {
         const data = await res.json();
         if (data.text) {
           setJobDesc(data.text);
+          setNotification({ type: "success", msg: lang === "id" ? "Deskripsi lowongan berhasil diambil dari URL!" : "Job description fetched from URL!" });
+          setTimeout(() => setNotification(null), 4000);
         } else {
-           alert(lang === "id" ? "Gagal mengambil teks dari URL ini. Silakan copy-paste manual." : "Failed to extract text from this URL. Please copy-paste manually.");
+          setNotification({ type: "error", msg: lang === "id" ? "Gagal mengambil teks dari URL ini. Silakan copy-paste manual." : "Failed to extract text from this URL. Please copy-paste manually." });
         }
       } else {
-         alert(lang === "id" ? "Website ini diblokir (Cloudflare/Bot Protection). Silakan copy-paste deskripsi manual." : "This website blocks automated scraping. Please copy-paste the description manually.");
+        setNotification({ type: "error", msg: lang === "id" ? "Website ini memblokir scraping otomatis. Silakan copy-paste deskripsi manual." : "This website blocks automated scraping. Please copy-paste manually." });
       }
     } catch (e) {
       console.error("Scraping failed", e);
-      alert("Error connecting to scraping service.");
+      setNotification({ type: "error", msg: "Error connecting to scraping service." });
     }
     setIsScraping(false);
   }
@@ -224,14 +259,16 @@ export default function CoverCraftPage() {
               }
             }
           }
+          setNotification({ type: "success", msg: lang === "id" ? "CV PDF berhasil diproses!" : "CV parsed successfully!" });
+          setTimeout(() => setNotification(null), 4000);
         }
       } else {
         const data = await res.json();
-        alert(data.error || "Failed to parse PDF");
+        setNotification({ type: "error", msg: data.error || "Failed to parse PDF" });
       }
     } catch (e) {
       console.error("Upload failed", e);
-      alert("Error uploading file");
+      setNotification({ type: "error", msg: "Error uploading file" });
     }
     setIsParsingPdf(false);
     // Reset input so the same file can be selected again
@@ -256,7 +293,7 @@ export default function CoverCraftPage() {
 
     const prompt = `You are an expert career coach. Write a ${toneMap[tone]} cover letter for:
 - Applicant: ${yourName || "the applicant"}
-- Role: ${jobTitle} at ${company}
+- Role: ${targetRole || jobTitle} at ${company}
 
 BACKGROUND:
 ${background || "A passionate professional ready to contribute."}
@@ -348,6 +385,13 @@ RULES:
           .cc-nav-inner { padding: 0 1rem; }
           .cc-back-text { display: none; }
           .cc-badge, .lang-toggle { font-size: 0.7rem; padding: 0.25rem 0.5rem; }
+          .cc-container { padding: 0 1rem; }
+          .cc-hero { padding: 2rem 0 1.5rem; }
+          .cc-card { padding: 1.25rem 1rem; border-radius: 14px; margin: 1rem 0; }
+          .cc-input { font-size: 16px; /* Prevents iOS auto-zoom on focus */ }
+          .cc-tone-label { padding: 0.45rem 0.75rem; font-size: 0.76rem; }
+          .cc-action-btn { flex: 1 1 calc(50% - 0.4rem); justify-content: center; padding: 0.65rem 0.5rem; font-size: 0.78rem; text-align: center; }
+          .cc-result-actions { width: 100%; }
         }
         .cc-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.2rem; background: linear-gradient(135deg, #a78bfa, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
         .cc-badge { display: flex; align-items: center; gap: .5rem; font-size: .75rem; color: #94a3b8; background: rgba(124,58,237,.1); border: 1px solid rgba(139,92,246,.2); border-radius: 100px; padding: .3rem .8rem; }
@@ -449,16 +493,57 @@ RULES:
             <p>{t.desc}</p>
             <div className="cc-ecosystem-note">
               {t.note}{" "}
-              <a href="https://jobtracker-kjmw.vercel.app" target="_blank" rel="noopener">JobTrail ↗</a>
+              <a href="https://jobtracker-kjmw.vercel.app/demo" target="_blank" rel="noopener">JobTrail Demo ↗</a>
             </div>
           </section>
+
+          {notification && (
+            <div style={{
+              padding: '0.75rem 1.25rem',
+              borderRadius: '12px',
+              marginBottom: '1.5rem',
+              fontSize: '0.88rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              background: notification.type === 'error' ? 'rgba(239, 68, 68, 0.15)' : notification.type === 'success' ? 'rgba(16, 185, 129, 0.15)' : 'rgba(56, 189, 248, 0.15)',
+              border: `1px solid ${notification.type === 'error' ? 'rgba(239, 68, 68, 0.3)' : notification.type === 'success' ? 'rgba(16, 185, 129, 0.3)' : 'rgba(56, 189, 248, 0.3)'}`,
+              color: notification.type === 'error' ? '#f87171' : notification.type === 'success' ? '#34d399' : '#38bdf8',
+              animation: 'fadeUp 0.3s ease'
+            }}>
+              <span>{notification.msg}</span>
+              <button onClick={() => setNotification(null)} style={{ background: 'transparent', border: 'none', color: 'inherit', cursor: 'pointer', fontSize: '1.2rem', padding: '0 0.5rem' }}>×</button>
+            </div>
+          )}
 
           {prefilled && (
             <div className="cc-prefill">{t.prefilled}</div>
           )}
 
           <div className="cc-card">
-            <p className="cc-step-label">{t.step1}</p>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+              <p className="cc-step-label" style={{ margin: 0 }}>{t.step1}</p>
+              <button 
+                type="button" 
+                onClick={fillSampleData}
+                style={{
+                  background: 'rgba(56, 189, 248, 0.1)',
+                  border: '1px solid rgba(56, 189, 248, 0.3)',
+                  color: '#38bdf8',
+                  fontSize: '0.78rem',
+                  fontWeight: 600,
+                  padding: '0.4rem 0.85rem',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.35rem',
+                  transition: 'all 0.2s'
+                }}
+              >
+                {t.sampleBtn}
+              </button>
+            </div>
             <div className="cc-grid">
               <div className="cc-group">
                 <label className="cc-label">{t.jobTitleLabel} <span>*</span></label>
@@ -493,7 +578,12 @@ RULES:
               </div>
               <div className="cc-group">
                 <label className="cc-label">{t.roleLabel}</label>
-                <input className="cc-input" placeholder={t.rolePh} />
+                <input 
+                  className="cc-input" 
+                  placeholder={t.rolePh} 
+                  value={targetRole} 
+                  onChange={(e) => setTargetRole(e.target.value)} 
+                />
               </div>
               <div className="cc-group full">
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "0.35rem" }}>
@@ -586,7 +676,7 @@ RULES:
             <div className="cc-flow">
               <Link href="/autoapply" className="cc-flow-item">{t.ecoBtn1}</Link>
               <span className="cc-arrow">→</span>
-              <a href="https://jobtracker-kjmw.vercel.app" target="_blank" rel="noopener" className="cc-flow-item">{t.ecoBtn2}</a>
+              <a href="https://jobtracker-kjmw.vercel.app/demo" target="_blank" rel="noopener" className="cc-flow-item">{t.ecoBtn2}</a>
               <span className="cc-arrow">→</span>
               <span className="cc-flow-item active">{t.ecoBtn3}</span>
               <span className="cc-arrow">→</span>

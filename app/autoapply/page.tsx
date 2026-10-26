@@ -50,7 +50,15 @@ export default function AutoApplyPage() {
       btn2: "View in JobTrail ↗",
       how: "How It Works",
       pipe: "The Automation Pipeline",
-      pipeDesc: "Every 6 hours, the workflow runs automatically. Jobs flow from discovery to your JobTrail dashboard without you lifting a finger."
+      pipeDesc: "Every 6 hours, the workflow runs automatically. Jobs flow from discovery to your JobTrail dashboard without you lifting a finger.",
+      tableTime: "Time",
+      tableCompany: "Company",
+      tablePosition: "Position Found",
+      tableStatus: "Status",
+      monitoring: "Monitoring 24/7",
+      liveActivity: "Live Agent Activity",
+      connecting: "Connecting to agent...",
+      noActivity: "No recent activity."
     },
     id: {
       back: "← Kembali ke Portofolio",
@@ -61,7 +69,15 @@ export default function AutoApplyPage() {
       btn2: "Lihat di JobTrail ↗",
       how: "Cara Kerjanya",
       pipe: "Pipa Otomatisasi",
-      pipeDesc: "Setiap 6 jam, alur kerja berjalan otomatis. Lowongan pekerjaan mengalir dari penemuan hingga ke dasbor JobTrail Anda tanpa perlu repot."
+      pipeDesc: "Setiap 6 jam, alur kerja berjalan otomatis. Lowongan pekerjaan mengalir dari penemuan hingga ke dasbor JobTrail Anda tanpa perlu repot.",
+      tableTime: "Waktu",
+      tableCompany: "Perusahaan",
+      tablePosition: "Posisi Ditemukan",
+      tableStatus: "Status",
+      monitoring: "Memantau 24/7",
+      liveActivity: "Aktivitas Live Agent",
+      connecting: "Menghubungkan ke agent...",
+      noActivity: "Tidak ada aktivitas terbaru."
     }
   }[lang as "en" | "id"];
 
@@ -138,7 +154,7 @@ export default function AutoApplyPage() {
         .aa-table tr:last-child td { border-bottom:none; }
 
         /* LIVE FEED */
-        .live-feed-container { background: #0b0f19; border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-top: 3rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; overflow: hidden; }
+        .live-feed-container { background: #0b0f19; border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; margin-top: 3rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; overflow: hidden; }
         .live-feed-container::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--primary), transparent); animation: scan 3s linear infinite; }
         @keyframes scan { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
         .live-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem; }
@@ -147,7 +163,8 @@ export default function AutoApplyPage() {
         @keyframes pulse { 0% { opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); } 70% { opacity: 0.5; box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); } 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
         .live-status-text { font-size: 0.8rem; color: #ef4444; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
         
-        .live-table { width: 100%; border-collapse: collapse; font-family: 'Courier New', monospace; font-size: 0.85rem; }
+        .live-scroll-hint { display: none; }
+        .live-table { width: 100%; min-width: 500px; border-collapse: collapse; font-family: 'Courier New', monospace; font-size: 0.85rem; }
         .live-table th { text-align: left; padding: 0.75rem 1rem; color: #64748b; font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .live-table td { padding: 1rem; color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .live-table tr:hover td { background: rgba(255,255,255,0.02); }
@@ -157,6 +174,15 @@ export default function AutoApplyPage() {
         .live-badge.saved { background: rgba(56, 189, 248, 0.1); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.2); }
         .live-badge.applied { background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.2); }
         .live-badge.rejected { background: rgba(244, 63, 94, 0.1); color: #f43f5e; border: 1px solid rgba(244, 63, 94, 0.2); }
+
+        @media (max-width: 600px) {
+          .live-feed-container { padding: 1rem 0.85rem; border-radius: 14px; margin-top: 2rem; }
+          .live-header { flex-direction: column; align-items: flex-start; gap: 0.4rem; margin-bottom: 1rem; padding-bottom: 0.75rem; }
+          .live-scroll-hint { display: block; font-size: 0.72rem; color: #64748b; margin-bottom: 0.75rem; }
+          .live-table th, .live-table td { padding: 0.65rem 0.6rem; font-size: 0.78rem; }
+          .aa-hero-actions { flex-direction: column; width: 100%; }
+          .aa-btn-primary, .aa-btn-outline { width: 100%; justify-content: center; text-align: center; }
+        }
 
         /* ECOSYSTEM */
         .aa-ecosystem { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:2rem; text-align:center; margin:2rem 0; }
@@ -210,26 +236,30 @@ export default function AutoApplyPage() {
               <div className="live-header">
                 <div className="live-title">
                   <span className="live-indicator"></span>
-                  Live Agent Activity
+                  {t.liveActivity}
                 </div>
-                <div className="live-status-text">Monitoring 24/7</div>
+                <div className="live-status-text">{t.monitoring}</div>
+              </div>
+
+              <div className="live-scroll-hint">
+                ⇄ {lang === 'en' ? 'Scroll horizontally to view full feed' : 'Geser untuk melihat data lengkap'}
               </div>
               
-              <div style={{ overflowX: "auto" }}>
+              <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
                 <table className="live-table">
                   <thead>
                     <tr>
-                      <th>Time</th>
-                      <th>Company</th>
-                      <th>Position Found</th>
-                      <th>Status</th>
+                      <th>{t.tableTime}</th>
+                      <th>{t.tableCompany}</th>
+                      <th>{t.tablePosition}</th>
+                      <th>{t.tableStatus}</th>
                     </tr>
                   </thead>
                   <tbody>
                     {isFetching && liveJobs.length === 0 ? (
-                      <tr><td colSpan={4} style={{ textAlign: "center", padding: "2rem" }}>Connecting to agent...</td></tr>
+                      <tr><td colSpan={4} style={{ textAlign: "center", padding: "2rem" }}>{t.connecting}</td></tr>
                     ) : liveJobs.length === 0 ? (
-                      <tr><td colSpan={4} style={{ textAlign: "center", padding: "2rem" }}>No recent activity.</td></tr>
+                      <tr><td colSpan={4} style={{ textAlign: "center", padding: "2rem" }}>{t.noActivity}</td></tr>
                     ) : (
                       liveJobs.map((job) => {
                         let displayCompany = job.companyName;
@@ -389,7 +419,7 @@ export default function AutoApplyPage() {
             <div className="aa-eco-flow">
               <span className="aa-eco-item active">🤖 AutoApply Flow</span>
               <span className="aa-eco-arrow">→</span>
-              <a href="https://jobtracker-kjmw.vercel.app" target="_blank" rel="noopener" className="aa-eco-item">📋 JobTrail</a>
+              <a href="https://jobtracker-kjmw.vercel.app/demo" target="_blank" rel="noopener" className="aa-eco-item">📋 JobTrail</a>
               <span className="aa-eco-arrow">→</span>
               <Link href="/covercraft" className="aa-eco-item">✨ CoverCraft</Link>
               <span className="aa-eco-arrow">→</span>
