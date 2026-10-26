@@ -570,6 +570,12 @@ body::before {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
+  align-items: stretch;
+}
+.projects-grid > .reveal {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 .project-card-modern {
   background: var(--surface);
@@ -578,6 +584,8 @@ body::before {
   padding: 2rem 1.75rem;
   display: flex;
   flex-direction: column;
+  height: 100%;
+  flex: 1;
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
