@@ -243,80 +243,8 @@ export default function Home() {
             </div>
           </RevealWrapper>
 
-          {/* 1.1 LIVE SUITE PULSE STRIP */}
+          {/* 1.1 INTERACTIVE PIPELINE ARCHITECTURE FLOW */}
           <RevealWrapper delay={50}>
-            <div className="pulse-panel">
-              <div className="pulse-header">
-                <div>
-                  <div style={{ fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "#94a3b8", marginBottom: "0.25rem" }}>
-                    {t.liveStats?.badge || "Live Suite Pulse"}
-                  </div>
-                  <div style={{ fontSize: "0.75rem", color: "#64748b" }}>
-                    {t.liveStats?.source || "Real-time sync from JobTrail database"}
-                  </div>
-                </div>
-                <div className="pulse-live-badge">
-                  <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#10b981", boxShadow: "0 0 8px #10b981", animation: "pulse-green 2s infinite" }} />
-                  <span>Neon PostgreSQL Live Sync</span>
-                </div>
-              </div>
-
-              <div className="pulse-grid">
-                <div className="pulse-card">
-                  <div className="pulse-icon-box">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                      <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-                      <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
-                      <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
-                    </svg>
-                  </div>
-                  <div className="pulse-number">{jobStats.applications > 0 ? `${jobStats.applications}+` : "18+"}</div>
-                  <div className="pulse-title">{t.liveStats?.apps || "Applications Tracked"}</div>
-                  <div className="pulse-sub">Neon PostgreSQL</div>
-                </div>
-
-                <div className="pulse-card">
-                  <div className="pulse-icon-box" style={{ color: "#a78bfa" }}>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                      <circle cx="12" cy="12" r="10"></circle>
-                      <line x1="22" y1="12" x2="18" y2="12"></line>
-                      <line x1="6" y1="12" x2="2" y2="12"></line>
-                      <line x1="12" y1="6" x2="12" y2="2"></line>
-                      <line x1="12" y1="22" x2="12" y2="18"></line>
-                    </svg>
-                  </div>
-                  <div className="pulse-number">{jobStats.interviews > 0 ? jobStats.interviews : "1"}</div>
-                  <div className="pulse-title">{t.liveStats?.interviews || "Active Interviews"}</div>
-                  <div className="pulse-sub">Active pipeline</div>
-                </div>
-
-                <div className="pulse-card">
-                  <div className="pulse-icon-box" style={{ color: "#38bdf8" }}>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                    </svg>
-                  </div>
-                  <div className="pulse-number">{t.liveStats?.automationSub || "Every 6 Hours"}</div>
-                  <div className="pulse-title">{t.liveStats?.automation || "Automated via n8n"}</div>
-                  <div className="pulse-sub">Cron Webhooks</div>
-                </div>
-
-                <div className="pulse-card">
-                  <div className="pulse-icon-box" style={{ color: "#f43f5e" }}>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                      <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"></path>
-                    </svg>
-                  </div>
-                  <div className="pulse-number">{t.liveStats?.speedSub || "< 3s"}</div>
-                  <div className="pulse-title">{t.liveStats?.speed || "Gemini AI Engine"}</div>
-                  <div className="pulse-sub">Flash Generation</div>
-                </div>
-              </div>
-            </div>
-          </RevealWrapper>
-
-          {/* 1.2 INTERACTIVE PIPELINE ARCHITECTURE FLOW */}
-          <RevealWrapper delay={100}>
             <div className="pipeline-flow">
               <Link href="/autoapply" className="pipeline-card">
                 <span className="pipeline-step-badge">01 · DISCOVERY</span>
@@ -366,10 +294,10 @@ export default function Home() {
             </div>
           </RevealWrapper>
 
-          {/* 1.3 THREE SUITE PROJECTS */}
+          {/* 1.2 THREE SUITE PROJECTS */}
           <div className="projects-grid">
             {/* PROJECT 1: JOBTRAIL */}
-            <RevealWrapper delay={150}>
+            <RevealWrapper delay={100}>
               <div className="project-card-modern" style={{ background: "linear-gradient(145deg, rgba(15, 23, 42, 0.7) 0%, rgba(6, 182, 212, 0.04) 100%)" }}>
                 <div className="project-header-top">
                   <div className="project-pill-badge cyan">
@@ -411,7 +339,7 @@ export default function Home() {
             </RevealWrapper>
 
             {/* PROJECT 2: COVERCRAFT */}
-            <RevealWrapper delay={200}>
+            <RevealWrapper delay={150}>
               <div className="project-card-modern" style={{ background: "linear-gradient(145deg, rgba(15, 23, 42, 0.7) 0%, rgba(167, 139, 250, 0.04) 100%)" }}>
                 <div className="project-header-top">
                   <div className="project-pill-badge purple">
@@ -458,7 +386,7 @@ export default function Home() {
             </RevealWrapper>
 
             {/* PROJECT 3: AUTOAPPLY FLOW */}
-            <RevealWrapper delay={250}>
+            <RevealWrapper delay={200}>
               <div className="project-card-modern" style={{ background: "linear-gradient(145deg, rgba(15, 23, 42, 0.7) 0%, rgba(16, 185, 129, 0.04) 100%)" }}>
                 <div className="project-header-top">
                   <div className="project-pill-badge emerald">
@@ -502,6 +430,81 @@ export default function Home() {
               </div>
             </RevealWrapper>
           </div>
+
+          {/* 1.3 LIVE ECOSYSTEM PROOF & TELEMETRY */}
+          <RevealWrapper delay={250}>
+            <div className="pulse-panel">
+              <div className="pulse-header">
+                <div>
+                  <div style={{ fontSize: "0.8rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "#38bdf8", marginBottom: "0.3rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    </svg>
+                    <span>{t.liveStats?.badge || "Ecosystem in Action · Live Telemetry"}</span>
+                  </div>
+                  <div style={{ fontSize: "0.78rem", color: "#94a3b8" }}>
+                    {t.liveStats?.source || "Real-time sync from my active job hunting database & automated bots:"}
+                  </div>
+                </div>
+                <div className="pulse-live-badge">
+                  <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#10b981", boxShadow: "0 0 8px #10b981", animation: "pulse-green 2s infinite" }} />
+                  <span>{t.liveStats?.pill || "PostgreSQL Live Sync"}</span>
+                </div>
+              </div>
+
+              <div className="pulse-grid">
+                <div className="pulse-card">
+                  <div className="pulse-icon-box">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                      <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                      <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                      <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                    </svg>
+                  </div>
+                  <div className="pulse-number">{jobStats.applications > 0 ? `${jobStats.applications}+` : "18+"}</div>
+                  <div className="pulse-title">{t.liveStats?.apps || "Total Applications Sent"}</div>
+                  <div className="pulse-sub">{t.liveStats?.appsSub || "Stored in Neon PostgreSQL"}</div>
+                </div>
+
+                <div className="pulse-card">
+                  <div className="pulse-icon-box" style={{ color: "#a78bfa" }}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="22" y1="12" x2="18" y2="12"></line>
+                      <line x1="6" y1="12" x2="2" y2="12"></line>
+                      <line x1="12" y1="6" x2="12" y2="2"></line>
+                      <line x1="12" y1="22" x2="12" y2="18"></line>
+                    </svg>
+                  </div>
+                  <div className="pulse-number">{jobStats.interviews > 0 ? jobStats.interviews : "1"}</div>
+                  <div className="pulse-title">{t.liveStats?.interviews || "Active Interview Stages"}</div>
+                  <div className="pulse-sub">{t.liveStats?.interviewsSub || "Currently in pipeline"}</div>
+                </div>
+
+                <div className="pulse-card">
+                  <div className="pulse-icon-box" style={{ color: "#38bdf8" }}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    </svg>
+                  </div>
+                  <div className="pulse-number">{t.liveStats?.automationVal || "Every 6 Hours"}</div>
+                  <div className="pulse-title">{t.liveStats?.automation || "Automated Job Scouting"}</div>
+                  <div className="pulse-sub">{t.liveStats?.automationSub || "n8n scans listings 24/7"}</div>
+                </div>
+
+                <div className="pulse-card">
+                  <div className="pulse-icon-box" style={{ color: "#f43f5e" }}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                      <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"></path>
+                    </svg>
+                  </div>
+                  <div className="pulse-number">{t.liveStats?.speedVal || "< 3 Seconds"}</div>
+                  <div className="pulse-title">{t.liveStats?.speed || "AI Cover Letter Speed"}</div>
+                  <div className="pulse-sub">{t.liveStats?.speedSub || "Gemini 2.5 Flash Engine"}</div>
+                </div>
+              </div>
+            </div>
+          </RevealWrapper>
         </section>
 
         {/* ============================================
