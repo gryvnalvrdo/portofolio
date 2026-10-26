@@ -9,11 +9,11 @@ export const dict = {
       hire: "Hire Me",
     },
     hero: {
-      badge: "Software Engineer · Full-Stack & Automation Systems",
+      badge: "Full-Stack Software Engineer",
       hi: "Hi, I'm",
       role: "Software Engineer",
-      sub: "I build full-stack web apps and ML systems — from job trackers to plagiarism detectors. Currently job hunting, so I engineered the tools to do it better.",
-      tagline: "\"I'm not just job hunting — I'm engineering the process.\"",
+      sub: "I engineer full-stack web applications, automation pipelines, and AI systems — focused on building high-performance, production-ready tools that solve real problems.",
+      tagline: "\"Building scalable systems and intelligent automation that solve real problems.\"",
       viewProjects: "View Projects →",
       location: "📍 Makassar · Open to Remote",
       stats: {
@@ -158,11 +158,11 @@ export const dict = {
       hire: "Rekrut Saya",
     },
     hero: {
-      badge: "Software Engineer · Full-Stack & Otomasi Sistem",
+      badge: "Software Engineer · Full-Stack",
       hi: "Halo, saya",
       role: "Software Engineer",
-      sub: "Saya membangun aplikasi web full-stack dan sistem ML — dari pelacak lowongan kerja hingga pendeteksi plagiarisme. Saat ini sedang mencari pekerjaan, jadi saya merekayasa alat untuk melakukannya dengan lebih baik.",
-      tagline: "\"Saya tidak sekadar mencari kerja — saya merekayasa prosesnya.\"",
+      sub: "Saya merekayasa aplikasi web full-stack, pipeline otomasi, dan integrasi AI — berfokus membangun sistem produksi nyata yang memecahkan masalah kompleks.",
+      tagline: "\"Membangun sistem terukur dan otomasi cerdas untuk memecahkan masalah nyata.\"",
       viewProjects: "Lihat Proyek →",
       location: "📍 Makassar · Siap Remote",
       stats: {
