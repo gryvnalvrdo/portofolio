@@ -139,8 +139,8 @@ export const dict = {
       label: "Contact",
       title1: "Let's ",
       title2: "Work Together",
-      chip: "Available for full-time positions · Open to remote globally",
-      desc: "I'm actively seeking Software Engineer roles — full-time, remote, or hybrid. If you're building something meaningful and need a developer who ships fast, learns faster, and brings both web and ML skills to the table, let's talk.",
+      chip: "Open for Software Engineer roles · Global & Remote Friendly",
+      desc: "Available for full-time Software Engineer positions & impactful engineering collaborations. If you're building high-impact products and need an engineer who ships fast, writes clean code, and leverages AI & automation, let's talk.",
       btn: "Say Hello 👋"
     },
     footer: {
@@ -288,8 +288,8 @@ export const dict = {
       label: "Kontak",
       title1: "Mari ",
       title2: "Bekerja Sama",
-      chip: "Tersedia untuk posisi full-time · Terbuka untuk remote global",
-      desc: "Saya aktif mencari peran Software Engineer — full-time, remote, atau hybrid. Jika Anda sedang membangun sesuatu yang bermakna dan membutuhkan pengembang yang merilis dengan cepat, belajar lebih cepat, serta membawa keahlian web dan ML, mari berdiskusi.",
+      chip: "Terbuka untuk posisi Software Engineer · Siap Remote & Global",
+      desc: "Terbuka untuk peluang Software Engineer & kolaborasi proyek engineering — full-time, remote, atau hybrid. Jika Anda sedang membangun produk inovatif dan membutuhkan developer yang merilis dengan cepat, adaptif, serta menguasai ekosistem web dan AI, mari berdiskusi.",
       btn: "Sapa Saya 👋"
     },
     footer: {

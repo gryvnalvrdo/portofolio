@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Gryven Alverdo Gunawan — Software Engineer",
   description:
-    "Portfolio of Gryven Alverdo Gunawan — Software Engineer actively job hunting. Creator of the Job Hunting Suite: JobTrail, CoverCraft, and AutoApply Flow.",
+    "Portfolio of Gryven Alverdo Gunawan — Software Engineer building full-stack web applications, automation pipelines, and AI systems. Creator of JobTrail, CoverCraft, and AutoApply Flow.",
   keywords: [
     "Gryven Alverdo Gunawan",
     "Software Engineer",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Gryven Alverdo Gunawan — Software Engineer",
     description:
-      "I'm not just job hunting — I'm engineering the process. Explore my Job Hunting Suite portfolio.",
+      "Full-stack software engineer building high-performance web applications, intelligent automation, and AI systems.",
     type: "website",
     url: "https://portofolio-seven-lac-56.vercel.app",
     siteName: "Gryven Alverdo Gunawan",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Gryven Alverdo Gunawan — Software Engineer",
     description:
-      "I'm not just job hunting — I'm engineering the process. Explore my Job Hunting Suite: JobTrail, CoverCraft & AutoApply Flow.",
+      "Full-stack software engineer building high-performance web applications, intelligent automation, and AI systems.",
     images: ["https://portofolio-seven-lac-56.vercel.app/photo.jpeg"],
   },
 };
