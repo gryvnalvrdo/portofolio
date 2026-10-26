@@ -11,11 +11,22 @@ export default function Home() {
   const [lang, setLang] = useState<Lang>("en");
   const [jobStats, setJobStats] = useState({ applications: 0, interviews: 0 });
   const [isPhotoPopupOpen, setIsPhotoPopupOpen] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
   const t = dict[lang];
 
   useEffect(() => {
     const saved = localStorage.getItem("lang") as Lang;
     if (saved === "id" || saved === "en") setLang(saved);
+
+    const handleScroll = () => {
+      if (window.scrollY > 350) {
+        setShowScrollTop(true);
+      } else {
+        setShowScrollTop(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     // Fetch live job tracking stats from JobTrail Neon DB
     fetch("https://jobtracker-kjmw.vercel.app/api/public/stats")
@@ -29,6 +40,10 @@ export default function Home() {
         }
       })
       .catch((err) => console.error("Failed to fetch job stats:", err));
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   const toggleLang = () => {
@@ -752,19 +767,22 @@ export default function Home() {
               </svg>
               <span>Email</span>
             </a>
-            <button
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="footer-back-to-top"
-              aria-label="Back to top"
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M18 15l-6-6-6 6"/>
-              </svg>
-              <span>Top</span>
-            </button>
           </div>
         </footer>
       </main>
+
+      {/* FLOATING BACK TO TOP BUTTON */}
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        className={`floating-back-to-top ${showScrollTop ? "visible" : ""}`}
+        aria-label="Back to top"
+        title="Scroll to top"
+      >
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M18 15l-6-6-6 6"/>
+        </svg>
+        <span>Top</span>
+      </button>
 
       {/* PHOTO POPUP MODAL */}
       <div className={`photo-popup-overlay ${isPhotoPopupOpen ? "active" : ""}`} onClick={() => setIsPhotoPopupOpen(false)}>
