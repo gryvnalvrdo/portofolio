@@ -78,31 +78,18 @@ export default function Home() {
       ============================================= */}
       <header className="site-header-fixed">
         <div className="site-header-inner">
-          <div className="site-nav-brand">
-            <span style={{ fontWeight: 800, letterSpacing: "-0.03em" }}>GA.</span>
-            <div className="site-nav-status-pill">
-              <div
-                style={{
-                  width: "6px",
-                  height: "6px",
-                  borderRadius: "50%",
-                  background: "#10b981",
-                  boxShadow: "0 0 8px #10b981",
-                  animation: "pulse-green 2s infinite",
-                }}
-              />
-              <span
-                style={{
-                  fontSize: "0.72rem",
-                  color: "#10b981",
-                  fontWeight: 600,
-                  letterSpacing: "0.02em",
-                }}
-              >
-                {lang === "en" ? "Available for Work" : "Siap Bekerja"}
-              </span>
-            </div>
-          </div>
+          <a
+            href="#"
+            className="site-nav-brand"
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            aria-label="Gryven Alverdo"
+          >
+            <span className="site-brand-name">Gryven Alverdo</span>
+            <span className="site-brand-dot">.</span>
+          </a>
 
           <nav className="site-nav-links">
             <a href="#suite" className="site-nav-link">
@@ -150,9 +137,9 @@ export default function Home() {
           <div className="hero-content">
             <RevealWrapper delay={0}>
               <div className="hero-eyebrow">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                  <circle cx="12" cy="10" r="3"></circle>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="16 18 22 12 16 6"></polyline>
+                  <polyline points="8 6 2 12 8 18"></polyline>
                 </svg>
                 <span>{t.hero.badge}</span>
               </div>

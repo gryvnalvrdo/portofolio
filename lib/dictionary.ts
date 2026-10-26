@@ -9,7 +9,7 @@ export const dict = {
       hire: "Hire Me",
     },
     hero: {
-      badge: "Open to Work · Full-time & Remote",
+      badge: "Software Engineer · Full-Stack & Automation Systems",
       hi: "Hi, I'm",
       role: "Software Engineer",
       sub: "I build full-stack web apps and ML systems — from job trackers to plagiarism detectors. Currently job hunting, so I engineered the tools to do it better.",
@@ -158,7 +158,7 @@ export const dict = {
       hire: "Rekrut Saya",
     },
     hero: {
-      badge: "Siap Bekerja · Full-time & Remote",
+      badge: "Software Engineer · Full-Stack & Otomasi Sistem",
       hi: "Halo, saya",
       role: "Software Engineer",
       sub: "Saya membangun aplikasi web full-stack dan sistem ML — dari pelacak lowongan kerja hingga pendeteksi plagiarisme. Saat ini sedang mencari pekerjaan, jadi saya merekayasa alat untuk melakukannya dengan lebih baik.",
