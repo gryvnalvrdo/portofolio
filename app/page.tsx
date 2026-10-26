@@ -58,11 +58,11 @@ export default function Home() {
 
   return (
     <>
-      <main className="portfolio-wrapper">
-        {/* ============================================
-            FLOATING SLEEK NAVBAR
-        ============================================= */}
-        <header className="site-nav">
+      {/* ============================================
+          FIXED EDGE-TO-EDGE BLUR NAVBAR (VERCEL / APPLE STYLE)
+      ============================================= */}
+      <header className="site-header-fixed">
+        <div className="site-header-inner">
           <div className="site-nav-brand">
             <span style={{ fontWeight: 800, letterSpacing: "-0.03em" }}>GA.</span>
             <div
@@ -134,8 +134,10 @@ export default function Home() {
               <span>CV</span>
             </a>
           </div>
-        </header>
+        </div>
+      </header>
 
+      <main className="portfolio-wrapper">
         {/* ============================================
             HERO SECTION
         ============================================= */}
@@ -161,7 +163,26 @@ export default function Home() {
               <p className="hero-desc">{t.hero.sub}</p>
             </RevealWrapper>
 
-            <RevealWrapper delay={150}>
+            <RevealWrapper delay={130}>
+              <div className="hero-highlights-strip">
+                <div className="hero-highlight-item">
+                  <span className="hero-highlight-val">3.88 GPA</span>
+                  <span className="hero-highlight-lbl">{lang === "id" ? "Lulusan CS Terbaik" : "Honors CS Grad"}</span>
+                </div>
+                <div className="hero-highlight-divider" />
+                <div className="hero-highlight-item">
+                  <span className="hero-highlight-val">3 Shipped</span>
+                  <span className="hero-highlight-lbl">{lang === "id" ? "Alat Suite Dibangun" : "Suite Tools Built"}</span>
+                </div>
+                <div className="hero-highlight-divider" />
+                <div className="hero-highlight-item">
+                  <span className="hero-highlight-val">Laravel 11</span>
+                  <span className="hero-highlight-lbl">{lang === "id" ? "Web Prod Hotel Claro" : "Prod Hotel Web"}</span>
+                </div>
+              </div>
+            </RevealWrapper>
+
+            <RevealWrapper delay={160}>
               <div className="hero-actions">
                 <a href={resumeUrl} target="_blank" rel="noopener noreferrer" className="btn-primary">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -189,7 +210,14 @@ export default function Home() {
           </div>
 
           <RevealWrapper delay={100}>
-            <div className="hero-avatar-card" onClick={() => setIsPhotoPopupOpen(true)}>
+            <div
+              className="hero-avatar-card"
+              onClick={() => setIsPhotoPopupOpen(true)}
+              title={lang === "id" ? "Klik untuk memperbesar foto profil" : "Click to view full photo"}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") setIsPhotoPopupOpen(true); }}
+            >
               <div className="hero-avatar-glow" />
               <div className="hero-avatar-inner">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -352,11 +380,12 @@ export default function Home() {
             {/* PROJECT 1: JOBTRAIL */}
             <RevealWrapper delay={150}>
               <div className="project-card-modern" style={{ background: "linear-gradient(145deg, rgba(15, 23, 42, 0.7) 0%, rgba(6, 182, 212, 0.04) 100%)" }}>
-                <div className="project-badge-row">
-                  <span className="project-category-badge" style={{ color: "#38bdf8", borderColor: "rgba(56, 189, 248, 0.3)" }}>
-                    Full-Stack SaaS · Live
-                  </span>
-                  <span className="project-num-label">{t.projects.jobtrail.num}</span>
+                <div className="project-header-top">
+                  <div className="project-pill-badge cyan">
+                    <span className="project-pill-dot" />
+                    <span>Full-Stack SaaS</span>
+                  </div>
+                  <span className="project-index-tag">01 · Live</span>
                 </div>
                 <h3 className="project-card-title">
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -393,11 +422,12 @@ export default function Home() {
             {/* PROJECT 2: COVERCRAFT */}
             <RevealWrapper delay={200}>
               <div className="project-card-modern" style={{ background: "linear-gradient(145deg, rgba(15, 23, 42, 0.7) 0%, rgba(167, 139, 250, 0.04) 100%)" }}>
-                <div className="project-badge-row">
-                  <span className="project-category-badge" style={{ color: "#a78bfa", borderColor: "rgba(167, 139, 250, 0.3)" }}>
-                    AI Micro-Tool · Instant
-                  </span>
-                  <span className="project-num-label">{t.projects.covercraft.num}</span>
+                <div className="project-header-top">
+                  <div className="project-pill-badge purple">
+                    <span className="project-pill-dot" />
+                    <span>AI Micro-Tool</span>
+                  </div>
+                  <span className="project-index-tag">02 · Instant</span>
                 </div>
                 <h3 className="project-card-title">
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -439,11 +469,12 @@ export default function Home() {
             {/* PROJECT 3: AUTOAPPLY FLOW */}
             <RevealWrapper delay={250}>
               <div className="project-card-modern" style={{ background: "linear-gradient(145deg, rgba(15, 23, 42, 0.7) 0%, rgba(16, 185, 129, 0.04) 100%)" }}>
-                <div className="project-badge-row">
-                  <span className="project-category-badge" style={{ color: "#10b981", borderColor: "rgba(16, 185, 129, 0.3)" }}>
-                    Automation Agent · n8n
-                  </span>
-                  <span className="project-num-label">{t.projects.autoapply.num}</span>
+                <div className="project-header-top">
+                  <div className="project-pill-badge emerald">
+                    <span className="project-pill-dot" />
+                    <span>Automation Agent</span>
+                  </div>
+                  <span className="project-index-tag">03 · n8n</span>
                 </div>
                 <h3 className="project-card-title">
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -689,10 +720,54 @@ export default function Home() {
           <div>
             © 2026 <strong>Gryven Alverdo Gunawan</strong> · Software Engineer · Makassar, Indonesia
           </div>
-          <div style={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
-            <a href="https://github.com/gryvnalvrdo" target="_blank" rel="noopener noreferrer">GitHub</a>
-            <a href="https://www.linkedin.com/in/gryven-alverdo-gunawan-7283ab262/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            <a href="mailto:gryvnalvrdo@gmail.com">Email</a>
+          <div className="footer-social-row">
+            <a
+              href="https://github.com/gryvnalvrdo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-icon-btn"
+              aria-label="GitHub profile"
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+              </svg>
+              <span>GitHub</span>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/gryven-alverdo-gunawan-7283ab262/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="footer-icon-btn"
+              aria-label="LinkedIn profile"
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                <rect x="2" y="9" width="4" height="12"></rect>
+                <circle cx="4" cy="4" r="2"></circle>
+              </svg>
+              <span>LinkedIn</span>
+            </a>
+            <a
+              href="mailto:gryvnalvrdo@gmail.com"
+              className="footer-icon-btn"
+              aria-label="Email Gryven"
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+              <span>Email</span>
+            </a>
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              className="footer-back-to-top"
+              aria-label="Back to top"
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 15l-6-6-6 6"/>
+              </svg>
+              <span>Top</span>
+            </button>
           </div>
         </footer>
       </main>
