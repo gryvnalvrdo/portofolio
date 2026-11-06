@@ -164,6 +164,207 @@ body::before {
 }
 
 /* ============================================
+   UNIFIED SUBPAGE HEADER & COMPONENTS
+============================================= */
+.subpage-nav {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(250, 248, 245, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03);
+  transition: all 0.25s ease;
+}
+.subpage-nav-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.subpage-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #475569;
+  text-decoration: none;
+  font-size: 0.86rem;
+  font-weight: 600;
+  padding: 0.38rem 0.75rem;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  transition: all 0.2s ease;
+  white-space: nowrap !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  flex-shrink: 0;
+}
+.subpage-back-link:hover {
+  color: #0f172a;
+  border-color: rgba(217, 119, 6, 0.4);
+  background: #faf8f5;
+  transform: translateX(-2px);
+}
+.subpage-back-icon {
+  flex-shrink: 0;
+  font-size: 0.95rem;
+  line-height: 1;
+}
+.subpage-brand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  padding: 0.32rem 0.85rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #0f172a;
+  white-space: nowrap;
+}
+
+/* UNIFIED SUBPAGE ECOSYSTEM */
+.subpage-ecosystem {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2.25rem 2rem;
+  margin: 3rem 0 2rem;
+  text-align: center;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.03);
+}
+.subpage-ecosystem h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.subpage-ecosystem p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.65;
+  max-width: 580px;
+  margin: 0 auto 1.75rem;
+}
+.subpage-eco-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+.subpage-eco-item {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.6rem 1.1rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.subpage-eco-item:hover {
+  background: #ffffff;
+  border-color: rgba(217, 119, 6, 0.4);
+  color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+.subpage-eco-item.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 4px 14px -2px rgba(217, 119, 6, 0.4);
+}
+.subpage-eco-arrow {
+  color: var(--primary);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+/* UNIFIED SUBPAGE FOOTER */
+.subpage-footer {
+  border-top: 1px solid var(--border);
+  padding: 3rem 1.5rem calc(3.5rem + env(safe-area-inset-bottom, 0px));
+  margin-top: 3.5rem;
+  background: rgba(255, 255, 255, 0.6);
+  text-align: center;
+}
+.subpage-footer-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.subpage-footer-brand {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #0f172a;
+}
+.subpage-footer-desc {
+  font-size: 0.85rem;
+  color: #64748b;
+  max-width: 500px;
+  line-height: 1.55;
+  margin: 0;
+}
+.subpage-footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 0.25rem;
+}
+.subpage-footer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  color: #334155;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+.subpage-footer-link:hover {
+  background: #faf8f5;
+  border-color: rgba(217, 119, 6, 0.4);
+  color: #b45309;
+  transform: translateY(-1px);
+}
+.subpage-footer-copy {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  margin-top: 0.25rem;
+}
+
+/* ============================================
    STICKY FULL-WIDTH HEADER (VERCEL / APPLE STYLE)
 ============================================= */
 .site-header-fixed {
@@ -1287,4 +1488,56 @@ body::before {
   }
   .footer-brand-side { align-items: center; }
   .footer-social-row { justify-content: center; }
+
+  /* Subpage Mobile Overrides */
+  .subpage-nav-inner {
+    padding: 0.65rem 0.95rem;
+    gap: 0.5rem;
+  }
+  .subpage-back-link {
+    padding: 0.32rem 0.6rem;
+    font-size: 0.78rem;
+    gap: 0.3rem;
+  }
+  .subpage-brand-badge {
+    padding: 0.28rem 0.65rem;
+    font-size: 0.75rem;
+  }
+  .subpage-ecosystem {
+    padding: 1.5rem 1rem;
+    margin: 2rem 0 1.5rem;
+    border-radius: 14px;
+  }
+  .subpage-eco-flow {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.35rem;
+  }
+  .subpage-eco-item {
+    width: 100%;
+    justify-content: center;
+    padding: 0.75rem 1rem;
+    font-size: 0.88rem;
+    border-radius: 10px;
+  }
+  .subpage-eco-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(90deg);
+    padding: 0.15rem 0;
+    font-size: 1rem;
+  }
+  .subpage-footer {
+    padding: 2.25rem 1rem calc(3rem + env(safe-area-inset-bottom, 0px));
+    margin-top: 2.5rem;
+  }
+  .subpage-footer-links {
+    width: 100%;
+    gap: 0.5rem;
+  }
+  .subpage-footer-link {
+    flex: 1 1 calc(50% - 0.5rem);
+    justify-content: center;
+  }
 }

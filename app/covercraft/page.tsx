@@ -382,9 +382,6 @@ RULES:
         .cc-nav-fixed { position: sticky; top: 0; z-index: 100; background: rgba(250, 248, 245, 0.9); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: .9rem 0; border-bottom: 1px solid var(--border); }
         .cc-nav-inner { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; }
         @media (max-width: 600px) {
-          .cc-nav-inner { padding: 0 1rem; }
-          .cc-back-text { font-size: 0.8rem; }
-          .cc-badge, .lang-toggle { font-size: 0.74rem; padding: 0.3rem 0.55rem; white-space: nowrap; }
           .cc-container { padding: 0 1rem; }
           .cc-hero { padding: 1.5rem 0 1rem; }
           .cc-hero h1 { font-size: 1.55rem !important; line-height: 1.25 !important; margin-bottom: 0.75rem !important; }
@@ -393,15 +390,32 @@ RULES:
           .cc-card { padding: 1.25rem 1rem; border-radius: 14px; margin: 1rem 0; }
           .cc-input { font-size: 16px; /* Prevents iOS auto-zoom on focus */ }
           .cc-step-label { font-size: 0.65rem; }
-          .cc-tone-row { gap: 0.35rem; }
-          .cc-tone-label { padding: 0.45rem 0.7rem; font-size: 0.75rem; flex: 1 1 calc(33% - 0.35rem); justify-content: center; text-align: center; }
+          .cc-tone-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.45rem;
+          }
+          .cc-tone-label {
+            padding: 0.55rem 0.6rem;
+            font-size: 0.78rem;
+            justify-content: center;
+            text-align: center;
+            border-radius: 8px;
+          }
           .cc-btn-generate { padding: 0.85rem; font-size: 0.9rem; }
-          .cc-action-btn { flex: 1 1 calc(50% - 0.4rem); justify-content: center; padding: 0.65rem 0.5rem; font-size: 0.78rem; text-align: center; }
-          .cc-result-actions { width: 100%; }
-          .cc-ecosystem { padding: 1.35rem 1rem; border-radius: 14px; margin: 1.5rem 0; }
-          .cc-flow { flex-direction: column; align-items: stretch; gap: 0.35rem; }
-          .cc-flow-item { width: 100%; display: flex; align-items: center; justify-content: center; padding: 0.7rem 1rem; font-size: 0.88rem; border-radius: 10px; }
-          .cc-arrow { display: flex; align-items: center; justify-content: center; transform: rotate(90deg); font-size: 1rem; padding: 0.15rem 0; color: var(--amber); }
+          .cc-result-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            width: 100%;
+          }
+          .cc-action-btn {
+            width: 100%;
+            justify-content: center;
+            padding: 0.7rem 0.5rem;
+            font-size: 0.78rem;
+            text-align: center;
+          }
         }
         .cc-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.2rem; background: linear-gradient(135deg, #f59e0b, #d97706); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
         .cc-badge { display: flex; align-items: center; gap: .5rem; font-size: .75rem; color: var(--text-2); background: var(--surface2); border: 1px solid var(--border); border-radius: 100px; padding: .3rem .8rem; }
@@ -476,18 +490,21 @@ RULES:
       `}</style>
 
       <div className="cc-body">
-        <nav className="cc-nav-fixed" style={{ borderBottom: 'none' }}>
-          <div className="cc-nav-inner">
-            <Link href="/" style={{ color: "var(--muted)", textDecoration: "none", fontSize: "0.9rem", fontWeight: 500, display: "flex", alignItems: "center", gap: "0.25rem" }}>
-              <span>←</span> <span className="cc-back-text">{lang === 'en' ? 'Back to Portfolio' : 'Kembali ke Portofolio'}</span>
+        <nav className="subpage-nav">
+          <div className="subpage-nav-inner">
+            <Link href="/" className="subpage-back-link" aria-label={lang === 'en' ? 'Back to Portfolio' : 'Kembali ke Portofolio'}>
+              <span className="subpage-back-icon">←</span>
+              <span>{lang === 'en' ? 'Portfolio' : 'Portofolio'}</span>
             </Link>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-              <div className="cc-badge" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', background: 'var(--surface2)', borderRadius: '99px', border: '1px solid var(--border)' }}>
-                <div className="dot" style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--text)' }}></div>
-                CoverCraft
-              </div>
-              <button onClick={toggleLang} className="lang-toggle" style={{ background: 'transparent', border: '1px solid var(--border)', color: 'var(--text)', borderRadius: '6px', cursor: 'pointer' }}>
-                {lang === "en" ? "EN / ID" : "ID / EN"}
+
+            <div className="subpage-brand-badge">
+              <span>✨</span>
+              <span>CoverCraft</span>
+            </div>
+
+            <div className="site-nav-right">
+              <button onClick={toggleLang} className="lang-toggle" aria-label="Toggle language">
+                {lang === "en" ? "EN · ID" : "ID · EN"}
               </button>
             </div>
           </div>
@@ -676,26 +693,53 @@ RULES:
             </div>
           )}
 
-          <div className="cc-ecosystem">
-            <h3>{t.ecoTitle}</h3>
+          <div className="subpage-ecosystem">
+            <h3><span>⚡</span> {t.ecoTitle}</h3>
             <p>{t.ecoDesc1} <strong>JobTrail</strong> {t.ecoDesc2} <strong>AutoApply Flow</strong> {t.ecoDesc3}</p>
-            <div className="cc-flow">
-              <Link href="/autoapply" className="cc-flow-item">{t.ecoBtn1}</Link>
-              <span className="cc-arrow">→</span>
-              <a href="https://jobtracker-kjmw.vercel.app/demo" target="_blank" rel="noopener" className="cc-flow-item">{t.ecoBtn2}</a>
-              <span className="cc-arrow">→</span>
-              <span className="cc-flow-item active">{t.ecoBtn3}</span>
-              <span className="cc-arrow">→</span>
-              <span className="cc-flow-item">{t.ecoBtn4}</span>
+            <div className="subpage-eco-flow">
+              <Link href="/autoapply" className="subpage-eco-item">
+                <span>🤖</span> {t.ecoBtn1}
+              </Link>
+              <span className="subpage-eco-arrow">→</span>
+              <a href="https://jobtracker-kjmw.vercel.app/demo" target="_blank" rel="noopener noreferrer" className="subpage-eco-item">
+                <span>📋</span> {t.ecoBtn2}
+              </a>
+              <span className="subpage-eco-arrow">→</span>
+              <span className="subpage-eco-item active">
+                <span>✨</span> {t.ecoBtn3}
+              </span>
+              <span className="subpage-eco-arrow">→</span>
+              <span className="subpage-eco-item">
+                <span>🎯</span> {t.ecoBtn4}
+              </span>
             </div>
           </div>
         </div>
 
-        <footer>
-          <div className="cc-container">
-            {t.footer1} <a href="/">Gryven Alverdo Gunawan</a> ·{" "}
-            <a href="https://github.com/gryvnalvrdo" target="_blank" rel="noopener">GitHub</a> ·
-            {t.footer2}
+        <footer className="subpage-footer">
+          <div className="subpage-footer-inner">
+            <div className="subpage-footer-brand">
+              Gryven Alverdo Gunawan<span style={{ color: "var(--amber)" }}>.</span>
+            </div>
+            <p className="subpage-footer-desc">
+              {lang === "en"
+                ? "Full-Stack Engineer & AI Automations Developer. Building high-impact production systems."
+                : "Software Engineer Full-Stack & Otomasi AI. Membangun sistem produksi nyata bernilai tinggi."}
+            </p>
+            <div className="subpage-footer-links">
+              <Link href="/" className="subpage-footer-link">
+                <span>←</span> {lang === "en" ? "Back to Portfolio" : "Ke Portofolio"}
+              </Link>
+              <a href="https://github.com/gryvnalvrdo" target="_blank" rel="noopener noreferrer" className="subpage-footer-link">
+                GitHub ↗
+              </a>
+              <a href="https://www.linkedin.com/in/gryven-alverdo-gunawan-7283ab262/" target="_blank" rel="noopener noreferrer" className="subpage-footer-link">
+                LinkedIn ↗
+              </a>
+            </div>
+            <div className="subpage-footer-copy">
+              © {new Date().getFullYear()} Gryven Alverdo Gunawan. {lang === "en" ? "All rights reserved." : "Hak cipta dilindungi."}
+            </div>
           </div>
         </footer>
       </div>

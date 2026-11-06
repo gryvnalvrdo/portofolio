@@ -202,18 +202,6 @@ export default function AutoApplyPage() {
     <>
       <style>{`
         .aa-body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; }
-        .aa-nav { position:sticky; top:0; z-index:100; background:rgba(250,248,245,0.9); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-bottom:1px solid var(--border); padding:.9rem 0; }
-        .aa-nav-inner { max-width:1000px; margin:0 auto; padding:0 1.5rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
-        @media (max-width: 600px) {
-          .aa-nav-inner { padding: 0 1rem; }
-          .aa-back-text { display: none; }
-          .aa-logo { font-size: 0.85rem !important; }
-          .lang-toggle { font-size: 0.7rem !important; padding: 0.25rem 0.5rem !important; }
-        }
-        .aa-logo { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.1rem; text-decoration:none; color:var(--text); }
-        .aa-nav-links { display:flex; gap:.5rem; }
-        .aa-nav-link { display:flex; align-items:center; gap:.35rem; padding:.4rem .85rem; border-radius:8px; border:1px solid var(--border); background:var(--surface2); color:var(--text); text-decoration:none; font-size:.8rem; font-weight:500; transition:all .2s; white-space:nowrap; }
-        .aa-nav-link:hover { background:var(--border); }
         .aa-container { max-width:1000px; margin:0 auto; padding:0 1.5rem; position:relative; z-index:1; }
         .aa-hero { padding:4rem 0 3rem; text-align:center; }
         .aa-chip { display:inline-flex; align-items:center; gap:.45rem; background:var(--surface2); border:1px solid var(--border); border-radius:100px; padding:.35rem 1rem; font-size:.78rem; color:var(--text); font-weight:500; margin-bottom:1.25rem; }
@@ -280,7 +268,7 @@ export default function AutoApplyPage() {
         @keyframes pulse { 0% { opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); } 70% { opacity: 0.5; box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); } 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
         .live-status-text { font-size: 0.8rem; color: #dc2626; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
         
-        .live-scroll-hint { display: none; }
+        .live-table-wrapper { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
         .live-table { width: 100%; min-width: 500px; border-collapse: collapse; font-family: 'Courier New', monospace; font-size: 0.85rem; }
         .live-table th { text-align: left; padding: 0.75rem 1rem; color: #64748b; font-weight: 600; border-bottom: 1px solid rgba(15,23,42,0.08); }
         .live-table td { padding: 1rem; color: #475569; border-bottom: 1px solid rgba(15,23,42,0.06); }
@@ -292,7 +280,10 @@ export default function AutoApplyPage() {
         .live-badge.applied { background: rgba(16, 185, 129, 0.1); color: #059669; border: 1px solid rgba(16, 185, 129, 0.2); }
         .live-badge.rejected { background: rgba(239, 68, 68, 0.1); color: #dc2626; border: 1px solid rgba(239, 68, 68, 0.2); }
 
+        .live-mobile-cards { display: none; }
+
         @media (max-width: 600px) {
+          .aa-container { padding: 0 1rem; }
           .aa-hero { padding: 1.5rem 0 1rem; }
           .aa-hero h1 { font-size: 1.55rem !important; line-height: 1.25 !important; margin-bottom: 0.75rem !important; }
           .aa-hero p { font-size: 0.88rem !important; line-height: 1.55 !important; margin-bottom: 1.25rem !important; }
@@ -301,40 +292,91 @@ export default function AutoApplyPage() {
           .aa-section-title { font-size: 1.35rem !important; line-height: 1.25 !important; margin-bottom: 0.5rem; }
           .aa-section-desc { font-size: 0.85rem; margin-bottom: 1.5rem; }
           .aa-node { width: 100%; max-width: 320px; padding: 1.15rem 1rem; }
-          .live-feed-container { padding: 1rem 0.85rem; border-radius: 14px; margin-top: 2rem; }
-          .live-header { flex-direction: column; align-items: flex-start; gap: 0.4rem; margin-bottom: 1rem; padding-bottom: 0.75rem; }
-          .live-scroll-hint { display: block; font-size: 0.72rem; color: #64748b; margin-bottom: 0.75rem; }
-          .live-table th, .live-table td { padding: 0.65rem 0.6rem; font-size: 0.78rem; }
           .aa-hero-actions { flex-direction: column; width: 100%; }
           .aa-btn-primary, .aa-btn-outline { width: 100%; justify-content: center; text-align: center; }
-          .aa-ecosystem { padding: 1.35rem 1rem; border-radius: 14px; margin: 1.5rem 0; }
-          .aa-eco-flow { flex-direction: column; align-items: stretch; gap: 0.35rem; }
-          .aa-eco-item { width: 100%; display: flex; align-items: center; justify-content: center; padding: 0.7rem 1rem; font-size: 0.88rem; border-radius: 10px; }
-          .aa-eco-arrow { display: flex; align-items: center; justify-content: center; transform: rotate(90deg); font-size: 1rem; padding: 0.15rem 0; color: var(--amber); }
-        }
 
-        /* ECOSYSTEM */
-        .aa-ecosystem { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:2rem; text-align:center; margin:2rem 0; }
-        .aa-ecosystem h3 { font-family:'Inter',sans-serif; font-size:1.1rem; font-weight:600; margin-bottom:.65rem; color:var(--text); }
-        .aa-ecosystem p { font-size:.9rem; color:var(--muted); line-height:1.7; max-width:580px; margin:0 auto 1.25rem; }
-        .aa-eco-flow { display:flex; align-items:center; justify-content:center; gap:.45rem; flex-wrap:wrap; }
-        .aa-eco-item { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:.42rem .9rem; font-size:.85rem; font-weight:500; text-decoration:none; color:var(--text); transition:all .2s; }
-        .aa-eco-item:hover { background:#ffffff; border-color:rgba(217, 119, 6, 0.4); color:var(--primary); }
-        .aa-eco-item.active { background:var(--primary); border-color:var(--primary); color:#ffffff; }
-        .aa-eco-arrow { color:var(--muted-2); }
-        footer { border-top:1px solid var(--border); padding:2rem 0; text-align:center; font-size:.85rem; color:var(--muted); }
-        footer a { color:var(--text); text-decoration:underline; }
+          /* Responsive Live Feed */
+          .live-feed-container { padding: 1rem 0.85rem; border-radius: 14px; margin-top: 2rem; }
+          .live-header { flex-direction: column; align-items: flex-start; gap: 0.4rem; margin-bottom: 1rem; padding-bottom: 0.75rem; }
+          .live-table-wrapper { display: none; }
+          .live-mobile-cards { display: flex; flex-direction: column; gap: 0.65rem; }
+          .live-mobile-item {
+            background: #faf8f5;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 0.85rem 0.95rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+          }
+          .live-mobile-row-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+          }
+          .live-mobile-company {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #0f172a;
+          }
+          .live-mobile-pos {
+            font-size: 0.85rem;
+            color: var(--primary);
+            font-weight: 500;
+          }
+          .live-mobile-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.74rem;
+            color: var(--muted);
+            margin-top: 0.2rem;
+            padding-top: 0.4rem;
+            border-top: 1px dashed rgba(15, 23, 42, 0.08);
+          }
+          .live-mobile-tag {
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.1);
+            border-radius: 4px;
+            padding: 0.1rem 0.45rem;
+            font-size: 0.68rem;
+            font-weight: 600;
+            color: var(--text-2);
+          }
+
+          /* Responsive Env Vars Table */
+          .aa-table thead { display: none; }
+          .aa-table, .aa-table tbody, .aa-table tr, .aa-table td { display: block; width: 100%; }
+          .aa-table tr {
+            background: #faf8f5;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 0.75rem 0.85rem;
+            margin-bottom: 0.65rem;
+          }
+          .aa-table td { padding: 0.2rem 0; border: none; }
+          .aa-table td:first-child { font-size: 0.8rem; font-weight: 700; color: var(--primary); word-break: break-all; }
+          .aa-table td:last-child { font-size: 0.78rem; color: var(--muted); }
+        }
       `}</style>
 
       <div className="aa-body">
-        <nav className="aa-nav">
-          <div className="aa-nav-inner">
-            <Link href="/" style={{ color: "var(--muted)", textDecoration: "none", fontSize: "0.9rem", fontWeight: 500, display: "flex", alignItems: "center", gap: "0.25rem" }}>
-              <span>←</span> <span className="aa-back-text">{t.back}</span>
+        <nav className="subpage-nav">
+          <div className="subpage-nav-inner">
+            <Link href="/" className="subpage-back-link" aria-label={lang === 'en' ? 'Back to Portfolio' : 'Kembali ke Portofolio'}>
+              <span className="subpage-back-icon">←</span>
+              <span>{lang === 'en' ? 'Portfolio' : 'Portofolio'}</span>
             </Link>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-              <div className="aa-logo">🤖 AutoApply Flow</div>
-              <button onClick={toggleLang} className="lang-toggle" style={{ background: 'transparent', border: '1px solid var(--border)', color: 'var(--text)', padding: '0.3rem 0.6rem', borderRadius: '6px', fontSize: '0.75rem', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+
+            <div className="subpage-brand-badge">
+              <span>🤖</span>
+              <span>AutoApply Flow</span>
+            </div>
+
+            <div className="site-nav-right">
+              <button onClick={toggleLang} className="lang-toggle" aria-label="Toggle language">
                 {lang === "en" ? "EN · ID" : "ID · EN"}
               </button>
             </div>
@@ -370,11 +412,8 @@ export default function AutoApplyPage() {
                 <div className="live-status-text">{t.monitoring}</div>
               </div>
 
-              <div className="live-scroll-hint">
-                {t.scrollHint}
-              </div>
-              
-              <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+              {/* Desktop Table View */}
+              <div className="live-table-wrapper">
                 <table className="live-table">
                   <thead>
                     <tr>
@@ -416,6 +455,44 @@ export default function AutoApplyPage() {
                     )}
                   </tbody>
                 </table>
+              </div>
+
+              {/* Mobile Card Feed View */}
+              <div className="live-mobile-cards">
+                {isFetching && liveJobs.length === 0 ? (
+                  <div style={{ textAlign: "center", padding: "1.5rem", color: "var(--muted)", fontSize: "0.85rem" }}>
+                    {t.connecting}
+                  </div>
+                ) : liveJobs.length === 0 ? (
+                  <div style={{ textAlign: "center", padding: "1.5rem", color: "var(--muted)", fontSize: "0.85rem" }}>
+                    {t.noActivity}
+                  </div>
+                ) : (
+                  liveJobs.map((job) => {
+                    let displayCompany = job.companyName;
+                    let displayPosition = job.position;
+                    if (displayCompany === "Company" && displayPosition.includes(":")) {
+                      const parts = displayPosition.split(":");
+                      displayCompany = parts[0].trim();
+                      displayPosition = parts.slice(1).join(":").trim();
+                    }
+                    return (
+                      <div className="live-mobile-item" key={`mobile-${job.id}`}>
+                        <div className="live-mobile-row-top">
+                          <span className="live-mobile-company">{displayCompany}</span>
+                          <span className={`live-badge ${job.status.toLowerCase()}`}>
+                            {job.status}
+                          </span>
+                        </div>
+                        <div className="live-mobile-pos">{displayPosition}</div>
+                        <div className="live-mobile-meta">
+                          <span>🕒 {new Date(job.appliedDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                          <span className="live-mobile-tag">Scraped & Logged</span>
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
               </div>
             </div>
 
@@ -528,26 +605,53 @@ export default function AutoApplyPage() {
           </section>
 
           {/* ECOSYSTEM */}
-          <div className="aa-ecosystem">
-            <h3>{t.ecoTitle}</h3>
+          <div className="subpage-ecosystem">
+            <h3><span>⚡</span> {t.ecoTitle}</h3>
             <p>{t.ecoDesc}</p>
-            <div className="aa-eco-flow">
-              <span className="aa-eco-item active">{t.ecoBtn1}</span>
-              <span className="aa-eco-arrow">→</span>
-              <a href="https://jobtracker-kjmw.vercel.app/demo" target="_blank" rel="noopener" className="aa-eco-item">{t.ecoBtn2}</a>
-              <span className="aa-eco-arrow">→</span>
-              <Link href="/covercraft" className="aa-eco-item">{t.ecoBtn3}</Link>
-              <span className="aa-eco-arrow">→</span>
-              <span className="aa-eco-item">{t.ecoBtn4}</span>
+            <div className="subpage-eco-flow">
+              <span className="subpage-eco-item active">
+                <span>🤖</span> {t.ecoBtn1}
+              </span>
+              <span className="subpage-eco-arrow">→</span>
+              <a href="https://jobtracker-kjmw.vercel.app/demo" target="_blank" rel="noopener noreferrer" className="subpage-eco-item">
+                <span>📋</span> {t.ecoBtn2}
+              </a>
+              <span className="subpage-eco-arrow">→</span>
+              <Link href="/covercraft" className="subpage-eco-item">
+                <span>✨</span> {t.ecoBtn3}
+              </Link>
+              <span className="subpage-eco-arrow">→</span>
+              <span className="subpage-eco-item">
+                <span>🎯</span> {t.ecoBtn4}
+              </span>
             </div>
           </div>
         </div>
 
-        <footer>
-          <div className="aa-container">
-            {t.footerBuilt} <a href="/">Gryven Alverdo Gunawan</a> ·{" "}
-            <a href="https://github.com/gryvnalvrdo/autoapply-flow" target="_blank" rel="noopener">GitHub</a> ·{" "}
-            {t.footerPart}
+        <footer className="subpage-footer">
+          <div className="subpage-footer-inner">
+            <div className="subpage-footer-brand">
+              Gryven Alverdo Gunawan<span style={{ color: "var(--amber)" }}>.</span>
+            </div>
+            <p className="subpage-footer-desc">
+              {lang === "en"
+                ? "Full-Stack Engineer & AI Automations Developer. Building high-impact production systems."
+                : "Software Engineer Full-Stack & Otomasi AI. Membangun sistem produksi nyata bernilai tinggi."}
+            </p>
+            <div className="subpage-footer-links">
+              <Link href="/" className="subpage-footer-link">
+                <span>←</span> {lang === "en" ? "Back to Portfolio" : "Ke Portofolio"}
+              </Link>
+              <a href="https://github.com/gryvnalvrdo/autoapply-flow" target="_blank" rel="noopener noreferrer" className="subpage-footer-link">
+                GitHub Repository ↗
+              </a>
+              <a href="https://www.linkedin.com/in/gryven-alverdo-gunawan-7283ab262/" target="_blank" rel="noopener noreferrer" className="subpage-footer-link">
+                LinkedIn ↗
+              </a>
+            </div>
+            <div className="subpage-footer-copy">
+              © {new Date().getFullYear()} Gryven Alverdo Gunawan. {lang === "en" ? "All rights reserved." : "Hak cipta dilindungi."}
+            </div>
           </div>
         </footer>
       </div>
