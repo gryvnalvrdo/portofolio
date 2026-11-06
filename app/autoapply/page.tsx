@@ -206,12 +206,13 @@ export default function AutoApplyPage() {
         .aa-hero { padding:4rem 0 3rem; text-align:center; }
         .aa-chip { display:inline-flex; align-items:center; gap:.45rem; background:var(--surface2); border:1px solid var(--border); border-radius:100px; padding:.35rem 1rem; font-size:.78rem; color:var(--text); font-weight:500; margin-bottom:1.25rem; }
         .aa-hero h1 { font-family:'Space Grotesk',sans-serif; font-size:clamp(2rem,5vw,3rem); font-weight:700; line-height:1.1; margin-bottom:.9rem; color:var(--text); }
+        .aa-hero h1 span { background: linear-gradient(135deg, #ffffff 15%, #fbbf24 65%, #f59e0b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         .aa-hero p { color:var(--muted); font-size:1rem; max-width:580px; margin:0 auto 2rem; line-height:1.75; }
         .aa-hero-actions { display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; }
-        .aa-btn-primary { display:inline-flex; align-items:center; gap:.5rem; padding:.8rem 1.6rem; background:linear-gradient(135deg, #f59e0b 0%, #d97706 100%); border:none; border-radius:8px; color:#ffffff; font-family:'Space Grotesk',sans-serif; font-size:.9rem; font-weight:600; text-decoration:none; transition:all .2s; cursor:pointer; box-shadow:0 4px 14px -2px rgba(217, 119, 6, 0.35); }
-        .aa-btn-primary:hover { transform:translateY(-1px); box-shadow:0 8px 22px -4px rgba(217, 119, 6, 0.5); color:#ffffff; }
-        .aa-btn-outline { display:inline-flex; align-items:center; gap:.5rem; padding:.8rem 1.6rem; background:#ffffff; border:1px solid rgba(15,23,42,0.12); border-radius:8px; color:var(--text); font-family:'Space Grotesk',sans-serif; font-size:.9rem; font-weight:600; text-decoration:none; transition:all .2s; box-shadow:0 2px 6px rgba(0,0,0,0.03); }
-        .aa-btn-outline:hover { background:var(--surface2); border-color:var(--border-hover); color:#b45309; }
+        .aa-btn-primary { display:inline-flex; align-items:center; gap:.5rem; padding:.8rem 1.6rem; background:linear-gradient(135deg, #fbbf24 0%, #f59e0b 60%, #d97706 100%); border:none; border-radius:8px; color:#0d1117; font-family:'Space Grotesk',sans-serif; font-size:.9rem; font-weight:700; text-decoration:none; transition:all .2s; cursor:pointer; box-shadow:0 4px 18px -2px rgba(245, 158, 11, 0.35); }
+        .aa-btn-primary:hover { transform:translateY(-1px); box-shadow:0 8px 25px -4px rgba(245, 158, 11, 0.55); color:#0d1117; }
+        .aa-btn-outline { display:inline-flex; align-items:center; gap:.5rem; padding:.8rem 1.6rem; background:var(--surface); border:1px solid var(--border); border-radius:8px; color:var(--text); font-family:'Space Grotesk',sans-serif; font-size:.9rem; font-weight:600; text-decoration:none; transition:all .2s; box-shadow:0 2px 6px rgba(0,0,0,0.2); }
+        .aa-btn-outline:hover { background:var(--surface2); border-color:rgba(245, 158, 11, 0.4); color:#fbbf24; }
         .aa-section { padding:3.5rem 0; }
         .aa-section + .aa-section { border-top:1px solid var(--border); }
         .aa-section-label { font-size:.68rem; font-weight:600; text-transform:uppercase; letter-spacing:.18em; color:var(--muted); margin-bottom:.65rem; display:flex; align-items:center; gap:.5rem; }
@@ -228,7 +229,7 @@ export default function AutoApplyPage() {
         .aa-node p { font-size:.75rem; color:var(--muted); line-height:1.4; }
         .aa-node-badge { display:inline-block; margin-top:.6rem; padding:.15rem .5rem; border-radius:6px; font-size:.65rem; font-weight:600; background:var(--surface2); color:var(--text); border:1px solid var(--border); }
         .aa-node.highlight { border-color:var(--primary); }
-        .aa-node.highlight .aa-node-badge { background:var(--primary); color:#ffffff; border-color:var(--primary); }
+        .aa-node.highlight .aa-node-badge { background:var(--primary); color:#0d1117; border-color:var(--primary); font-weight:700; }
         .aa-connect { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0 .35rem; gap:.15rem; flex-shrink:0; }
         .aa-connect-line { width:32px; height:2px; background:var(--border); position:relative; }
         .aa-connect-line::after { content:''; position:absolute; right:-1px; top:50%; transform:translateY(-50%); width:0; height:0; border-left:5px solid var(--border); border-top:3px solid transparent; border-bottom:3px solid transparent; }
@@ -259,26 +260,26 @@ export default function AutoApplyPage() {
         .aa-table tr:last-child td { border-bottom:none; }
 
         /* LIVE FEED */
-        .live-feed-container { background: #ffffff; border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; margin-top: 3rem; box-shadow: 0 4px 25px rgba(0,0,0,0.04); position: relative; overflow: hidden; }
+        .live-feed-container { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; margin-top: 3rem; box-shadow: 0 4px 25px rgba(0,0,0,0.3); position: relative; overflow: hidden; }
         .live-feed-container::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--primary), transparent); animation: scan 3s linear infinite; }
         @keyframes scan { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
-        .live-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(15,23,42,0.08); padding-bottom: 1rem; }
+        .live-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
         .live-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 0.5rem; }
         .live-indicator { display: inline-block; width: 10px; height: 10px; background-color: #ef4444; border-radius: 50%; box-shadow: 0 0 10px #ef4444; animation: pulse 2s infinite; }
         @keyframes pulse { 0% { opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); } 70% { opacity: 0.5; box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); } 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
-        .live-status-text { font-size: 0.8rem; color: #dc2626; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+        .live-status-text { font-size: 0.8rem; color: #f87171; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
         
         .live-table-wrapper { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
         .live-table { width: 100%; min-width: 500px; border-collapse: collapse; font-family: 'Courier New', monospace; font-size: 0.85rem; }
-        .live-table th { text-align: left; padding: 0.75rem 1rem; color: #64748b; font-weight: 600; border-bottom: 1px solid rgba(15,23,42,0.08); }
-        .live-table td { padding: 1rem; color: #475569; border-bottom: 1px solid rgba(15,23,42,0.06); }
-        .live-table tr:hover td { background: #faf8f5; }
+        .live-table th { text-align: left; padding: 0.75rem 1rem; color: var(--muted); font-weight: 600; border-bottom: 1px solid var(--border); }
+        .live-table td { padding: 1rem; color: var(--text-2); border-bottom: 1px solid var(--border); }
+        .live-table tr:hover td { background: var(--surface2); }
         .live-company { color: var(--text); font-weight: 600; font-family: 'Inter', sans-serif; }
-        .live-position { color: #d97706; }
+        .live-position { color: var(--primary); }
         .live-badge { display: inline-flex; align-items: center; padding: 0.25rem 0.6rem; border-radius: 100px; font-size: 0.75rem; font-weight: 600; font-family: 'Inter', sans-serif; }
-        .live-badge.saved { background: rgba(217, 119, 6, 0.1); color: #d97706; border: 1px solid rgba(217, 119, 6, 0.25); }
-        .live-badge.applied { background: rgba(16, 185, 129, 0.1); color: #059669; border: 1px solid rgba(16, 185, 129, 0.2); }
-        .live-badge.rejected { background: rgba(239, 68, 68, 0.1); color: #dc2626; border: 1px solid rgba(239, 68, 68, 0.2); }
+        .live-badge.saved { background: rgba(245, 158, 11, 0.12); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.25); }
+        .live-badge.applied { background: rgba(16, 185, 129, 0.12); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.25); }
+        .live-badge.rejected { background: rgba(239, 68, 68, 0.12); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.25); }
 
         .live-mobile-cards { display: none; }
 
@@ -301,7 +302,7 @@ export default function AutoApplyPage() {
           .live-table-wrapper { display: none; }
           .live-mobile-cards { display: flex; flex-direction: column; gap: 0.65rem; }
           .live-mobile-item {
-            background: #faf8f5;
+            background: var(--surface2);
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 0.85rem 0.95rem;
@@ -319,7 +320,7 @@ export default function AutoApplyPage() {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
             font-size: 0.95rem;
-            color: #0f172a;
+            color: #f1f5f9;
           }
           .live-mobile-pos {
             font-size: 0.85rem;
@@ -334,11 +335,11 @@ export default function AutoApplyPage() {
             color: var(--muted);
             margin-top: 0.2rem;
             padding-top: 0.4rem;
-            border-top: 1px dashed rgba(15, 23, 42, 0.08);
+            border-top: 1px dashed var(--border);
           }
           .live-mobile-tag {
-            background: #ffffff;
-            border: 1px solid rgba(15, 23, 42, 0.1);
+            background: var(--surface);
+            border: 1px solid var(--border);
             border-radius: 4px;
             padding: 0.1rem 0.45rem;
             font-size: 0.68rem;
@@ -350,7 +351,7 @@ export default function AutoApplyPage() {
           .aa-table thead { display: none; }
           .aa-table, .aa-table tbody, .aa-table tr, .aa-table td { display: block; width: 100%; }
           .aa-table tr {
-            background: #faf8f5;
+            background: var(--surface2);
             border: 1px solid var(--border);
             border-radius: 10px;
             padding: 0.75rem 0.85rem;
