@@ -393,15 +393,15 @@ RULES:
           .cc-action-btn { flex: 1 1 calc(50% - 0.4rem); justify-content: center; padding: 0.65rem 0.5rem; font-size: 0.78rem; text-align: center; }
           .cc-result-actions { width: 100%; }
         }
-        .cc-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.2rem; background: linear-gradient(135deg, #a78bfa, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
-        .cc-badge { display: flex; align-items: center; gap: .5rem; font-size: .75rem; color: #94a3b8; background: rgba(124,58,237,.1); border: 1px solid rgba(139,92,246,.2); border-radius: 100px; padding: .3rem .8rem; }
-        .cc-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: #a78bfa; animation: pulse 2s infinite; }
+        .cc-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.2rem; background: linear-gradient(135deg, #fbbf24, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
+        .cc-badge { display: flex; align-items: center; gap: .5rem; font-size: .75rem; color: #cbd5e1; background: rgba(245,158,11,.1); border: 1px solid rgba(245,158,11,.25); border-radius: 100px; padding: .3rem .8rem; }
+        .cc-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: #f59e0b; animation: pulse 2s infinite; }
         @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
         .cc-container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; position: relative; z-index: 1; }
         .cc-hero { text-align: center; padding: 3.5rem 0 2rem; }
-        .cc-chip { display: inline-flex; align-items: center; gap: .5rem; background: rgba(6,182,212,.1); border: 1px solid rgba(6,182,212,.3); border-radius: 100px; padding: .35rem 1rem; font-size: .8rem; color: #06b6d4; font-weight: 500; margin-bottom: 1.25rem; }
+        .cc-chip { display: inline-flex; align-items: center; gap: .5rem; background: rgba(245,158,11,.1); border: 1px solid rgba(245,158,11,.3); border-radius: 100px; padding: .35rem 1rem; font-size: .8rem; color: #fbbf24; font-weight: 500; margin-bottom: 1.25rem; }
         .cc-hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem,5vw,3rem); font-weight: 700; line-height: 1.1; margin-bottom: .9rem; }
-        .cc-hero h1 span { background: linear-gradient(135deg, #a78bfa, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .cc-hero h1 span { background: linear-gradient(135deg, #ffffff 10%, #fbbf24 60%, #f59e0b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         .cc-hero p { color: #94a3b8; font-size: 1rem; max-width: 520px; margin: 0 auto 1.5rem; line-height: 1.7; }
         .cc-nav { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 0; margin-bottom: 3rem; border: none; }
         .cc-logo, .cc-nav-brand { font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: .5rem; }
@@ -438,13 +438,13 @@ RULES:
         .cc-tone-row { display: flex; gap: .45rem; flex-wrap: wrap; }
         .cc-tone-opt { display: none; }
         .cc-tone-label { display: flex; align-items: center; gap: .3rem; padding: .38rem .85rem; border-radius: 8px; border: 1px solid rgba(255,255,255,.1); font-size: .78rem; cursor: pointer; transition: all .2s; color: #94a3b8; user-select: none; }
-        .cc-tone-opt:checked + .cc-tone-label { background: rgba(124,58,237,.2); border-color: #7c3aed; color: #a78bfa; }
+        .cc-tone-opt:checked + .cc-tone-label { background: rgba(99,102,241,.18); border-color: #6366f1; color: #818cf8; }
         .cc-error { background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.3); border-radius: 10px; padding: .7rem 1rem; font-size: .83rem; color: #fca5a5; margin-top: .75rem; }
-        .cc-btn-generate { width: 100%; padding: .95rem; background: linear-gradient(135deg, #7c3aed, #6d28d9); border: none; border-radius: 12px; font-family: 'Space Grotesk', sans-serif; font-size: .95rem; font-weight: 600; color: white; cursor: pointer; transition: all .3s; margin-top: 1.25rem; position: relative; overflow: hidden; }
-        .cc-btn-generate:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(124,58,237,.4); }
+        .cc-btn-generate { width: 100%; padding: .95rem; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 60%, #d97706 100%); border: none; border-radius: 12px; font-family: 'Space Grotesk', sans-serif; font-size: .95rem; font-weight: 700; color: #0c1017; cursor: pointer; transition: all .3s; margin-top: 1.25rem; position: relative; overflow: hidden; box-shadow: 0 4px 18px -2px rgba(245, 158, 11, 0.35); }
+        .cc-btn-generate:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(245, 158, 11, 0.55); color: #0c1017; }
         .cc-btn-generate:disabled { opacity: .55; cursor: not-allowed; }
         .cc-loading { text-align: center; padding: 2.5rem 0; }
-        .cc-spinner { width: 44px; height: 44px; border: 3px solid rgba(124,58,237,.2); border-top-color: #7c3aed; border-radius: 50%; animation: spin .8s linear infinite; margin: 0 auto .75rem; }
+        .cc-spinner { width: 44px; height: 44px; border: 3px solid rgba(245,158,11,.2); border-top-color: #f59e0b; border-radius: 50%; animation: spin .8s linear infinite; margin: 0 auto .75rem; }
         @keyframes spin { to { transform: rotate(360deg); } }
         .cc-loading p { color: var(--muted); font-size: .9rem; }
         .cc-result { margin-top: 2rem; animation: fadeUp .4s ease; }
@@ -506,9 +506,9 @@ RULES:
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              background: notification.type === 'error' ? 'rgba(239, 68, 68, 0.15)' : notification.type === 'success' ? 'rgba(16, 185, 129, 0.15)' : 'rgba(56, 189, 248, 0.15)',
-              border: `1px solid ${notification.type === 'error' ? 'rgba(239, 68, 68, 0.3)' : notification.type === 'success' ? 'rgba(16, 185, 129, 0.3)' : 'rgba(56, 189, 248, 0.3)'}`,
-              color: notification.type === 'error' ? '#f87171' : notification.type === 'success' ? '#34d399' : '#38bdf8',
+              background: notification.type === 'error' ? 'rgba(239, 68, 68, 0.15)' : notification.type === 'success' ? 'rgba(16, 185, 129, 0.15)' : 'rgba(245, 158, 11, 0.15)',
+              border: `1px solid ${notification.type === 'error' ? 'rgba(239, 68, 68, 0.3)' : notification.type === 'success' ? 'rgba(16, 185, 129, 0.3)' : 'rgba(245, 158, 11, 0.35)'}`,
+              color: notification.type === 'error' ? '#f87171' : notification.type === 'success' ? '#34d399' : '#fbbf24',
               animation: 'fadeUp 0.3s ease'
             }}>
               <span>{notification.msg}</span>
@@ -527,9 +527,9 @@ RULES:
                 type="button" 
                 onClick={fillSampleData}
                 style={{
-                  background: 'rgba(56, 189, 248, 0.1)',
-                  border: '1px solid rgba(56, 189, 248, 0.3)',
-                  color: '#38bdf8',
+                  background: 'rgba(245, 158, 11, 0.12)',
+                  border: '1px solid rgba(245, 158, 11, 0.35)',
+                  color: '#fbbf24',
                   fontSize: '0.78rem',
                   fontWeight: 600,
                   padding: '0.4rem 0.85rem',
@@ -556,7 +556,7 @@ RULES:
               <div className="cc-group full">
                 <label className="cc-label">
                   {t.jobDescLabel} <span>*</span> 
-                  {isScraping && <span style={{ color: "#a78bfa", marginLeft: "10px", fontWeight: "normal", fontSize: "0.75rem" }}>{t.scraping}</span>}
+                  {isScraping && <span style={{ color: "#818cf8", marginLeft: "10px", fontWeight: "normal", fontSize: "0.75rem" }}>{t.scraping}</span>}
                 </label>
                 <textarea 
                   className="cc-input cc-textarea" 
@@ -591,8 +591,8 @@ RULES:
                   <label style={{ 
                     cursor: "pointer", 
                     fontSize: "0.75rem", 
-                    color: "#a78bfa", 
-                    background: "rgba(124,58,237,.1)", 
+                    color: "#818cf8", 
+                    background: "rgba(99,102,241,.12)", 
                     padding: "0.3rem 0.6rem", 
                     borderRadius: "6px",
                     display: "flex",

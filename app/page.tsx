@@ -149,24 +149,6 @@ export default function Home() {
             </RevealWrapper>
 
             <RevealWrapper delay={60}>
-              <p className="hero-desc">{t.hero.sub}</p>
-            </RevealWrapper>
-
-            <RevealWrapper delay={120}>
-              <div className="hero-highlights-strip">
-                <div className="hero-highlight-item">
-                  <span className="hero-highlight-val">3 Shipped</span>
-                  <span className="hero-highlight-lbl">{lang === "id" ? "Alat Suite Dibangun" : "Suite Tools Built"}</span>
-                </div>
-                <div className="hero-highlight-divider" />
-                <div className="hero-highlight-item">
-                  <span className="hero-highlight-val">Laravel 11</span>
-                  <span className="hero-highlight-lbl">{lang === "id" ? "Web Prod Hotel Claro" : "Prod Hotel Web"}</span>
-                </div>
-              </div>
-            </RevealWrapper>
-
-            <RevealWrapper delay={160}>
               <div className="hero-actions">
                 <a href={resumeUrl} target="_blank" rel="noopener noreferrer" className="btn-primary hero-btn-cv">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
@@ -209,7 +191,7 @@ export default function Home() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/photo.jpeg" alt="Gryven Alverdo Gunawan" className="hero-avatar-img" />
                 <div className="hero-avatar-badge">
-                  <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#38bdf8", boxShadow: "0 0 8px #38bdf8" }} />
+                  <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#f59e0b", boxShadow: "0 0 8px #f59e0b" }} />
                   <span>{lang === "id" ? "Makassar · Terbuka Relokasi" : "Makassar · Open to Relocate"}</span>
                 </div>
               </div>
@@ -262,7 +244,7 @@ export default function Home() {
               <a href="https://jobtracker-kjmw.vercel.app/demo" target="_blank" rel="noopener noreferrer" className="pipeline-card">
                 <span className="pipeline-step-badge">02 · TRACKING</span>
                 <div className="pipeline-card-title">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="2.2">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2.2">
                     <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
                     <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
                   </svg>
@@ -278,7 +260,7 @@ export default function Home() {
               <Link href="/covercraft" className="pipeline-card">
                 <span className="pipeline-step-badge">03 · AI GENERATION</span>
                 <div className="pipeline-card-title">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" strokeWidth="2.2">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#818cf8" strokeWidth="2.2">
                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                   </svg>
                   CoverCraft
@@ -294,7 +276,7 @@ export default function Home() {
           <div className="projects-grid">
             {/* PROJECT 1: JOBTRAIL */}
             <RevealWrapper delay={100}>
-              <div className="project-card-modern" style={{ background: "linear-gradient(145deg, rgba(15, 23, 42, 0.7) 0%, rgba(6, 182, 212, 0.04) 100%)" }}>
+              <div className="project-card-modern" style={{ background: "linear-gradient(145deg, rgba(19, 26, 38, 0.75) 0%, rgba(245, 158, 11, 0.05) 100%)" }}>
                 <div className="project-header-top">
                   <div className="project-pill-badge cyan">
                     <span className="project-pill-dot" />
@@ -303,7 +285,7 @@ export default function Home() {
                   <span className="project-index-tag">01 · Live</span>
                 </div>
                 <h3 className="project-card-title">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
                   </svg>
                   {t.projects.jobtrail.title}
@@ -336,7 +318,7 @@ export default function Home() {
 
             {/* PROJECT 2: COVERCRAFT */}
             <RevealWrapper delay={150}>
-              <div className="project-card-modern" style={{ background: "linear-gradient(145deg, rgba(15, 23, 42, 0.7) 0%, rgba(167, 139, 250, 0.04) 100%)" }}>
+              <div className="project-card-modern" style={{ background: "linear-gradient(145deg, rgba(19, 26, 38, 0.75) 0%, rgba(99, 102, 241, 0.05) 100%)" }}>
                 <div className="project-header-top">
                   <div className="project-pill-badge purple">
                     <span className="project-pill-dot" />
@@ -345,7 +327,7 @@ export default function Home() {
                   <span className="project-index-tag">02 · Instant</span>
                 </div>
                 <h3 className="project-card-title">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#818cf8" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
                     <polyline points="14 2 14 8 20 8" />
                     <path d="m9 15 2 2 4-4" />
@@ -366,9 +348,9 @@ export default function Home() {
                     style={{
                       flex: 1,
                       justifyContent: "center",
-                      background: "linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%)",
+                      background: "linear-gradient(135deg, #818cf8 0%, #6366f1 100%)",
                       color: "#fff",
-                      boxShadow: "0 4px 15px -2px rgba(167, 139, 250, 0.35)",
+                      boxShadow: "0 4px 15px -2px rgba(99, 102, 241, 0.35)",
                     }}
                   >
                     <span>{t.projects.covercraft.btn1}</span>
@@ -383,7 +365,7 @@ export default function Home() {
 
             {/* PROJECT 3: AUTOAPPLY FLOW */}
             <RevealWrapper delay={200}>
-              <div className="project-card-modern" style={{ background: "linear-gradient(145deg, rgba(15, 23, 42, 0.7) 0%, rgba(16, 185, 129, 0.04) 100%)" }}>
+              <div className="project-card-modern" style={{ background: "linear-gradient(145deg, rgba(19, 26, 38, 0.75) 0%, rgba(16, 185, 129, 0.05) 100%)" }}>
                 <div className="project-header-top">
                   <div className="project-pill-badge emerald">
                     <span className="project-pill-dot" />
@@ -463,13 +445,13 @@ export default function Home() {
                             fontSize: "0.74rem",
                             padding: "0.25rem 0.65rem",
                             borderRadius: "6px",
-                            background: "rgba(56, 189, 248, 0.12)",
-                            color: "#38bdf8",
+                            background: "rgba(245, 158, 11, 0.12)",
+                            color: "#fbbf24",
                             textDecoration: "none",
                             display: "inline-flex",
                             alignItems: "center",
                             gap: "0.3rem",
-                            border: "1px solid rgba(56, 189, 248, 0.25)",
+                            border: "1px solid rgba(245, 158, 11, 0.3)",
                             fontWeight: 600,
                           }}
                         >
@@ -521,7 +503,7 @@ export default function Home() {
             <RevealWrapper delay={50}>
               <div className="stack-card">
                 <div className="stack-category-title">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="2.2">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2.2">
                     <polyline points="4 7 4 4 20 4 20 7"></polyline>
                     <line x1="9" y1="20" x2="15" y2="20"></line>
                     <line x1="12" y1="4" x2="12" y2="20"></line>
@@ -539,7 +521,7 @@ export default function Home() {
             <RevealWrapper delay={100}>
               <div className="stack-card">
                 <div className="stack-category-title">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" strokeWidth="2.2">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#818cf8" strokeWidth="2.2">
                     <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
                     <line x1="8" y1="21" x2="16" y2="21"></line>
                     <line x1="12" y1="17" x2="12" y2="21"></line>
@@ -693,9 +675,9 @@ export default function Home() {
           opacity: emailCopiedToast ? 1 : 0,
           pointerEvents: "none",
           transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
-          background: "rgba(15, 23, 42, 0.95)",
+          background: "rgba(19, 26, 38, 0.95)",
           backdropFilter: "blur(12px)",
-          border: "1px solid rgba(56, 189, 248, 0.3)",
+          border: "1px solid rgba(245, 158, 11, 0.35)",
           color: "#fff",
           padding: "0.6rem 1.25rem",
           borderRadius: "100px",
@@ -708,7 +690,7 @@ export default function Home() {
           fontWeight: 500,
         }}
       >
-        <span style={{ color: "#38bdf8" }}>✓</span>
+        <span style={{ color: "#fbbf24" }}>✓</span>
         <span>
           {lang === "id"
             ? "Membuka Gmail & email disalin ke clipboard! (gryvnalvrdo@gmail.com)"

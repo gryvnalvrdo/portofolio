@@ -258,9 +258,9 @@ export default function AutoApplyPage() {
         /* CODE BLOCK */
         .aa-code-block { background:#111; border:1px solid var(--border); border-radius:12px; padding:1.25rem 1.5rem; font-family:'Courier New',monospace; font-size:.85rem; color:#e2e8f0; overflow-x:auto; line-height:1.7; }
         .aa-code-block .comment { color:#64748b; }
-        .aa-code-block .key { color:#a78bfa; }
-        .aa-code-block .val { color:#67e8f9; }
-        .aa-code-block .str { color:#6ee7b7; }
+        .aa-code-block .key { color:#818cf8; }
+        .aa-code-block .val { color:#fbbf24; }
+        .aa-code-block .str { color:#34d399; }
 
         /* ENV VARS TABLE */
         .aa-table { width:100%; border-collapse:collapse; margin-top:1rem; }
@@ -271,7 +271,7 @@ export default function AutoApplyPage() {
         .aa-table tr:last-child td { border-bottom:none; }
 
         /* LIVE FEED */
-        .live-feed-container { background: #0b0f19; border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; margin-top: 3rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; overflow: hidden; }
+        .live-feed-container { background: #0c1017; border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; margin-top: 3rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; overflow: hidden; }
         .live-feed-container::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--primary), transparent); animation: scan 3s linear infinite; }
         @keyframes scan { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
         .live-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem; }
@@ -286,9 +286,9 @@ export default function AutoApplyPage() {
         .live-table td { padding: 1rem; color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .live-table tr:hover td { background: rgba(255,255,255,0.02); }
         .live-company { color: #e2e8f0; font-weight: 600; font-family: 'Inter', sans-serif; }
-        .live-position { color: #38bdf8; }
+        .live-position { color: #f59e0b; }
         .live-badge { display: inline-flex; align-items: center; padding: 0.25rem 0.6rem; border-radius: 100px; font-size: 0.75rem; font-weight: 600; font-family: 'Inter', sans-serif; }
-        .live-badge.saved { background: rgba(56, 189, 248, 0.1); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.2); }
+        .live-badge.saved { background: rgba(245, 158, 11, 0.12); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
         .live-badge.applied { background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.2); }
         .live-badge.rejected { background: rgba(244, 63, 94, 0.1); color: #f43f5e; border: 1px solid rgba(244, 63, 94, 0.2); }
 
