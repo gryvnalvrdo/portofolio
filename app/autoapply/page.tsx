@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-
 import { useState, useEffect } from "react";
 
 export default function AutoApplyPage() {
@@ -43,9 +42,10 @@ export default function AutoApplyPage() {
   const t = {
     en: {
       back: "← Back to Portfolio",
+      chip: "🤖 n8n Workflow · Open Source · Import Ready",
       title1: "Automate Your ",
       title2: "Job Discovery",
-      desc: "An n8n workflow that monitors LinkedIn, Glints, and Kalibrr every 6 hours, filters jobs by your criteria, and automatically adds matching listings to JobTrail — so you never miss a relevant opportunity.",
+      desc: "An n8n workflow that monitors LinkedIn, Glints, and Kalibrr every 6 hours, filters jobs by your criteria, and automatically adds matching listings to JobTrail so you never miss a relevant opportunity.",
       btn1: "📥 Download Workflow JSON",
       btn2: "View in JobTrail ↗",
       how: "How It Works",
@@ -58,13 +58,72 @@ export default function AutoApplyPage() {
       monitoring: "Monitoring 24/7",
       liveActivity: "Live Agent Activity",
       connecting: "Connecting to agent...",
-      noActivity: "No recent activity."
+      noActivity: "No recent activity.",
+      scrollHint: "⇄ Scroll horizontally to view full feed",
+      
+      flow1Title: "Schedule Trigger",
+      flow1Desc: "Runs every 6 hours automatically",
+      flow1Badge: "Cron",
+      flow1Conn: "triggers",
+      flow2Title: "Fetch Jobs",
+      flow2Desc: "LinkedIn RSS + Glints + Kalibrr APIs",
+      flow2Badge: "HTTP Request",
+      flow2Conn: "raw data",
+      flow3Title: "Filter Jobs",
+      flow3Desc: "Keywords, location, salary range",
+      flow3Badge: "Code Node",
+      flow3Conn: "matched",
+      flow4Title: "Add to JobTrail",
+      flow4Desc: "POST to JobTrail API endpoint",
+      flow4Badge: "API Integration",
+      flow4Conn: "notify",
+      flow5Title: "Telegram Alert",
+      flow5Desc: "Instant notification for each new job",
+      flow5Badge: "Telegram Bot",
+
+      featLabel: "Features",
+      featTitle: "What the Workflow Does",
+      features: [
+        { icon: "🔄", title: "Multi-Source Monitoring", desc: "Simultaneously monitors LinkedIn RSS feed, Glints, and Kalibrr every 6 hours for new listings." },
+        { icon: "🎯", title: "Smart Keyword Filtering", desc: "Filters jobs by configurable keywords (Next.js, Python, TypeScript, etc.) and location (Indonesia + Remote)." },
+        { icon: "🔗", title: "JobTrail Integration", desc: "Automatically sends matched jobs to JobTrail via HTTP POST and displays them in your dashboard instantly." },
+        { icon: "📱", title: "Telegram Notifications", desc: "Sends a formatted Telegram message for every new match with job title, company, and direct link." },
+        { icon: "🔁", title: "Deduplication", desc: "Tracks job URLs already added to prevent duplicate entries in JobTrail across runs." },
+        { icon: "⚙️", title: "Easy Configuration", desc: "All settings (keywords, location, API endpoints) are environment variables with no code changes needed." },
+      ],
+
+      quickLabel: "Quick Start",
+      quickTitle: "Deploy in 10 Minutes",
+      quickDesc: "Import the workflow JSON into any n8n instance (cloud or self-hosted) and set your environment variables.",
+      comment1: "# 1. Clone the repo",
+      comment2: "# 2. Import workflow.json into n8n\n#    n8n → Workflows → Import → Select workflow.json",
+      comment3: "# 3. Set environment variables in n8n",
+      comment4: "# 4. Activate the workflow and watch jobs flow in!",
+      thVar: "Variable",
+      thDesc: "Description",
+      envVars: [
+        ["JOBTRAIL_API_URL", "Your JobTrail deployment URL + /api/auto-apply"],
+        ["AUTOAPPLY_SECRET", "Secret key to authenticate the incoming webhook"],
+        ["TELEGRAM_BOT_TOKEN", "From @BotFather on Telegram (optional)"],
+        ["TELEGRAM_CHAT_ID", "Your Telegram chat ID for notifications (optional)"],
+        ["KEYWORDS", "Comma-separated job keywords to filter by"],
+      ],
+
+      ecoTitle: "🔗 Part of the Job Hunting Suite",
+      ecoDesc: "AutoApply Flow feeds job listings directly into JobTrail, which then connects to CoverCraft for AI-generated cover letters. Three tools, one seamless pipeline.",
+      ecoBtn1: "🤖 AutoApply Flow",
+      ecoBtn2: "📋 JobTrail",
+      ecoBtn3: "✨ CoverCraft",
+      ecoBtn4: "🎯 You Get Hired",
+      footerBuilt: "Built by",
+      footerPart: "Part of the Job Hunting Suite"
     },
     id: {
       back: "← Kembali ke Portofolio",
+      chip: "🤖 Workflow n8n · Open Source · Siap Pakai",
       title1: "Otomatisasi ",
       title2: "Pencarian Loker",
-      desc: "Alur kerja n8n yang memantau LinkedIn, Glints, dan Kalibrr setiap 6 jam, memfilter loker sesuai kriteria Anda, dan otomatis menambahkannya ke JobTrail — agar tidak ada peluang yang terlewat.",
+      desc: "Alur kerja n8n yang memantau LinkedIn, Glints, dan Kalibrr setiap 6 jam, memfilter loker sesuai kriteria Anda, dan otomatis menambahkannya ke JobTrail agar tidak ada peluang yang terlewat.",
       btn1: "📥 Unduh Workflow JSON",
       btn2: "Lihat di JobTrail ↗",
       how: "Cara Kerjanya",
@@ -77,7 +136,65 @@ export default function AutoApplyPage() {
       monitoring: "Memantau 24/7",
       liveActivity: "Aktivitas Live Agent",
       connecting: "Menghubungkan ke agent...",
-      noActivity: "Tidak ada aktivitas terbaru."
+      noActivity: "Tidak ada aktivitas terbaru.",
+      scrollHint: "⇄ Geser secara horizontal untuk melihat data lengkap",
+
+      flow1Title: "Pemicu Jadwal",
+      flow1Desc: "Berjalan otomatis setiap 6 jam",
+      flow1Badge: "Cron",
+      flow1Conn: "memicu",
+      flow2Title: "Ambil Lowongan",
+      flow2Desc: "API LinkedIn RSS + Glints + Kalibrr",
+      flow2Badge: "HTTP Request",
+      flow2Conn: "data mentah",
+      flow3Title: "Filter Lowongan",
+      flow3Desc: "Kata kunci, lokasi, rentang gaji",
+      flow3Badge: "Code Node",
+      flow3Conn: "cocok",
+      flow4Title: "Kirim ke JobTrail",
+      flow4Desc: "POST ke endpoint API JobTrail",
+      flow4Badge: "Integrasi API",
+      flow4Conn: "notifikasi",
+      flow5Title: "Notifikasi Telegram",
+      flow5Desc: "Pemberitahuan instan untuk setiap loker baru",
+      flow5Badge: "Bot Telegram",
+
+      featLabel: "Fitur",
+      featTitle: "Cara Kerja Alur Otomasi",
+      features: [
+        { icon: "🔄", title: "Pemantauan Multi Sumber", desc: "Secara bersamaan memantau feed RSS LinkedIn, Glints, dan Kalibrr setiap 6 jam untuk lowongan baru." },
+        { icon: "🎯", title: "Filter Kata Kunci Cerdas", desc: "Memfilter loker berdasarkan kata kunci yang dapat diatur (Next.js, Python, TypeScript, dll.) dan lokasi (Indonesia + Remote)." },
+        { icon: "🔗", title: "Integrasi JobTrail", desc: "Secara otomatis mengirimkan loker yang cocok ke JobTrail via HTTP POST dan langsung tampil di dasbor Anda." },
+        { icon: "📱", title: "Notifikasi Telegram", desc: "Mengirim pesan Telegram terformat untuk setiap lowongan baru lengkap dengan judul, perusahaan, dan tautan langsung." },
+        { icon: "🔁", title: "Pencegahan Duplikasi", desc: "Melacak URL pekerjaan yang sudah ditambahkan agar tidak ada data ganda di JobTrail." },
+        { icon: "⚙️", title: "Konfigurasi Mudah", desc: "Semua pengaturan (kata kunci, lokasi, endpoint API) berupa environment variables tanpa perlu ubah kode." },
+      ],
+
+      quickLabel: "Mulai Cepat",
+      quickTitle: "Pasang dalam 10 Menit",
+      quickDesc: "Impor file JSON alur kerja ke instans n8n mana pun (cloud atau self-hosted) dan atur environment variables Anda.",
+      comment1: "# 1. Clone repositori",
+      comment2: "# 2. Impor workflow.json ke n8n\n#    n8n → Workflows → Import → Pilih workflow.json",
+      comment3: "# 3. Pasang environment variables di n8n",
+      comment4: "# 4. Aktifkan alur kerja dan amati lowongan masuk otomatis!",
+      thVar: "Variabel",
+      thDesc: "Deskripsi",
+      envVars: [
+        ["JOBTRAIL_API_URL", "URL deployment JobTrail Anda + /api/auto-apply"],
+        ["AUTOAPPLY_SECRET", "Kunci rahasia untuk autentikasi webhook yang masuk"],
+        ["TELEGRAM_BOT_TOKEN", "Dari @BotFather di Telegram (opsional)"],
+        ["TELEGRAM_CHAT_ID", "ID obrolan Telegram Anda untuk notifikasi (opsional)"],
+        ["KEYWORDS", "Kata kunci pekerjaan dipisahkan koma untuk filter"],
+      ],
+
+      ecoTitle: "🔗 Bagian dari Job Hunting Suite",
+      ecoDesc: "AutoApply Flow menyalurkan lowongan kerja langsung ke JobTrail, yang kemudian terhubung ke CoverCraft untuk membuat cover letter berbasis AI. Tiga alat, satu alur kerja terpadu.",
+      ecoBtn1: "🤖 AutoApply Flow",
+      ecoBtn2: "📋 JobTrail",
+      ecoBtn3: "✨ CoverCraft",
+      ecoBtn4: "🎯 Anda Diterima",
+      footerBuilt: "Dibuat oleh",
+      footerPart: "Bagian dari Job Hunting Suite"
     }
   }[lang as "en" | "id"];
 
@@ -201,7 +318,7 @@ export default function AutoApplyPage() {
         <nav className="aa-nav">
           <div className="aa-nav-inner">
             <Link href="/" style={{ color: "var(--muted)", textDecoration: "none", fontSize: "0.9rem", fontWeight: 500, display: "flex", alignItems: "center", gap: "0.25rem" }}>
-              <span>←</span> <span className="aa-back-text">{lang === 'en' ? 'Back to Portfolio' : 'Kembali ke Portofolio'}</span>
+              <span>←</span> <span className="aa-back-text">{t.back}</span>
             </Link>
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
               <div className="aa-logo">🤖 AutoApply Flow</div>
@@ -215,7 +332,7 @@ export default function AutoApplyPage() {
         <div className="aa-container">
           {/* HERO */}
           <section className="aa-hero">
-            <div className="aa-chip">🤖 n8n Workflow · Open Source · Import-Ready</div>
+            <div className="aa-chip">{t.chip}</div>
             <h1>{t.title1} <span>{t.title2}</span></h1>
             <p>{t.desc}</p>
             <div className="aa-hero-actions">
@@ -242,7 +359,7 @@ export default function AutoApplyPage() {
               </div>
 
               <div className="live-scroll-hint">
-                ⇄ {lang === 'en' ? 'Scroll horizontally to view full feed' : 'Geser untuk melihat data lengkap'}
+                {t.scrollHint}
               </div>
               
               <div style={{ overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
@@ -299,66 +416,59 @@ export default function AutoApplyPage() {
             <div className="aa-flow">
               <div className="aa-node">
                 <span className="aa-node-icon">⏰</span>
-                <h4>Schedule Trigger</h4>
-                <p>Runs every 6 hours automatically</p>
-                <span className="aa-node-badge">Cron</span>
+                <h4>{t.flow1Title}</h4>
+                <p>{t.flow1Desc}</p>
+                <span className="aa-node-badge">{t.flow1Badge}</span>
               </div>
               <div className="aa-connect">
                 <div className="aa-connect-line"></div>
-                <span className="aa-connect-label">triggers</span>
+                <span className="aa-connect-label">{t.flow1Conn}</span>
               </div>
               <div className="aa-node">
                 <span className="aa-node-icon">🔍</span>
-                <h4>Fetch Jobs</h4>
-                <p>LinkedIn RSS + Glints + Kalibrr APIs</p>
-                <span className="aa-node-badge">HTTP Request</span>
+                <h4>{t.flow2Title}</h4>
+                <p>{t.flow2Desc}</p>
+                <span className="aa-node-badge">{t.flow2Badge}</span>
               </div>
               <div className="aa-connect">
                 <div className="aa-connect-line"></div>
-                <span className="aa-connect-label">raw data</span>
+                <span className="aa-connect-label">{t.flow2Conn}</span>
               </div>
               <div className="aa-node">
                 <span className="aa-node-icon">🧹</span>
-                <h4>Filter Jobs</h4>
-                <p>Keywords, location, salary range</p>
-                <span className="aa-node-badge">Code Node</span>
+                <h4>{t.flow3Title}</h4>
+                <p>{t.flow3Desc}</p>
+                <span className="aa-node-badge">{t.flow3Badge}</span>
               </div>
               <div className="aa-connect">
                 <div className="aa-connect-line"></div>
-                <span className="aa-connect-label">matched</span>
+                <span className="aa-connect-label">{t.flow3Conn}</span>
               </div>
               <div className="aa-node highlight">
                 <span className="aa-node-icon">📋</span>
-                <h4>Add to JobTrail</h4>
-                <p>POST to JobTrail API endpoint</p>
-                <span className="aa-node-badge">API Integration</span>
+                <h4>{t.flow4Title}</h4>
+                <p>{t.flow4Desc}</p>
+                <span className="aa-node-badge">{t.flow4Badge}</span>
               </div>
               <div className="aa-connect">
                 <div className="aa-connect-line"></div>
-                <span className="aa-connect-label">notify</span>
+                <span className="aa-connect-label">{t.flow4Conn}</span>
               </div>
               <div className="aa-node">
                 <span className="aa-node-icon">📱</span>
-                <h4>Telegram Alert</h4>
-                <p>Instant notification for each new job</p>
-                <span className="aa-node-badge">Telegram Bot</span>
+                <h4>{t.flow5Title}</h4>
+                <p>{t.flow5Desc}</p>
+                <span className="aa-node-badge">{t.flow5Badge}</span>
               </div>
             </div>
           </section>
 
           {/* FEATURES */}
           <section className="aa-section">
-            <p className="aa-section-label">Features</p>
-            <h2 className="aa-section-title">What the Workflow Does</h2>
+            <p className="aa-section-label">{t.featLabel}</p>
+            <h2 className="aa-section-title">{t.featTitle}</h2>
             <div className="aa-features-grid">
-              {[
-                { icon: "🔄", title: "Multi-Source Monitoring", desc: "Simultaneously monitors LinkedIn RSS feed, Glints, and Kalibrr every 6 hours for new Software Engineer listings." },
-                { icon: "🎯", title: "Smart Keyword Filtering", desc: "Filters jobs by configurable keywords (software engineer, Next.js, Python, etc.) and location (Indonesia + Remote)." },
-                { icon: "🔗", title: "JobTrail Integration", desc: "Automatically sends matched jobs to JobTrail via HTTP POST — they appear in your dashboard instantly." },
-                { icon: "📱", title: "Telegram Notifications", desc: "Sends a formatted Telegram message for every new match with job title, company, and direct link." },
-                { icon: "🔁", title: "Deduplication", desc: "Tracks job URLs already added to prevent duplicate entries in JobTrail across runs." },
-                { icon: "⚙️", title: "Easy Configuration", desc: "All settings (keywords, location, API endpoints) are environment variables — no code changes needed." },
-              ].map((f) => (
+              {t.features.map((f) => (
                 <div className="aa-feature" key={f.title}>
                   <span className="aa-feature-icon">{f.icon}</span>
                   <h3>{f.title}</h3>
@@ -370,39 +480,32 @@ export default function AutoApplyPage() {
 
           {/* SETUP */}
           <section className="aa-section">
-            <p className="aa-section-label">Quick Start</p>
-            <h2 className="aa-section-title">Deploy in 10 Minutes</h2>
-            <p className="aa-section-desc">Import the workflow JSON into any n8n instance (cloud or self-hosted) and set your environment variables.</p>
+            <p className="aa-section-label">{t.quickLabel}</p>
+            <h2 className="aa-section-title">{t.quickTitle}</h2>
+            <p className="aa-section-desc">{t.quickDesc}</p>
 
             <div className="aa-code-block">
-              <span className="comment"># 1. Clone the repo</span>{"\n"}
+              <span className="comment">{t.comment1}</span>{"\n"}
               git clone https://github.com/gryvnalvrdo/autoapply-flow{"\n\n"}
-              <span className="comment"># 2. Import workflow.json into n8n</span>{"\n"}
-              <span className="comment">#    n8n → Workflows → Import → Select workflow.json</span>{"\n\n"}
-              <span className="comment"># 3. Set environment variables in n8n</span>{"\n"}
+              <span className="comment">{t.comment2}</span>{"\n\n"}
+              <span className="comment">{t.comment3}</span>{"\n"}
               <span className="key">JOBTRAIL_API_URL</span>=<span className="str">https://jobtracker-kjmw.vercel.app/api/auto-apply</span>{"\n"}
               <span className="key">AUTOAPPLY_SECRET</span>=<span className="str">your-secret-key</span>{"\n"}
               <span className="key">TELEGRAM_BOT_TOKEN</span>=<span className="str">your-bot-token</span>{"\n"}
               <span className="key">TELEGRAM_CHAT_ID</span>=<span className="str">your-chat-id</span>{"\n\n"}
-              <span className="comment"># 4. Activate the workflow and watch jobs flow in!</span>
+              <span className="comment">{t.comment4}</span>
             </div>
 
             <br />
             <table className="aa-table">
               <thead>
                 <tr>
-                  <th>Variable</th>
-                  <th>Description</th>
+                  <th>{t.thVar}</th>
+                  <th>{t.thDesc}</th>
                 </tr>
               </thead>
               <tbody>
-                {[
-                  ["JOBTRAIL_API_URL", "Your JobTrail deployment URL + /api/auto-apply"],
-                  ["AUTOAPPLY_SECRET", "Secret key to authenticate the incoming webhook"],
-                  ["TELEGRAM_BOT_TOKEN", "From @BotFather on Telegram (optional)"],
-                  ["TELEGRAM_CHAT_ID", "Your Telegram chat ID for notifications (optional)"],
-                  ["KEYWORDS", "Comma-separated job keywords to filter by"],
-                ].map(([k, v]) => (
+                {t.envVars.map(([k, v]) => (
                   <tr key={k}>
                     <td>{k}</td>
                     <td>{v}</td>
@@ -414,25 +517,25 @@ export default function AutoApplyPage() {
 
           {/* ECOSYSTEM */}
           <div className="aa-ecosystem">
-            <h3>🔗 Part of the Job Hunting Suite</h3>
-            <p>AutoApply Flow feeds job listings directly into <strong>JobTrail</strong>, which then connects to <strong>CoverCraft</strong> for AI-generated cover letters. Three tools, one seamless pipeline.</p>
+            <h3>{t.ecoTitle}</h3>
+            <p>{t.ecoDesc}</p>
             <div className="aa-eco-flow">
-              <span className="aa-eco-item active">🤖 AutoApply Flow</span>
+              <span className="aa-eco-item active">{t.ecoBtn1}</span>
               <span className="aa-eco-arrow">→</span>
-              <a href="https://jobtracker-kjmw.vercel.app/demo" target="_blank" rel="noopener" className="aa-eco-item">📋 JobTrail</a>
+              <a href="https://jobtracker-kjmw.vercel.app/demo" target="_blank" rel="noopener" className="aa-eco-item">{t.ecoBtn2}</a>
               <span className="aa-eco-arrow">→</span>
-              <Link href="/covercraft" className="aa-eco-item">✨ CoverCraft</Link>
+              <Link href="/covercraft" className="aa-eco-item">{t.ecoBtn3}</Link>
               <span className="aa-eco-arrow">→</span>
-              <span className="aa-eco-item">🎯 You Get Hired</span>
+              <span className="aa-eco-item">{t.ecoBtn4}</span>
             </div>
           </div>
         </div>
 
         <footer>
           <div className="aa-container">
-            Built by <a href="/">Gryven Alverdo Gunawan</a> ·{" "}
-            <a href="https://github.com/gryvnalvrdo/autoapply-flow" target="_blank" rel="noopener">GitHub</a> ·
-            Part of the Job Hunting Suite
+            {t.footerBuilt} <a href="/">Gryven Alverdo Gunawan</a> ·{" "}
+            <a href="https://github.com/gryvnalvrdo/autoapply-flow" target="_blank" rel="noopener">GitHub</a> ·{" "}
+            {t.footerPart}
           </div>
         </footer>
       </div>

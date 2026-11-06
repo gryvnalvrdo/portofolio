@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Gryven Alverdo Gunawan — Software Engineer",
+  title: "Gryven Alverdo Gunawan · Portfolio",
   description:
-    "Portfolio of Gryven Alverdo Gunawan — Software Engineer building full-stack web applications, automation pipelines, and AI systems. Creator of JobTrail, CoverCraft, and AutoApply Flow.",
+    "Portfolio of Gryven Alverdo Gunawan, building full-stack web applications, automation pipelines, and AI systems. Creator of JobTrail, CoverCraft, and AutoApply Flow.",
   keywords: [
     "Gryven Alverdo Gunawan",
     "Software Engineer",
@@ -15,9 +15,9 @@ export const metadata: Metadata = {
     "Makassar",
   ],
   openGraph: {
-    title: "Gryven Alverdo Gunawan — Software Engineer",
+    title: "Gryven Alverdo Gunawan · Portfolio",
     description:
-      "Full-stack software engineer building high-performance web applications, intelligent automation, and AI systems.",
+      "Full-stack web applications, intelligent automation, and AI systems.",
     type: "website",
     url: "https://portofolio-seven-lac-56.vercel.app",
     siteName: "Gryven Alverdo Gunawan",
@@ -27,15 +27,15 @@ export const metadata: Metadata = {
         url: "https://portofolio-seven-lac-56.vercel.app/photo.jpeg",
         width: 800,
         height: 800,
-        alt: "Gryven Alverdo Gunawan — Software Engineer",
+        alt: "Gryven Alverdo Gunawan",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Gryven Alverdo Gunawan — Software Engineer",
+    title: "Gryven Alverdo Gunawan · Portfolio",
     description:
-      "Full-stack software engineer building high-performance web applications, intelligent automation, and AI systems.",
+      "Full-stack web applications, intelligent automation, and AI systems.",
     images: ["https://portofolio-seven-lac-56.vercel.app/photo.jpeg"],
   },
 };

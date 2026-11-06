@@ -12,7 +12,7 @@ export const dict = {
       badge: "Full-Stack Software Engineer",
       hi: "Hi, I'm",
       role: "Software Engineer",
-      sub: "I engineer full-stack web applications, automation pipelines, and AI systems — focused on building high-performance, production-ready tools that solve real problems.",
+      sub: "I engineer full-stack web applications, automation pipelines, and AI systems, focused on building high-performance, production-ready tools that solve real problems.",
       tagline: "\"Building scalable systems and intelligent automation that solve real problems.\"",
       viewProjects: "View Projects →",
       location: "📍 Makassar · Open to Remote",
@@ -28,13 +28,13 @@ export const dict = {
       title1: "A Developer Who's ",
       title2: "Engineering His Own Job Hunt",
       p1: "I'm a fresh graduate in Informatics Engineering from Universitas Atma Jaya Makassar (GPA 3.88/4.00), passionate about building practical tools that solve real problems.",
-      p2: "During my internship at Hotel Claro Makassar, I served as both IT Support and Web Developer — handling everything from technical support to deploying the hotel's full website. This taught me to be adaptable, resourceful, and always deliver.",
-      p3: "Right now, I'm actively looking for my next role as a Software Engineer. Instead of just sending resumes, I built a whole suite of tools to make the process smarter — and that became this portfolio.",
+      p2: "During my internship at Hotel Claro Makassar, I served as both IT Support and Web Developer, handling everything from technical support to deploying the hotel's full website. This taught me to be adaptable, resourceful, and always deliver.",
+      p3: "Right now, I'm actively looking for my next role as a Software Engineer. Instead of just sending resumes, I built a whole suite of tools to make the process smarter, which became this portfolio.",
       highlightTitle: "💡 Why This Portfolio Exists",
-      highlightText: "Every project here was born from a real need during my job search. JobTrail tracks my applications. AutoApply Flow automates discovery. CoverCraft generates tailored letters. These aren't just demo projects — they're tools I use daily.",
+      highlightText: "Every project here was born from a real need during my job search. JobTrail tracks my applications. AutoApply Flow automates discovery. CoverCraft generates tailored letters. These aren't just demo projects, but tools I use daily.",
       side: [
-        { title: "S1 Teknik Informatika", desc: "Universitas Atma Jaya Makassar · GPA 3.88/4.00 · 2022–2026" },
-        { title: "IT Support Intern & Web Dev", desc: "Hotel Claro Makassar · Aug – Oct 2025" },
+        { title: "S1 Teknik Informatika", desc: "Universitas Atma Jaya Makassar · GPA 3.88/4.00 · 2022 to 2026" },
+        { title: "IT Support Intern & Web Dev", desc: "Hotel Claro Makassar · Aug to Oct 2025" },
         { title: "Based in Makassar", desc: "Open to remote, hybrid, or relocation" },
         { title: "Languages", desc: "Bahasa Indonesia (native) · English (professional)" },
       ]
@@ -43,7 +43,7 @@ export const dict = {
       label: "The Job Hunting Suite",
       title1: "Three Tools. ",
       title2: "One Ecosystem.",
-      desc: "These three projects are not independent demos — they're a connected system I built to automate and optimize my own job search. Each tool feeds into the next, creating an end-to-end pipeline from job discovery to application delivery.",
+      desc: "These three projects are not independent demos, but a connected system I built to automate and optimize my own job search. Each tool feeds into the next, creating an end-to-end pipeline from job discovery to application delivery.",
       nodes: [
         { title: "AutoApply Flow", desc: "n8n workflow that monitors job boards and automatically sends new job listings to JobTrail" },
         { title: "JobTrail", desc: "Full-stack tracker to manage applications, track status, and analyze response rates with charts" },
@@ -55,7 +55,7 @@ export const dict = {
       proofs: [
         { title: "AutoApply Flow → JobTrail", desc: "The n8n workflow sends a POST request to JobTrail's internal API endpoint with job title, company, and URL. The job appears automatically in your JobTrail dashboard." },
         { title: "JobTrail → CoverCraft", desc: "On the JobTrail application detail page, a \"Generate Cover Letter\" button opens CoverCraft with the job title and company pre-filled via URL parameters." },
-        { title: "One Dashboard to Track All", desc: "Every application — whether added manually or via AutoApply Flow — is tracked in JobTrail with status history, follow-up reminders, and response rate analytics." },
+        { title: "One Dashboard to Track All", desc: "Every application, whether added manually or via AutoApply Flow, is tracked in JobTrail with status history, follow-up reminders, and response rate analytics." },
       ]
     },
     projects: {
@@ -74,7 +74,7 @@ export const dict = {
         num: "Project 02 · AI-Powered",
         title: "CoverCraft",
         sub: "AI Cover Letter Generator",
-        desc: "An AI-powered tool that generates personalized, ATS-friendly cover letters from any job description. Built with Gemini AI (ready to use — no sign-up or API key needed). Supports 4 tones: Professional, Enthusiastic, Concise, and Creative. Pre-fills automatically when opened from JobTrail.",
+        desc: "An AI-powered tool that generates personalized, ATS friendly cover letters from any job description. Built with Gemini AI (ready to use without sign-up or API key). Supports 4 tones: Professional, Enthusiastic, Concise, and Creative. Pre-fills automatically when opened from JobTrail.",
         btn1: "🚀 Try CoverCraft",
       },
       autoapply: {
@@ -84,21 +84,6 @@ export const dict = {
         desc: "An n8n workflow that monitors job boards (LinkedIn RSS, Kalibrr, Glints) for matching listings, filters by keywords and location, then automatically sends new jobs to JobTrail via webhook. Also sends Telegram/email notifications so you never miss a relevant opportunity.",
         btn1: "📖 View Workflow Docs",
       }
-    },
-    liveStats: {
-      badge: "Ecosystem in Action · Live Telemetry",
-      source: "Real-time sync from my active job hunting database & automated bots:",
-      pill: "PostgreSQL Live Sync",
-      apps: "Total Applications Sent",
-      appsSub: "Stored in Neon PostgreSQL",
-      interviews: "Active Interview Stages",
-      interviewsSub: "Currently in pipeline",
-      automation: "Automated Job Scouting",
-      automationVal: "Every 6 Hours",
-      automationSub: "n8n scans listings 24/7",
-      speed: "AI Cover Letter Speed",
-      speedVal: "< 3 Seconds",
-      speedSub: "Gemini 2.5 Flash Engine",
     },
     skills: {
       label: "Tech Stack",
@@ -112,7 +97,7 @@ export const dict = {
       liveDemo: "Live Demo",
       items: [
         {
-          date: "Aug 2025 – Oct 2025",
+          date: "Aug 2025 to Oct 2025",
           title: "IT Support Intern & Web Developer",
           org: "Hotel Claro Makassar · Makassar, Indonesia",
           link: "https://hotel-web-iota-pink.vercel.app/",
@@ -124,7 +109,7 @@ export const dict = {
           ]
         },
         {
-          date: "2022 – 2026",
+          date: "2022 to 2026",
           title: "S1 Teknik Informatika",
           org: "Universitas Atma Jaya Makassar · GPA 3.88/4.00",
           desc: [
@@ -145,7 +130,7 @@ export const dict = {
     },
     footer: {
       built: "Designed & built by",
-      part: "Part of the Job Hunting Suite — engineered to land the next role."
+      part: "Part of the Job Hunting Suite, engineered to land the next role."
     }
   },
   id: {
@@ -161,7 +146,7 @@ export const dict = {
       badge: "Software Engineer · Full-Stack",
       hi: "Halo, saya",
       role: "Software Engineer",
-      sub: "Saya merekayasa aplikasi web full-stack, pipeline otomasi, dan integrasi AI — berfokus membangun sistem produksi nyata yang memecahkan masalah kompleks.",
+      sub: "Saya merekayasa aplikasi web full-stack, pipeline otomasi, dan integrasi AI yang berfokus membangun sistem produksi nyata untuk memecahkan masalah kompleks.",
       tagline: "\"Membangun sistem terukur dan otomasi cerdas untuk memecahkan masalah nyata.\"",
       viewProjects: "Lihat Proyek →",
       location: "📍 Makassar · Siap Remote",
@@ -177,13 +162,13 @@ export const dict = {
       title1: "Developer yang ",
       title2: "Merekayasa Pencarian Kerjanya Sendiri",
       p1: "Saya adalah lulusan baru Teknik Informatika dari Universitas Atma Jaya Makassar (IPK 3.88/4.00), bersemangat dalam membangun alat praktis yang memecahkan masalah nyata.",
-      p2: "Selama magang di Hotel Claro Makassar, saya menjabat sebagai IT Support sekaligus Web Developer — menangani segalanya mulai dari dukungan teknis hingga men-deploy website penuh hotel. Hal ini mengajari saya untuk mudah beradaptasi, banyak akal, dan selalu memberikan hasil terbaik.",
-      p3: "Saat ini, saya sedang aktif mencari peran berikutnya sebagai Software Engineer. Daripada sekadar mengirimkan resume, saya membangun serangkaian alat lengkap untuk membuat prosesnya lebih cerdas — dan itulah yang menjadi portofolio ini.",
+      p2: "Selama magang di Hotel Claro Makassar, saya menjabat sebagai IT Support sekaligus Web Developer, menangani segalanya mulai dari dukungan teknis hingga men-deploy website penuh hotel. Hal ini mengajari saya untuk mudah beradaptasi, banyak akal, dan selalu memberikan hasil terbaik.",
+      p3: "Saat ini, saya sedang aktif mencari peran berikutnya sebagai Software Engineer. Daripada sekadar mengirimkan resume, saya membangun serangkaian alat lengkap untuk membuat prosesnya lebih cerdas, dan itulah yang menjadi portofolio ini.",
       highlightTitle: "💡 Mengapa Portofolio Ini Ada",
-      highlightText: "Setiap proyek di sini lahir dari kebutuhan nyata selama saya mencari kerja. JobTrail melacak lamaran saya. AutoApply Flow mengotomatiskan penemuan loker. CoverCraft membuat surat lamaran (cover letter) yang disesuaikan. Ini bukan sekadar proyek demo — ini adalah alat yang saya gunakan setiap hari.",
+      highlightText: "Setiap proyek di sini lahir dari kebutuhan nyata selama saya mencari kerja. JobTrail melacak lamaran saya. AutoApply Flow mengotomatiskan penemuan loker. CoverCraft membuat surat lamaran (cover letter) yang disesuaikan. Ini bukan sekadar proyek demo, melainkan alat yang saya gunakan setiap hari.",
       side: [
-        { title: "S1 Teknik Informatika", desc: "Universitas Atma Jaya Makassar · IPK 3.88/4.00 · 2022–2026" },
-        { title: "IT Support Intern & Web Dev", desc: "Hotel Claro Makassar · Ags – Okt 2025" },
+        { title: "S1 Teknik Informatika", desc: "Universitas Atma Jaya Makassar · IPK 3.88/4.00 · 2022 s.d. 2026" },
+        { title: "IT Support Intern & Web Dev", desc: "Hotel Claro Makassar · Ags s.d. Okt 2025" },
         { title: "Berbasis di Makassar", desc: "Terbuka untuk remote, hybrid, atau relokasi" },
         { title: "Bahasa", desc: "Bahasa Indonesia (Penutur asli) · Inggris (Profesional)" },
       ]
@@ -192,7 +177,7 @@ export const dict = {
       label: "Job Hunting Suite",
       title1: "Tiga Alat. ",
       title2: "Satu Ekosistem.",
-      desc: "Ketiga proyek ini bukanlah demo independen — mereka adalah sistem terhubung yang saya bangun untuk mengotomatisasi dan mengoptimalkan pencarian kerja saya sendiri. Setiap alat memberikan masukan pada alat berikutnya, menciptakan alur ujung-ke-ujung mulai dari penemuan pekerjaan hingga pengiriman lamaran.",
+      desc: "Ketiga proyek ini bukanlah demo independen, melainkan sistem terhubung yang saya bangun untuk mengotomatisasi dan mengoptimalkan pencarian kerja saya sendiri. Setiap alat memberikan masukan pada alat berikutnya, menciptakan alur ujung ke ujung mulai dari penemuan pekerjaan hingga pengiriman lamaran.",
       nodes: [
         { title: "AutoApply Flow", desc: "Alur kerja n8n yang memantau portal lowongan kerja & mengirim otomatis loker baru ke JobTrail" },
         { title: "JobTrail", desc: "Pelacak full-stack untuk mengelola lamaran, melacak status, dan analisis respons" },
@@ -204,7 +189,7 @@ export const dict = {
       proofs: [
         { title: "AutoApply Flow → JobTrail", desc: "Workflow n8n mengirim permintaan POST ke endpoint API internal JobTrail dengan judul pekerjaan, perusahaan, dan URL. Pekerjaan ini muncul otomatis di dashboard JobTrail Anda." },
         { title: "JobTrail → CoverCraft", desc: "Di halaman detail lamaran JobTrail, tombol \"Generate Cover Letter\" membuka CoverCraft dengan judul pekerjaan & perusahaan terisi otomatis melalui URL." },
-        { title: "Satu Dashboard untuk Semua", desc: "Setiap lamaran — baik ditambahkan secara manual maupun via AutoApply Flow — dilacak di JobTrail beserta riwayat status, pengingat follow-up, & analitik respons." },
+        { title: "Satu Dashboard untuk Semua", desc: "Setiap lamaran, baik ditambahkan secara manual maupun via AutoApply Flow, dilacak di JobTrail beserta riwayat status, pengingat follow-up, & analitik respons." },
       ]
     },
     projects: {
@@ -223,7 +208,7 @@ export const dict = {
         num: "Proyek 02 · Bertenaga AI",
         title: "CoverCraft",
         sub: "AI Cover Letter Generator",
-        desc: "Alat bertenaga AI yang menghasilkan cover letter personalisasi & ramah-ATS dari deskripsi lowongan kerja. Ditenagai Gemini AI (langsung pakai — tanpa perlu daftar atau API key). Mendukung 4 nada: Profesional, Antusias, Singkat, & Kreatif. Terisi otomatis ketika dibuka dari JobTrail.",
+        desc: "Alat bertenaga AI yang menghasilkan cover letter personalisasi & ramah ATS dari deskripsi lowongan kerja. Ditenagai Gemini AI (langsung pakai tanpa perlu daftar atau API key). Mendukung 4 nada: Profesional, Antusias, Singkat, & Kreatif. Terisi otomatis ketika dibuka dari JobTrail.",
         btn1: "🚀 Coba CoverCraft",
       },
       autoapply: {
@@ -233,21 +218,6 @@ export const dict = {
         desc: "Alur kerja n8n yang memantau portal kerja (LinkedIn RSS, Kalibrr, Glints) untuk daftar yang cocok, memfilter berdasarkan kata kunci & lokasi, lalu secara otomatis mengirimkan pekerjaan baru ke JobTrail via webhook. Juga mengirimkan notifikasi Telegram/email sehingga tidak terlewatkan.",
         btn1: "📖 Lihat Dok. Workflow",
       }
-    },
-    liveStats: {
-      badge: "Bukti Sistem Bekerja Nyata (Live Telemetry)",
-      source: "Data real-time tersinkronisasi langsung dari database JobTrail & bot otomatisasi saya:",
-      pill: "Sinkronisasi Live PostgreSQL",
-      apps: "Total Lamaran Terkirim",
-      appsSub: "Tersimpan di Neon PostgreSQL",
-      interviews: "Tahap Interview Aktif",
-      interviewsSub: "Sedang berjalan dalam pipeline",
-      automation: "Pencarian Loker Otomatis",
-      automationVal: "Setiap 6 Jam",
-      automationSub: "Bot n8n memindai loker 24/7",
-      speed: "Kecepatan Generator AI",
-      speedVal: "< 3 Detik",
-      speedSub: "Mesin Gemini 2.5 Flash",
     },
     skills: {
       label: "Tumpukan Teknologi",
@@ -261,7 +231,7 @@ export const dict = {
       liveDemo: "Lihat Website",
       items: [
         {
-          date: "Ags 2025 – Okt 2025",
+          date: "Ags 2025 s.d. Okt 2025",
           title: "IT Support Intern & Web Developer",
           org: "Hotel Claro Makassar · Makassar, Indonesia",
           link: "https://hotel-web-iota-pink.vercel.app/",
@@ -273,7 +243,7 @@ export const dict = {
           ]
         },
         {
-          date: "2022 – 2026",
+          date: "2022 s.d. 2026",
           title: "S1 Teknik Informatika",
           org: "Universitas Atma Jaya Makassar · IPK 3.88/4.00",
           desc: [
@@ -289,12 +259,12 @@ export const dict = {
       title1: "Mari ",
       title2: "Bekerja Sama",
       chip: "Terbuka untuk posisi Software Engineer · Siap Remote & Global",
-      desc: "Terbuka untuk peluang Software Engineer & kolaborasi proyek engineering — full-time, remote, atau hybrid. Jika Anda sedang membangun produk inovatif dan membutuhkan developer yang merilis dengan cepat, adaptif, serta menguasai ekosistem web dan AI, mari berdiskusi.",
+      desc: "Terbuka untuk peluang Software Engineer & kolaborasi proyek engineering (full-time, remote, atau hybrid). Jika Anda sedang membangun produk inovatif dan membutuhkan developer yang merilis dengan cepat, adaptif, serta menguasai ekosistem web dan AI, mari berdiskusi.",
       btn: "Sapa Saya 👋"
     },
     footer: {
       built: "Dirancang & dibangun oleh",
-      part: "Bagian dari Job Hunting Suite — direkayasa untuk mendapatkan peran selanjutnya."
+      part: "Bagian dari Job Hunting Suite, direkayasa untuk mendapatkan peran selanjutnya."
     }
   }
 };

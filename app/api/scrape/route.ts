@@ -108,7 +108,7 @@ function extractJobDescription(url: string, html: string): string {
     .replace(/<footer[\s\S]*?<\/footer>/gi, " ")
     .replace(/<aside[\s\S]*?<\/aside>/gi, " ");
 
-  // Site-specific extraction — target known job description containers
+  // Site-specific extraction: target known job description containers
   const sitePatterns: { pattern: RegExp; name: string }[] = [
     // WeWorkRemotely
     { pattern: /<div[^>]*class="[^"]*job-description[^"]*"[^>]*>([\s\S]*?)<\/div>/i, name: "WWR" },

@@ -9,9 +9,9 @@ type Lang = "en" | "id";
 
 export default function Home() {
   const [lang, setLang] = useState<Lang>("en");
-  const [jobStats, setJobStats] = useState({ applications: 0, interviews: 0 });
   const [isPhotoPopupOpen, setIsPhotoPopupOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [emailCopiedToast, setEmailCopiedToast] = useState(false);
   const t = dict[lang];
 
   useEffect(() => {
@@ -27,19 +27,6 @@ export default function Home() {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-
-    // Fetch live job tracking stats from JobTrail Neon DB
-    fetch("https://jobtracker-kjmw.vercel.app/api/public/stats")
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.applications !== undefined) {
-          setJobStats({
-            applications: data.applications,
-            interviews: data.interviews || 0,
-          });
-        }
-      })
-      .catch((err) => console.error("Failed to fetch job stats:", err));
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -66,10 +53,30 @@ export default function Home() {
     };
   }, [isPhotoPopupOpen]);
 
+  const handleEmailClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    // Copy email address to clipboard
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText("gryvnalvrdo@gmail.com").catch(() => {});
+      setEmailCopiedToast(true);
+      setTimeout(() => setEmailCopiedToast(false), 3000);
+    }
+
+    // On desktop browsers, open Gmail Web Compose directly so it always opens regardless of OS mail client settings
+    const isMobile = typeof navigator !== "undefined" && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (!isMobile) {
+      e.preventDefault();
+      window.open(
+        "https://mail.google.com/mail/?view=cm&fs=1&to=gryvnalvrdo@gmail.com",
+        "_blank",
+        "noopener,noreferrer"
+      );
+    }
+  };
+
   const resumeUrl =
     lang === "id"
-      ? "https://drive.google.com/file/d/1IBG1j5z5CY1x_6139-bURoyCCEjZkwEQ/view?usp=sharing"
-      : "https://drive.google.com/file/d/1h_s4sBnCvEn8VgMihjvjM5f4Gp8cO6Qc/view?usp=sharing";
+      ? "https://drive.google.com/file/d/1uL_tACRRxVAA1-R53nNOybsOGDPXvhVg/view?usp=drive_link"
+      : "https://drive.google.com/file/d/1zX5yMg_YAA_XN-gP7eA7DFYSzin1OQuq/view?usp=drive_link";
 
   return (
     <>
@@ -136,32 +143,17 @@ export default function Home() {
         <section className="hero-section">
           <div className="hero-content">
             <RevealWrapper delay={0}>
-              <div className="hero-eyebrow">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="16 18 22 12 16 6"></polyline>
-                  <polyline points="8 6 2 12 8 18"></polyline>
-                </svg>
-                <span>{t.hero.badge}</span>
-              </div>
-            </RevealWrapper>
-
-            <RevealWrapper delay={50}>
               <h1 className="hero-title">
                 {t.hero.hi} <span className="hero-gradient-text">Gryven Alverdo Gunawan.</span>
               </h1>
             </RevealWrapper>
 
-            <RevealWrapper delay={100}>
+            <RevealWrapper delay={60}>
               <p className="hero-desc">{t.hero.sub}</p>
             </RevealWrapper>
 
-            <RevealWrapper delay={130}>
+            <RevealWrapper delay={120}>
               <div className="hero-highlights-strip">
-                <div className="hero-highlight-item">
-                  <span className="hero-highlight-val">3.88 GPA</span>
-                  <span className="hero-highlight-lbl">{lang === "id" ? "Lulusan CS Terbaik" : "Honors CS Grad"}</span>
-                </div>
-                <div className="hero-highlight-divider" />
                 <div className="hero-highlight-item">
                   <span className="hero-highlight-val">3 Shipped</span>
                   <span className="hero-highlight-lbl">{lang === "id" ? "Alat Suite Dibangun" : "Suite Tools Built"}</span>
@@ -434,81 +426,6 @@ export default function Home() {
               </div>
             </RevealWrapper>
           </div>
-
-          {/* 1.3 LIVE ECOSYSTEM PROOF & TELEMETRY */}
-          <RevealWrapper delay={250}>
-            <div className="pulse-panel">
-              <div className="pulse-header">
-                <div>
-                  <div style={{ fontSize: "0.8rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "#38bdf8", marginBottom: "0.3rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                    </svg>
-                    <span>{t.liveStats?.badge || "Ecosystem in Action · Live Telemetry"}</span>
-                  </div>
-                  <div style={{ fontSize: "0.78rem", color: "#94a3b8" }}>
-                    {t.liveStats?.source || "Real-time sync from my active job hunting database & automated bots:"}
-                  </div>
-                </div>
-                <div className="pulse-live-badge">
-                  <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#10b981", boxShadow: "0 0 8px #10b981", animation: "pulse-green 2s infinite" }} />
-                  <span>{t.liveStats?.pill || "PostgreSQL Live Sync"}</span>
-                </div>
-              </div>
-
-              <div className="pulse-grid">
-                <div className="pulse-card">
-                  <div className="pulse-icon-box">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                      <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-                      <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
-                      <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
-                    </svg>
-                  </div>
-                  <div className="pulse-number">{jobStats.applications > 0 ? `${jobStats.applications}+` : "18+"}</div>
-                  <div className="pulse-title">{t.liveStats?.apps || "Total Applications Sent"}</div>
-                  <div className="pulse-sub">{t.liveStats?.appsSub || "Stored in Neon PostgreSQL"}</div>
-                </div>
-
-                <div className="pulse-card">
-                  <div className="pulse-icon-box" style={{ color: "#a78bfa" }}>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                      <circle cx="12" cy="12" r="10"></circle>
-                      <line x1="22" y1="12" x2="18" y2="12"></line>
-                      <line x1="6" y1="12" x2="2" y2="12"></line>
-                      <line x1="12" y1="6" x2="12" y2="2"></line>
-                      <line x1="12" y1="22" x2="12" y2="18"></line>
-                    </svg>
-                  </div>
-                  <div className="pulse-number">{jobStats.interviews > 0 ? jobStats.interviews : "1"}</div>
-                  <div className="pulse-title">{t.liveStats?.interviews || "Active Interview Stages"}</div>
-                  <div className="pulse-sub">{t.liveStats?.interviewsSub || "Currently in pipeline"}</div>
-                </div>
-
-                <div className="pulse-card">
-                  <div className="pulse-icon-box" style={{ color: "#38bdf8" }}>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                    </svg>
-                  </div>
-                  <div className="pulse-number">{t.liveStats?.automationVal || "Every 6 Hours"}</div>
-                  <div className="pulse-title">{t.liveStats?.automation || "Automated Job Scouting"}</div>
-                  <div className="pulse-sub">{t.liveStats?.automationSub || "n8n scans listings 24/7"}</div>
-                </div>
-
-                <div className="pulse-card">
-                  <div className="pulse-icon-box" style={{ color: "#f43f5e" }}>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                      <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"></path>
-                    </svg>
-                  </div>
-                  <div className="pulse-number">{t.liveStats?.speedVal || "< 3 Seconds"}</div>
-                  <div className="pulse-title">{t.liveStats?.speed || "AI Cover Letter Speed"}</div>
-                  <div className="pulse-sub">{t.liveStats?.speedSub || "Gemini 2.5 Flash Engine"}</div>
-                </div>
-              </div>
-            </div>
-          </RevealWrapper>
         </section>
 
         {/* ============================================
@@ -685,7 +602,12 @@ export default function Home() {
               </h2>
               <p className="contact-desc">{t.contact.desc}</p>
               <div className="contact-btns">
-                <a href="mailto:gryvnalvrdo@gmail.com" className="btn-primary" style={{ padding: "0.85rem 2rem", fontSize: "1rem" }}>
+                <a
+                  href="mailto:gryvnalvrdo@gmail.com"
+                  onClick={handleEmailClick}
+                  className="btn-primary"
+                  style={{ padding: "0.85rem 2rem", fontSize: "1rem" }}
+                >
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                     <polyline points="22,6 12,13 2,6"></polyline>
@@ -716,7 +638,7 @@ export default function Home() {
         ============================================= */}
         <footer className="portfolio-footer">
           <div>
-            © 2026 <strong>Gryven Alverdo Gunawan</strong> · Software Engineer · Makassar, Indonesia
+            © 2026 <strong>Gryven Alverdo Gunawan</strong> · Makassar, Indonesia
           </div>
           <div className="footer-social-row">
             <a
@@ -747,6 +669,7 @@ export default function Home() {
             </a>
             <a
               href="mailto:gryvnalvrdo@gmail.com"
+              onClick={handleEmailClick}
               className="footer-icon-btn"
               aria-label="Email Gryven"
             >
@@ -759,6 +682,39 @@ export default function Home() {
           </div>
         </footer>
       </main>
+
+      {/* EMAIL NOTIFICATION TOAST */}
+      <div
+        style={{
+          position: "fixed",
+          bottom: "1.5rem",
+          left: "50%",
+          transform: `translateX(-50%) translateY(${emailCopiedToast ? "0" : "100px"})`,
+          opacity: emailCopiedToast ? 1 : 0,
+          pointerEvents: "none",
+          transition: "all 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
+          background: "rgba(15, 23, 42, 0.95)",
+          backdropFilter: "blur(12px)",
+          border: "1px solid rgba(56, 189, 248, 0.3)",
+          color: "#fff",
+          padding: "0.6rem 1.25rem",
+          borderRadius: "100px",
+          boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
+          zIndex: 9999,
+          display: "flex",
+          alignItems: "center",
+          gap: "0.5rem",
+          fontSize: "0.85rem",
+          fontWeight: 500,
+        }}
+      >
+        <span style={{ color: "#38bdf8" }}>✓</span>
+        <span>
+          {lang === "id"
+            ? "Membuka Gmail & email disalin ke clipboard! (gryvnalvrdo@gmail.com)"
+            : "Opening Gmail & copied to clipboard! (gryvnalvrdo@gmail.com)"}
+        </span>
+      </div>
 
       {/* FLOATING BACK TO TOP BUTTON */}
       <button
