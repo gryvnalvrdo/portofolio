@@ -293,12 +293,24 @@ export default function AutoApplyPage() {
         .live-badge.rejected { background: rgba(244, 63, 94, 0.1); color: #f43f5e; border: 1px solid rgba(244, 63, 94, 0.2); }
 
         @media (max-width: 600px) {
+          .aa-hero { padding: 1.5rem 0 1rem; }
+          .aa-hero h1 { font-size: 1.55rem !important; line-height: 1.25 !important; margin-bottom: 0.75rem !important; }
+          .aa-hero p { font-size: 0.88rem !important; line-height: 1.55 !important; margin-bottom: 1.25rem !important; }
+          .aa-chip { font-size: 0.72rem; padding: 0.3rem 0.75rem; margin-bottom: 0.85rem; max-width: 100%; white-space: normal; text-align: center; }
+          .aa-section { padding: 2.25rem 0; }
+          .aa-section-title { font-size: 1.35rem !important; line-height: 1.25 !important; margin-bottom: 0.5rem; }
+          .aa-section-desc { font-size: 0.85rem; margin-bottom: 1.5rem; }
+          .aa-node { width: 100%; max-width: 320px; padding: 1.15rem 1rem; }
           .live-feed-container { padding: 1rem 0.85rem; border-radius: 14px; margin-top: 2rem; }
           .live-header { flex-direction: column; align-items: flex-start; gap: 0.4rem; margin-bottom: 1rem; padding-bottom: 0.75rem; }
           .live-scroll-hint { display: block; font-size: 0.72rem; color: #64748b; margin-bottom: 0.75rem; }
           .live-table th, .live-table td { padding: 0.65rem 0.6rem; font-size: 0.78rem; }
           .aa-hero-actions { flex-direction: column; width: 100%; }
           .aa-btn-primary, .aa-btn-outline { width: 100%; justify-content: center; text-align: center; }
+          .aa-ecosystem { padding: 1.35rem 1rem; border-radius: 14px; margin: 1.5rem 0; }
+          .aa-eco-flow { flex-direction: column; align-items: stretch; gap: 0.35rem; }
+          .aa-eco-item { width: 100%; display: flex; align-items: center; justify-content: center; padding: 0.7rem 1rem; font-size: 0.88rem; border-radius: 10px; }
+          .aa-eco-arrow { display: flex; align-items: center; justify-content: center; transform: rotate(90deg); font-size: 1rem; padding: 0.15rem 0; color: var(--amber); }
         }
 
         /* ECOSYSTEM */
@@ -322,8 +334,8 @@ export default function AutoApplyPage() {
             </Link>
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
               <div className="aa-logo">🤖 AutoApply Flow</div>
-              <button onClick={toggleLang} className="lang-toggle" style={{ background: 'transparent', border: '1px solid var(--border)', color: 'var(--text)', padding: '0.3rem 0.6rem', borderRadius: '6px', fontSize: '0.75rem', cursor: 'pointer' }}>
-                {lang === "en" ? "EN / ID" : "ID / EN"}
+              <button onClick={toggleLang} className="lang-toggle" style={{ background: 'transparent', border: '1px solid var(--border)', color: 'var(--text)', padding: '0.3rem 0.6rem', borderRadius: '6px', fontSize: '0.75rem', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                {lang === "en" ? "EN · ID" : "ID · EN"}
               </button>
             </div>
           </div>

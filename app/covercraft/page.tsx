@@ -383,15 +383,25 @@ RULES:
         .cc-nav-inner { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; justify-content: space-between; }
         @media (max-width: 600px) {
           .cc-nav-inner { padding: 0 1rem; }
-          .cc-back-text { display: none; }
-          .cc-badge, .lang-toggle { font-size: 0.7rem; padding: 0.25rem 0.5rem; }
+          .cc-back-text { font-size: 0.8rem; }
+          .cc-badge, .lang-toggle { font-size: 0.74rem; padding: 0.3rem 0.55rem; white-space: nowrap; }
           .cc-container { padding: 0 1rem; }
-          .cc-hero { padding: 2rem 0 1.5rem; }
+          .cc-hero { padding: 1.5rem 0 1rem; }
+          .cc-hero h1 { font-size: 1.55rem !important; line-height: 1.25 !important; margin-bottom: 0.75rem !important; }
+          .cc-hero p { font-size: 0.88rem !important; line-height: 1.55 !important; margin-bottom: 1.25rem !important; }
+          .cc-chip { font-size: 0.72rem; padding: 0.3rem 0.75rem; margin-bottom: 0.85rem; max-width: 100%; white-space: normal; text-align: center; }
           .cc-card { padding: 1.25rem 1rem; border-radius: 14px; margin: 1rem 0; }
           .cc-input { font-size: 16px; /* Prevents iOS auto-zoom on focus */ }
-          .cc-tone-label { padding: 0.45rem 0.75rem; font-size: 0.76rem; }
+          .cc-step-label { font-size: 0.65rem; }
+          .cc-tone-row { gap: 0.35rem; }
+          .cc-tone-label { padding: 0.45rem 0.7rem; font-size: 0.75rem; flex: 1 1 calc(33% - 0.35rem); justify-content: center; text-align: center; }
+          .cc-btn-generate { padding: 0.85rem; font-size: 0.9rem; }
           .cc-action-btn { flex: 1 1 calc(50% - 0.4rem); justify-content: center; padding: 0.65rem 0.5rem; font-size: 0.78rem; text-align: center; }
           .cc-result-actions { width: 100%; }
+          .cc-ecosystem { padding: 1.35rem 1rem; border-radius: 14px; margin: 1.5rem 0; }
+          .cc-flow { flex-direction: column; align-items: stretch; gap: 0.35rem; }
+          .cc-flow-item { width: 100%; display: flex; align-items: center; justify-content: center; padding: 0.7rem 1rem; font-size: 0.88rem; border-radius: 10px; }
+          .cc-arrow { display: flex; align-items: center; justify-content: center; transform: rotate(90deg); font-size: 1rem; padding: 0.15rem 0; color: var(--amber); }
         }
         .cc-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.2rem; background: linear-gradient(135deg, #fbbf24, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-decoration: none; }
         .cc-badge { display: flex; align-items: center; gap: .5rem; font-size: .75rem; color: #cbd5e1; background: rgba(245,158,11,.1); border: 1px solid rgba(245,158,11,.25); border-radius: 100px; padding: .3rem .8rem; }
@@ -407,10 +417,6 @@ RULES:
         .cc-logo, .cc-nav-brand { font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 700; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: .5rem; }
         .cc-badge { background: var(--surface2); color: var(--text); padding: .35rem .75rem; border-radius: 99px; font-size: .75rem; font-weight: 500; border: 1px solid var(--border); display: flex; align-items: center; gap: .5rem; }
         .cc-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text); }
-        .cc-hero { text-align: center; margin-bottom: 3rem; }
-        .cc-hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: 2.75rem; font-weight: 700; color: var(--text); margin-bottom: .75rem; letter-spacing: -0.02em; }
-        .cc-hero p { color: var(--muted); font-size: 1.05rem; max-width: 500px; margin: 0 auto; line-height: 1.6; }
-        .cc-chip { display: inline-flex; align-items: center; gap: .5rem; background: var(--surface2); border: 1px solid var(--border); border-radius: 100px; padding: .35rem 1rem; font-size: .8rem; color: var(--text); font-weight: 500; margin-bottom: 1.25rem; }
         .cc-ecosystem-note { display: inline-flex; align-items: center; gap: .6rem; background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; padding: .65rem 1.2rem; font-size: .82rem; color: var(--muted); margin-top: 1rem; }
         .cc-ecosystem-note a { color: var(--text); text-decoration: underline; font-weight: 500; }
         .cc-prefill { background: rgba(16,185,129,.1); border: 1px solid rgba(16,185,129,.3); border-radius: 10px; padding: .7rem 1rem; font-size: .82rem; color: #6ee7b7; margin-bottom: 1rem; }
