@@ -275,7 +275,7 @@ export default function Home() {
           <div className="projects-grid">
             {/* PROJECT 1: JOBTRAIL */}
             <RevealWrapper delay={100}>
-              <div className="project-card-modern" style={{ background: "linear-gradient(145deg, rgba(19, 26, 38, 0.75) 0%, rgba(245, 158, 11, 0.05) 100%)" }}>
+              <div className="project-card-modern">
                 <div className="project-header-top">
                   <div className="project-pill-badge cyan">
                     <span className="project-pill-dot" />
@@ -317,7 +317,7 @@ export default function Home() {
 
             {/* PROJECT 2: COVERCRAFT */}
             <RevealWrapper delay={150}>
-              <div className="project-card-modern" style={{ background: "linear-gradient(145deg, rgba(19, 26, 38, 0.75) 0%, rgba(99, 102, 241, 0.05) 100%)" }}>
+              <div className="project-card-modern">
                 <div className="project-header-top">
                   <div className="project-pill-badge purple">
                     <span className="project-pill-dot" />
@@ -347,9 +347,9 @@ export default function Home() {
                     style={{
                       flex: 1,
                       justifyContent: "center",
-                      background: "linear-gradient(135deg, #818cf8 0%, #6366f1 100%)",
+                      background: "linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)",
                       color: "#fff",
-                      boxShadow: "0 4px 15px -2px rgba(99, 102, 241, 0.35)",
+                      boxShadow: "0 4px 14px -2px rgba(79, 70, 229, 0.35)",
                     }}
                   >
                     <span>{t.projects.covercraft.btn1}</span>
@@ -364,7 +364,7 @@ export default function Home() {
 
             {/* PROJECT 3: AUTOAPPLY FLOW */}
             <RevealWrapper delay={200}>
-              <div className="project-card-modern" style={{ background: "linear-gradient(145deg, rgba(19, 26, 38, 0.75) 0%, rgba(16, 185, 129, 0.05) 100%)" }}>
+              <div className="project-card-modern">
                 <div className="project-header-top">
                   <div className="project-pill-badge emerald">
                     <span className="project-pill-dot" />
