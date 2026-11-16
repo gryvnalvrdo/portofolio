@@ -23,15 +23,15 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Gryven Alverdo Gunawan | Full-Stack Software Engineer",
+  title: "Gryven Alverdo Gunawan | Portfolio",
   description:
-    "Portfolio of Gryven Alverdo Gunawan, Full-Stack Software Engineer building SaaS applications (JobTrail), AI micro-tools (CoverCraft), n8n automation pipelines (AutoApply Flow), and enterprise reservation systems (Hotel Claro Makassar).",
+    "Portfolio of Gryven Alverdo Gunawan. Web applications (JobTrail, Hotel Claro Makassar), AI micro-tools (CoverCraft), n8n automation workflows (AutoApply Flow), and AI audio similarity search.",
   keywords: [
     "Gryven Alverdo Gunawan",
-    "Software Engineer",
-    "Full Stack Developer",
-    "Next.js 15",
-    "Laravel 11",
+    "Software Developer",
+    "Web Development",
+    "Next.js",
+    "Laravel",
     "TypeScript",
     "Prisma",
     "Python",
@@ -39,9 +39,9 @@ export const metadata: Metadata = {
     "Makassar",
   ],
   openGraph: {
-    title: "Gryven Alverdo Gunawan | Full-Stack Software Engineer",
+    title: "Gryven Alverdo Gunawan | Portfolio",
     description:
-      "Full-stack SaaS applications, hospitality ERP systems, intelligent n8n automation, and AI workflows.",
+      "Web applications, hospitality reservation systems, n8n automation workflows, and AI tools.",
     type: "website",
     url: "https://portofolio-seven-lac-56.vercel.app",
     siteName: "Gryven Alverdo Gunawan",
@@ -57,9 +57,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Gryven Alverdo Gunawan | Full-Stack Software Engineer",
+    title: "Gryven Alverdo Gunawan | Portfolio",
     description:
-      "Full-stack SaaS applications, hospitality ERP systems, intelligent n8n automation, and AI workflows.",
+      "Web applications, hospitality reservation systems, n8n automation workflows, and AI tools.",
     images: ["https://portofolio-seven-lac-56.vercel.app/photo.jpeg"],
   },
 };
