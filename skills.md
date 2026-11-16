@@ -25,11 +25,14 @@
 
 ## 2. Single-Source-of-Truth UX & Dual Theme Support
 
-1. **Zero Repetition**:
-   - Tombol **CV** berada di Header dan di menu mobile (tidak diduplikasi di Hero).
-   - Kontak lengkap (**Email**, **WhatsApp**, **LinkedIn**, **GitHub**) dikonsentrasikan dalam **1 Unified Contact & Footer Section** dengan tata letak simetris dan bersih.
-   - Ekosistem *Job Hunting Suite* (`01 AutoApply Flow`, `02 JobTrail`, `03 CoverCraft`) ditampilkan dalam **1 Interactive Pipeline Inspector** tanpa mengulang kartu proyek di bawahnya.
-   - Karya utama lainnya (**Hotel Claro Makassar** dan **Melody Similarity Detector**) ditampilkan dalam grid 2 kolom yang seimbang.
+1. **Zero Repetition & Honest Inventory**:
+   - Nama brand pada Header ditulis bersih `Gryven Alverdo` tanpa titik dekoratif di belakangnya. Header wajib **solid opaque (`100%` tidak transparan)** agar teks di bawahnya tidak tembus saat di-scroll.
+   - Tombol **CV** berada di Header desktop dan di dalam slide-in drawer mobile (tidak diduplikasi di Hero maupun memakan ruang sempit di top bar mobile).
+   - Kontak lengkap (**Email**, **WhatsApp**, **LinkedIn**, **GitHub**) dikonsentrasikan dalam **1 Unified Contact & Footer Section** berbentuk bar/kartu ramping horizontal (bukan kotak besar kosong), tanpa tombol ekstra `Salin Email` yang berlebihan.
+   - Indeks sistem aktif pada Hero hanya menghitung sistem yang benar-benar ter-deploy (`4 LIVE`: `AutoApply Flow`, `JobTrail`, `CoverCraft`, `Hotel Claro Web`), tanpa ruang kosong besar pada kartu kanan (foto profil mengisi porsi visual secara proporsional di desktop).
+   - Ekosistem *Job Hunting Suite* (`01 AutoApply Flow`, `02 JobTrail`, `03 CoverCraft`) ditampilkan dalam **1 Interactive Pipeline Inspector** lengkap dengan navigasi dua arah (**Sebelumnya** & **Berikutnya**) serta transisi pergantian konten yang halus.
+2. **Mobile-First POV yang Berbeda dari Desktop**:
+   - Tampilan mobile tidak boleh sekadar mengecilkan kotak desktop: profil tampil ringkas horizontal di bagian atas Hero beserta pintasan `2x2`, header mobile hanya menampilkan hamburger kiri atas + nama + `[Tema] [EN/ID]` agar tidak saling bertabrakan, dan transisi antarhalaman (`template.tsx`) maupun perpindahan panel dibuat halus.
 2. **Dark & Light Mode (`data-theme`)**:
    - Portofolio dan seluruh subpage wajib mendukung mode **Dark** dan **Light** yang persisten di `localStorage` dengan rasio kontras teks yang nyaman di kedua tema.
 3. **Interaksi Pipeline yang Jujur (Tanpa Node Terkunci)**:

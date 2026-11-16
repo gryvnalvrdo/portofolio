@@ -619,7 +619,7 @@ export default function AutoApplyPage() {
         <footer className="subpage-footer">
           <div className="subpage-footer-inner">
             <div className="subpage-footer-brand">
-              Gryven Alverdo Gunawan<span style={{ color: "var(--amber)" }}>.</span>
+              Gryven Alverdo Gunawan
             </div>
             <div className="subpage-footer-links">
               <Link href="/" className="subpage-footer-link">

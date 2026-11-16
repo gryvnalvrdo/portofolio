@@ -17,7 +17,6 @@ export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isPhotoPopupOpen, setIsPhotoPopupOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [emailCopied, setEmailCopied] = useState(false);
 
   const t = dict[lang];
 
@@ -59,16 +58,7 @@ export default function Home() {
     };
   }, [mobileMenuOpen, isPhotoPopupOpen]);
 
-  const copyEmailToClipboard = () => {
-    if (typeof navigator !== "undefined" && navigator.clipboard) {
-      navigator.clipboard.writeText("gryvnalvrdo@gmail.com").catch(() => {});
-      setEmailCopied(true);
-      setTimeout(() => setEmailCopied(false), 2500);
-    }
-  };
-
   const handleEmailAction = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    copyEmailToClipboard();
     const isMobile =
       typeof navigator !== "undefined" &&
       /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -148,7 +138,6 @@ export default function Home() {
               }}
             >
               <span>Gryven Alverdo</span>
-              <span className="site-brand-dot">.</span>
             </a>
           </div>
 
@@ -239,7 +228,6 @@ export default function Home() {
         <div className="mobile-drawer-hdr">
           <span className="site-nav-brand">
             <span>Gryven Alverdo</span>
-            <span className="site-brand-dot">.</span>
           </span>
           <button
             type="button"
@@ -349,7 +337,7 @@ export default function Home() {
             </div>
           </RevealWrapper>
 
-          <RevealWrapper delay={60} style={{ height: "100%" }}>
+          <RevealWrapper delay={60} className="hero-reveal-right" style={{ height: "100%" }}>
             <aside className="hero-right-col" style={{ height: "100%" }}>
               <div className="hero-identity-row">
                 <button
@@ -366,9 +354,11 @@ export default function Home() {
                   />
                 </button>
 
-                <div>
-                  <div className="hero-id-name">{t.hero.name}</div>
-                  <div className="hero-id-sub">{t.hero.profileSubtitle}</div>
+                <div className="hero-identity-meta">
+                  <div>
+                    <div className="hero-id-name">{t.hero.name}</div>
+                    <div className="hero-id-sub">{t.hero.profileSubtitle}</div>
+                  </div>
                   <div className="hero-id-loc">{t.hero.profileLocation}</div>
                 </div>
               </div>
@@ -464,7 +454,10 @@ export default function Home() {
               data-theme={currentSystem.theme}
               role="tabpanel"
             >
-              <div className="inspector-body-grid">
+              <div
+                key={currentSystem.id}
+                className="inspector-body-grid inspector-animate-content"
+              >
                 <div>
                   <span className={`inspector-domain-pill ${currentSystem.theme}`}>
                     {currentSystem.index}: {currentSystem.category}
@@ -557,7 +550,10 @@ export default function Home() {
                     <path d="m12 19-7-7 7-7" />
                   </svg>
                   <span>
-                    {t.suite.prevStepLabel}: {prevSystem.index} {prevSystem.name}
+                    {t.suite.prevStepLabel}
+                    <span className="stepper-step-name">
+                      : {prevSystem.index} {prevSystem.name}
+                    </span>
                   </span>
                 </button>
 
@@ -571,7 +567,10 @@ export default function Home() {
                   onClick={() => setActiveSystem(nextSystem.id)}
                 >
                   <span>
-                    {t.suite.nextStepLabel}: {nextSystem.index} {nextSystem.name}
+                    {t.suite.nextStepLabel}
+                    <span className="stepper-step-name">
+                      : {nextSystem.index} {nextSystem.name}
+                    </span>
                   </span>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                     <path d="M5 12h14" />
@@ -709,25 +708,15 @@ export default function Home() {
         </section>
 
         {/* ============================================
-            SECTION 3: UNIFIED CONTACT & FOOTER
+            SECTION 3: UNIFIED CONTACT & FOOTER (SLIM & COMPACT)
         ============================================= */}
         <section id="contact" className="unified-contact-section">
           <RevealWrapper delay={0}>
             <div className="contact-card-clean">
               <div className="contact-header-row">
-                <div>
-                  <div className="section-eyebrow">{t.contact.label}</div>
-                  <h2 className="contact-title">{t.contact.title}</h2>
-                  <p className="contact-desc">{t.contact.desc}</p>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={copyEmailToClipboard}
-                  className={`btn-secondary ${emailCopied ? "copied" : ""}`}
-                >
-                  {emailCopied ? t.contact.copiedBtn : t.contact.copyBtn}
-                </button>
+                <div className="section-eyebrow">{t.contact.label}</div>
+                <h2 className="contact-title">{t.contact.title}</h2>
+                <p className="contact-desc">{t.contact.desc}</p>
               </div>
 
               <div className="contact-channels-grid">
@@ -736,14 +725,22 @@ export default function Home() {
                   onClick={handleEmailAction}
                   className="contact-channel-card"
                 >
-                  <div className="contact-channel-top">
-                    <span>{t.contact.emailLabel}</span>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                      <polyline points="22,6 12,13 2,6" />
-                    </svg>
+                  <div className="contact-channel-left">
+                    <span className="contact-channel-icon" aria-hidden="true">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                        <polyline points="22,6 12,13 2,6" />
+                      </svg>
+                    </span>
+                    <div className="contact-channel-info">
+                      <div className="contact-channel-label">{t.contact.emailLabel}</div>
+                      <div className="contact-channel-value">gryvnalvrdo@gmail.com</div>
+                    </div>
                   </div>
-                  <div className="contact-channel-value">gryvnalvrdo@gmail.com</div>
+                  <svg className="contact-channel-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                    <path d="M7 17L17 7" />
+                    <path d="M7 7h10v10" />
+                  </svg>
                 </a>
 
                 <a
@@ -752,13 +749,21 @@ export default function Home() {
                   rel="noopener noreferrer"
                   className="contact-channel-card"
                 >
-                  <div className="contact-channel-top">
-                    <span>{t.contact.whatsappLabel}</span>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-                    </svg>
+                  <div className="contact-channel-left">
+                    <span className="contact-channel-icon" aria-hidden="true">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+                      </svg>
+                    </span>
+                    <div className="contact-channel-info">
+                      <div className="contact-channel-label">{t.contact.whatsappLabel}</div>
+                      <div className="contact-channel-value">+62 812-5857-6431</div>
+                    </div>
                   </div>
-                  <div className="contact-channel-value">+62 812-5857-6431</div>
+                  <svg className="contact-channel-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                    <path d="M7 17L17 7" />
+                    <path d="M7 7h10v10" />
+                  </svg>
                 </a>
 
                 <a
@@ -767,15 +772,23 @@ export default function Home() {
                   rel="noopener noreferrer"
                   className="contact-channel-card"
                 >
-                  <div className="contact-channel-top">
-                    <span>{t.contact.linkedinLabel}</span>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-                      <rect x="2" y="9" width="4" height="12" />
-                      <circle cx="4" cy="4" r="2" />
-                    </svg>
+                  <div className="contact-channel-left">
+                    <span className="contact-channel-icon" aria-hidden="true">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                        <rect x="2" y="9" width="4" height="12" />
+                        <circle cx="4" cy="4" r="2" />
+                      </svg>
+                    </span>
+                    <div className="contact-channel-info">
+                      <div className="contact-channel-label">{t.contact.linkedinLabel}</div>
+                      <div className="contact-channel-value">gryven-alverdo-7283ab262</div>
+                    </div>
                   </div>
-                  <div className="contact-channel-value">gryven-alverdo-7283ab262</div>
+                  <svg className="contact-channel-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                    <path d="M7 17L17 7" />
+                    <path d="M7 7h10v10" />
+                  </svg>
                 </a>
 
                 <a
@@ -784,13 +797,21 @@ export default function Home() {
                   rel="noopener noreferrer"
                   className="contact-channel-card"
                 >
-                  <div className="contact-channel-top">
-                    <span>{t.contact.githubLabel}</span>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-                    </svg>
+                  <div className="contact-channel-left">
+                    <span className="contact-channel-icon" aria-hidden="true">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                      </svg>
+                    </span>
+                    <div className="contact-channel-info">
+                      <div className="contact-channel-label">{t.contact.githubLabel}</div>
+                      <div className="contact-channel-value">github.com/gryvnalvrdo</div>
+                    </div>
                   </div>
-                  <div className="contact-channel-value">github.com/gryvnalvrdo</div>
+                  <svg className="contact-channel-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                    <path d="M7 17L17 7" />
+                    <path d="M7 7h10v10" />
+                  </svg>
                 </a>
               </div>
 

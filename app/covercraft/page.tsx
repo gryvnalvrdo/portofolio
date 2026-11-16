@@ -794,12 +794,12 @@ RULES:
         <footer className="subpage-footer">
           <div className="subpage-footer-inner">
             <div className="subpage-footer-brand">
-              Gryven Alverdo Gunawan<span style={{ color: "var(--amber)" }}>.</span>
+              Gryven Alverdo Gunawan
             </div>
             <p className="subpage-footer-desc">
               {lang === "en"
-                ? "Full-Stack Software Engineer: Next.js, Laravel, and AI Automation Pipelines."
-                : "Full-Stack Software Engineer: Next.js, Laravel, dan Pipeline Otomasi AI."}
+                ? "Web Applications, Automation Workflows, and AI Tools."
+                : "Aplikasi Web, Alur Otomasi, dan Sistem AI."}
             </p>
             <div className="subpage-footer-links">
               <Link href="/" className="subpage-footer-link">
