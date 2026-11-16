@@ -6,7 +6,7 @@
 **Kontak Terverifikasi (dari CV)**:
 - Email: `gryvnalvrdo@gmail.com`
 - WhatsApp: `+62 812-5857-6431` (`https://wa.me/6281258576431`)
-- LinkedIn: `https://www.linkedin.com/in/gryven-alverdo-7283ab262/`
+- LinkedIn: `https://www.linkedin.com/in/gryven-alverdo-gunawan-7283ab262/`
 - GitHub: `https://github.com/gryvnalvrdo`
 
 ---

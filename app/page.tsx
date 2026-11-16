@@ -14,6 +14,7 @@ export default function Home() {
   const [theme, toggleTheme] = useTheme();
   const [activeSection, setActiveSection] = useState<SectionId>("suite");
   const [activeSystem, setActiveSystem] = useState<SuiteSystemKey>("autoapply");
+  const [expandedMobileSys, setExpandedMobileSys] = useState<SuiteSystemKey | null>("autoapply");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isPhotoPopupOpen, setIsPhotoPopupOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -94,7 +95,15 @@ export default function Home() {
   };
 
   const handleQuickJump = (target: string, system?: SuiteSystemKey) => {
-    if (system) setActiveSystem(system);
+    if (system) {
+      setActiveSystem(system);
+      setExpandedMobileSys(system);
+      const mobileCard = document.getElementById(`mobile-card-${system}`);
+      if (mobileCard && mobileCard.offsetHeight > 0) {
+        mobileCard.scrollIntoView({ behavior: "smooth" });
+        return;
+      }
+    }
     const el = document.getElementById(target);
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
@@ -406,177 +415,308 @@ export default function Home() {
           </RevealWrapper>
 
           <RevealWrapper delay={40}>
-            <div className="subsection-bar">
-              <span className="subsection-label">{t.suite.suiteSubheader}</span>
-              <span className="subsection-hint">{t.suite.suiteInstruction}</span>
-            </div>
-
-            <div
-              className="pipeline-selector-grid"
-              role="tablist"
-              aria-label="Job Hunting Suite"
-            >
-              {t.suite.systems.map((sys, idx) => {
-                const isActive = sys.id === activeSystem;
-                return (
-                  <React.Fragment key={sys.id}>
-                    <button
-                      type="button"
-                      role="tab"
-                      aria-selected={isActive}
-                      data-theme={sys.theme}
-                      className={`pipeline-node-btn ${isActive ? "active" : ""}`}
-                      onClick={() => setActiveSystem(sys.id)}
-                    >
-                      <div className="pipeline-node-top">
-                        <span className="pipeline-node-idx">{sys.index}</span>
-                        <span className="pipeline-node-domain">{sys.category}</span>
-                      </div>
-                      <div className="pipeline-node-name">{sys.name}</div>
-                      <div className="pipeline-node-desc">{sys.shortDesc}</div>
-                    </button>
-
-                    {idx < t.suite.systems.length - 1 && (
-                      <div className="pipeline-connector" aria-hidden="true">
-                        <svg width="20" height="14" viewBox="0 0 20 14" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M2 7h15" />
-                          <path d="m12 2 5 5-5 5" />
-                        </svg>
-                      </div>
-                    )}
-                  </React.Fragment>
-                );
-              })}
-            </div>
-
-            <div
-              className="inspector-panel"
-              data-theme={currentSystem.theme}
-              role="tabpanel"
-            >
-              <div
-                key={currentSystem.id}
-                className="inspector-body-grid inspector-animate-content"
-              >
-                <div>
-                  <span className={`inspector-domain-pill ${currentSystem.theme}`}>
-                    {currentSystem.index}: {currentSystem.category}
-                  </span>
-
-                  <h3 className="inspector-headline">
-                    {currentSystem.name}: {currentSystem.headline}
-                  </h3>
-
-                  <p className="inspector-problem">{currentSystem.overview}</p>
-
-                  <ul className="inspector-points">
-                    {currentSystem.highlights.map((pt, i) => (
-                      <li key={i}>{pt}</li>
-                    ))}
-                  </ul>
-
-                  <div className="inspector-stack-row">
-                    {currentSystem.tools.map((tech) => (
-                      <span className="inspector-stack-tag" key={tech}>
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="inspector-actions">
-                    {currentSystem.primaryBtn.external ? (
-                      <a
-                        href={currentSystem.primaryBtn.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`btn-theme-primary ${currentSystem.theme}`}
-                      >
-                        <span>{currentSystem.primaryBtn.label}</span>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3">
-                          <path d="M7 17L17 7" />
-                          <path d="M7 7h10v10" />
-                        </svg>
-                      </a>
-                    ) : (
-                      <Link
-                        href={currentSystem.primaryBtn.href}
-                        className={`btn-theme-primary ${currentSystem.theme}`}
-                      >
-                        <span>{currentSystem.primaryBtn.label}</span>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3">
-                          <path d="M5 12h14" />
-                          <path d="m12 5 7 7-7 7" />
-                        </svg>
-                      </Link>
-                    )}
-
-                    {currentSystem.secondaryBtn && (
-                      <a
-                        href={currentSystem.secondaryBtn.href}
-                        target={currentSystem.secondaryBtn.external ? "_blank" : undefined}
-                        rel={
-                          currentSystem.secondaryBtn.external
-                            ? "noopener noreferrer"
-                            : undefined
-                        }
-                        className="btn-outline"
-                      >
-                        <span>{currentSystem.secondaryBtn.label}</span>
-                      </a>
-                    )}
-                  </div>
-                </div>
-
-                <div className="flow-summary-card">
-                  <div className="flow-summary-title">{currentSystem.flowTitle}</div>
-                  {currentSystem.flowSteps.map((step) => (
-                    <div className="flow-step-row" key={step.label}>
-                      <span className="flow-step-label">{step.label}</span>
-                      <span className="flow-step-val">{step.value}</span>
-                    </div>
-                  ))}
-                </div>
+            {/* DESKTOP INTERACTIVE PIPELINE VIEW */}
+            <div className="suite-desktop-view">
+              <div className="subsection-bar">
+                <span className="subsection-label">{t.suite.suiteSubheader}</span>
+                <span className="subsection-hint">{t.suite.suiteInstruction}</span>
               </div>
 
-              {/* Clean Previous / Next Stage Stepper Bar */}
-              <div className="inspector-stepper-bar">
-                <button
-                  type="button"
-                  className="stepper-nav-btn"
-                  onClick={() => setActiveSystem(prevSystem.id)}
-                >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                    <path d="M19 12H5" />
-                    <path d="m12 19-7-7 7-7" />
-                  </svg>
-                  <span>
-                    {t.suite.prevStepLabel}
-                    <span className="stepper-step-name">
-                      : {prevSystem.index} {prevSystem.name}
-                    </span>
-                  </span>
-                </button>
+              <div
+                className="pipeline-selector-grid"
+                role="tablist"
+                aria-label="Job Hunting Suite"
+              >
+                {t.suite.systems.map((sys, idx) => {
+                  const isActive = sys.id === activeSystem;
+                  return (
+                    <React.Fragment key={sys.id}>
+                      <button
+                        type="button"
+                        role="tab"
+                        aria-selected={isActive}
+                        data-theme={sys.theme}
+                        className={`pipeline-node-btn ${isActive ? "active" : ""}`}
+                        onClick={() => setActiveSystem(sys.id)}
+                      >
+                        <div className="pipeline-node-top">
+                          <span className="pipeline-node-idx">{sys.index}</span>
+                          <span className="pipeline-node-domain">{sys.category}</span>
+                        </div>
+                        <div className="pipeline-node-name">{sys.name}</div>
+                        <div className="pipeline-node-desc">{sys.shortDesc}</div>
+                      </button>
 
-                <span className="stepper-dots">
-                  {currentSystem.index} / 0{totalStages}
-                </span>
+                      {idx < t.suite.systems.length - 1 && (
+                        <div className="pipeline-connector" aria-hidden="true">
+                          <svg width="20" height="14" viewBox="0 0 20 14" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M2 7h15" />
+                            <path d="m12 2 5 5-5 5" />
+                          </svg>
+                        </div>
+                      )}
+                    </React.Fragment>
+                  );
+                })}
+              </div>
 
-                <button
-                  type="button"
-                  className="stepper-nav-btn"
-                  onClick={() => setActiveSystem(nextSystem.id)}
+              <div
+                className="inspector-panel"
+                data-theme={currentSystem.theme}
+                role="tabpanel"
+              >
+                <div
+                  key={currentSystem.id}
+                  className="inspector-body-grid inspector-animate-content"
                 >
-                  <span>
-                    {t.suite.nextStepLabel}
-                    <span className="stepper-step-name">
-                      : {nextSystem.index} {nextSystem.name}
+                  <div>
+                    <span className={`inspector-domain-pill ${currentSystem.theme}`}>
+                      {currentSystem.index}: {currentSystem.category}
                     </span>
+
+                    <h3 className="inspector-headline">
+                      {currentSystem.name}: {currentSystem.headline}
+                    </h3>
+
+                    <p className="inspector-problem">{currentSystem.overview}</p>
+
+                    <ul className="inspector-points">
+                      {currentSystem.highlights.map((pt, i) => (
+                        <li key={i}>{pt}</li>
+                      ))}
+                    </ul>
+
+                    <div className="inspector-stack-row">
+                      {currentSystem.tools.map((tech) => (
+                        <span className="inspector-stack-tag" key={tech}>
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="inspector-actions">
+                      {currentSystem.primaryBtn.external ? (
+                        <a
+                          href={currentSystem.primaryBtn.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`btn-theme-primary ${currentSystem.theme}`}
+                        >
+                          <span>{currentSystem.primaryBtn.label}</span>
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3">
+                            <path d="M7 17L17 7" />
+                            <path d="M7 7h10v10" />
+                          </svg>
+                        </a>
+                      ) : (
+                        <Link
+                          href={currentSystem.primaryBtn.href}
+                          className={`btn-theme-primary ${currentSystem.theme}`}
+                        >
+                          <span>{currentSystem.primaryBtn.label}</span>
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3">
+                            <path d="M5 12h14" />
+                            <path d="m12 5 7 7-7 7" />
+                          </svg>
+                        </Link>
+                      )}
+
+                      {currentSystem.secondaryBtn && (
+                        <a
+                          href={currentSystem.secondaryBtn.href}
+                          target={currentSystem.secondaryBtn.external ? "_blank" : undefined}
+                          rel={
+                            currentSystem.secondaryBtn.external
+                              ? "noopener noreferrer"
+                              : undefined
+                          }
+                          className="btn-outline"
+                        >
+                          <span>{currentSystem.secondaryBtn.label}</span>
+                        </a>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flow-summary-card">
+                    <div className="flow-summary-title">{currentSystem.flowTitle}</div>
+                    {currentSystem.flowSteps.map((step) => (
+                      <div className="flow-step-row" key={step.label}>
+                        <span className="flow-step-label">{step.label}</span>
+                        <span className="flow-step-val">{step.value}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Clean Previous / Next Stage Stepper Bar */}
+                <div className="inspector-stepper-bar">
+                  <button
+                    type="button"
+                    className="stepper-nav-btn"
+                    onClick={() => setActiveSystem(prevSystem.id)}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                      <path d="M19 12H5" />
+                      <path d="m12 19-7-7 7-7" />
+                    </svg>
+                    <span>
+                      {t.suite.prevStepLabel}
+                      <span className="stepper-step-name">
+                        : {prevSystem.index} {prevSystem.name}
+                      </span>
+                    </span>
+                  </button>
+
+                  <span className="stepper-dots">
+                    {currentSystem.index} / 0{totalStages}
                   </span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                    <path d="M5 12h14" />
-                    <path d="m12 5 7 7-7 7" />
-                  </svg>
-                </button>
+
+                  <button
+                    type="button"
+                    className="stepper-nav-btn"
+                    onClick={() => setActiveSystem(nextSystem.id)}
+                  >
+                    <span>
+                      {t.suite.nextStepLabel}
+                      <span className="stepper-step-name">
+                        : {nextSystem.index} {nextSystem.name}
+                      </span>
+                    </span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                      <path d="M5 12h14" />
+                      <path d="m12 5 7 7-7 7" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* MOBILE-NATIVE VERTICAL PROJECT FEED (ALL 3 CARDS IMMEDIATELY ACCESSIBLE) */}
+            <div className="suite-mobile-view">
+              <div className="subsection-bar">
+                <span className="subsection-label">{t.suite.suiteSubheader}</span>
+              </div>
+
+              <div className="mobile-projects-stack">
+                {t.suite.systems.map((sys) => {
+                  const isOpen = expandedMobileSys === sys.id;
+                  return (
+                    <article
+                      key={sys.id}
+                      id={`mobile-card-${sys.id}`}
+                      className="mobile-project-card"
+                      data-theme={sys.theme}
+                    >
+                      <div className="mobile-project-top">
+                        <span className={`inspector-domain-pill ${sys.theme}`} style={{ marginBottom: 0 }}>
+                          {sys.index}: {sys.category}
+                        </span>
+                      </div>
+
+                      <h3 className="mobile-project-title">{sys.name}</h3>
+                      <p className="mobile-project-summary">{sys.overview}</p>
+
+                      <div className="mobile-project-cta-row">
+                        {sys.primaryBtn.external ? (
+                          <a
+                            href={sys.primaryBtn.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`btn-theme-primary ${sys.theme}`}
+                          >
+                            <span>{sys.primaryBtn.label}</span>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3">
+                              <path d="M7 17L17 7" />
+                              <path d="M7 7h10v10" />
+                            </svg>
+                          </a>
+                        ) : (
+                          <Link
+                            href={sys.primaryBtn.href}
+                            className={`btn-theme-primary ${sys.theme}`}
+                          >
+                            <span>{sys.primaryBtn.label}</span>
+                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3">
+                              <path d="M5 12h14" />
+                              <path d="m12 5 7 7-7 7" />
+                            </svg>
+                          </Link>
+                        )}
+
+                        <button
+                          type="button"
+                          className="mobile-project-toggle-btn"
+                          onClick={() =>
+                            setExpandedMobileSys(isOpen ? null : sys.id)
+                          }
+                          aria-expanded={isOpen}
+                        >
+                          <span>
+                            {isOpen ? t.suite.hideDetailsLabel : t.suite.showDetailsLabel}
+                          </span>
+                          <svg
+                            width="14"
+                            height="14"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.2"
+                            style={{
+                              transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+                              transition: "transform 0.22s ease",
+                            }}
+                          >
+                            <path d="m6 9 6 6 6-6" />
+                          </svg>
+                        </button>
+                      </div>
+
+                      {isOpen && (
+                        <div className="mobile-project-details inspector-animate-content">
+                          <ul className="inspector-points">
+                            {sys.highlights.map((pt, i) => (
+                              <li key={i}>{pt}</li>
+                            ))}
+                          </ul>
+
+                          <div className="mobile-flow-mini-grid">
+                            {sys.flowSteps.map((step) => (
+                              <div className="flow-step-row" key={step.label}>
+                                <span className="flow-step-label">{step.label}</span>
+                                <span className="flow-step-val">{step.value}</span>
+                              </div>
+                            ))}
+                          </div>
+
+                          <div className="inspector-stack-row" style={{ marginBottom: sys.secondaryBtn ? "0.85rem" : 0 }}>
+                            {sys.tools.map((tech) => (
+                              <span className="inspector-stack-tag" key={tech}>
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+
+                          {sys.secondaryBtn && (
+                            <a
+                              href={sys.secondaryBtn.href}
+                              target={sys.secondaryBtn.external ? "_blank" : undefined}
+                              rel={
+                                sys.secondaryBtn.external
+                                  ? "noopener noreferrer"
+                                  : undefined
+                              }
+                              className="btn-outline"
+                              style={{ width: "100%" }}
+                            >
+                              <span>{sys.secondaryBtn.label}</span>
+                            </a>
+                          )}
+                        </div>
+                      )}
+                    </article>
+                  );
+                })}
               </div>
             </div>
           </RevealWrapper>
@@ -767,7 +907,7 @@ export default function Home() {
                 </a>
 
                 <a
-                  href="https://www.linkedin.com/in/gryven-alverdo-7283ab262/"
+                  href="https://www.linkedin.com/in/gryven-alverdo-gunawan-7283ab262/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="contact-channel-card"

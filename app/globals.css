@@ -794,6 +794,89 @@ body::before {
   color: var(--muted);
 }
 
+.suite-desktop-view {
+  display: block;
+}
+.suite-mobile-view {
+  display: none;
+}
+
+.mobile-projects-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-bottom: 1.75rem;
+}
+.mobile-project-card {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 14px;
+  padding: 1.05rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  min-width: 0;
+  max-width: 100%;
+}
+.mobile-project-card[data-theme="emerald"] { border-color: var(--emerald-bdr); }
+.mobile-project-card[data-theme="indigo"]  { border-color: var(--indigo-bdr); }
+.mobile-project-card[data-theme="amber"]   { border-color: var(--amber-bdr); }
+.mobile-project-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.mobile-project-title {
+  font-family: var(--font-display);
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.25;
+}
+.mobile-project-summary {
+  font-size: 0.86rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+.mobile-project-cta-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-top: 0.2rem;
+}
+.mobile-project-cta-row .btn-theme-primary {
+  width: 100%;
+}
+.mobile-project-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  width: 100%;
+  min-height: 38px;
+  padding: 0.45rem 0.8rem;
+  border-radius: 9px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text-2);
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.mobile-project-details {
+  padding-top: 0.75rem;
+  margin-top: 0.25rem;
+  border-top: 1px solid var(--border);
+}
+.mobile-flow-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.45rem;
+  margin-bottom: 0.85rem;
+}
+
 /* ============================================
    SECTION 1A: JOB HUNTING SUITE INSPECTOR
 ============================================= */
@@ -1736,7 +1819,13 @@ body::before {
   }
 
   .portfolio-section {
-    padding: 2.75rem 0;
+    padding: 2.5rem 0;
+  }
+  .suite-desktop-view {
+    display: none;
+  }
+  .suite-mobile-view {
+    display: block;
   }
   .pipeline-connector {
     display: none;

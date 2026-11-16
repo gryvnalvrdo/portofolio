@@ -43,10 +43,10 @@ export const dict = {
     hero: {
       name: "Gryven Alverdo Gunawan",
       headline: "Building practical web applications, automation tools, and AI systems.",
-      sub: "Informatics Engineering graduate from Universitas Atma Jaya Makassar. I build end-to-end digital products, ranging from hotel reservation platforms and tracking dashboards to automated workflows and audio AI tools.",
+      sub: "Informatics Engineering graduate from Atma Jaya Makassar University. I build end-to-end digital products, ranging from hotel reservation platforms and tracking dashboards to automated workflows and audio AI tools.",
       exploreCta: "Explore Projects",
       contactCta: "Contact Me",
-      profileSubtitle: "Universitas Atma Jaya Makassar",
+      profileSubtitle: "Atma Jaya Makassar University",
       profileLocation: "Makassar, Indonesia",
       highlights: [
         { value: "4 Systems", label: "Web & AI Applications" },
@@ -70,6 +70,8 @@ export const dict = {
       suiteInstruction: "Select a stage below to inspect how each application works:",
       prevStepLabel: "Previous",
       nextStepLabel: "Next",
+      showDetailsLabel: "Details & How It Works",
+      hideDetailsLabel: "Hide Details",
       systems: [
         {
           id: "autoapply" as SuiteSystemKey,
@@ -217,7 +219,7 @@ export const dict = {
         {
           period: "2022 to 2026",
           role: "B.S. in Informatics Engineering",
-          org: "Universitas Atma Jaya Makassar",
+          org: "Atma Jaya Makassar University",
           location: "Makassar, Indonesia",
           isFeaturedHotel: false,
           bullets: [
@@ -280,6 +282,8 @@ export const dict = {
       suiteInstruction: "Pilih salah satu tahap di bawah ini untuk melihat cara kerja dan fungsinya:",
       prevStepLabel: "Sebelumnya",
       nextStepLabel: "Berikutnya",
+      showDetailsLabel: "Detail & Cara Kerja",
+      hideDetailsLabel: "Tutup Detail",
       systems: [
         {
           id: "autoapply" as SuiteSystemKey,
