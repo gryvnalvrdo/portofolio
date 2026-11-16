@@ -782,7 +782,7 @@ export default function Home() {
                     </span>
                     <div className="contact-channel-info">
                       <div className="contact-channel-label">{t.contact.linkedinLabel}</div>
-                      <div className="contact-channel-value">gryven-alverdo-7283ab262</div>
+                      <div className="contact-channel-value">Gryven Alverdo Gunawan</div>
                     </div>
                   </div>
                   <svg className="contact-channel-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
@@ -814,12 +814,6 @@ export default function Home() {
                   </svg>
                 </a>
               </div>
-
-              <footer className="contact-footer-bar">
-                <div className="contact-copyright">
-                  © 2026 {t.contact.copyright}
-                </div>
-              </footer>
             </div>
           </RevealWrapper>
         </section>

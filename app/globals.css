@@ -101,6 +101,8 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 76px;
+  max-width: 100%;
+  overflow-x: clip;
   scrollbar-width: thin;
   scrollbar-color: var(--border-strong) var(--bg);
 }
@@ -113,6 +115,7 @@ body {
   font-family: var(--font-sans);
   background-color: var(--bg);
   color: var(--text);
+  max-width: 100%;
   overflow-x: clip;
   line-height: 1.65;
   transition: background-color 0.28s cubic-bezier(0.22, 1, 0.36, 1), color 0.28s cubic-bezier(0.22, 1, 0.36, 1);
@@ -122,11 +125,9 @@ body {
 @keyframes pageEnter {
   from {
     opacity: 0;
-    transform: translateY(10px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
@@ -137,12 +138,12 @@ body {
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
 }
 
 .page-transition-shell {
-  animation: pageEnter 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: pageEnter 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .inspector-animate-content {
@@ -510,11 +511,13 @@ body::before {
    HERO SECTION (EQUAL-HEIGHT 2-COLUMN GRID)
 ============================================= */
 .portfolio-wrapper {
+  width: 100%;
   max-width: 1120px;
   margin: 0 auto;
   padding: 2.25rem 1.5rem 5rem;
   position: relative;
   z-index: 1;
+  overflow-x: clip;
 }
 
 .hero-section {
@@ -906,6 +909,9 @@ body::before {
   grid-template-columns: 1.3fr 0.7fr;
   gap: 1.75rem;
   align-items: start;
+}
+.inspector-body-grid > div {
+  min-width: 0;
 }
 
 .inspector-domain-pill {
@@ -1358,7 +1364,10 @@ body::before {
 .photo-popup-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(5, 7, 12, 0.9);
+  width: 100vw;
+  height: 100dvh;
+  padding: 1rem;
+  background: rgba(5, 7, 12, 0.88);
   backdrop-filter: blur(8px);
   z-index: 9999;
   display: flex;
@@ -1366,16 +1375,18 @@ body::before {
   justify-content: center;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.25s ease, visibility 0.25s ease;
+  pointer-events: none;
+  transition: opacity 0.24s ease, visibility 0.24s ease;
 }
 .photo-popup-overlay.active {
   opacity: 1;
   visibility: visible;
+  pointer-events: auto;
 }
 .photo-popup-content {
   position: relative;
-  max-width: 90vw;
-  max-height: 88vh;
+  max-width: min(92vw, 520px);
+  max-height: 85dvh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1387,25 +1398,31 @@ body::before {
 }
 .photo-popup-close {
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
   color: white;
   font-size: 22px;
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: rgba(15, 23, 42, 0.85);
+  background: rgba(15, 23, 42, 0.88);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.28);
 }
 .photo-popup-img {
+  display: block;
+  width: auto;
+  height: auto;
   max-width: 100%;
-  max-height: 88vh;
+  max-height: 82dvh;
   object-fit: contain;
-  border-radius: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
 }
 
 /* ============================================
@@ -1545,13 +1562,15 @@ body::before {
 }
 
 .reveal {
+  min-width: 0;
+  max-width: 100%;
   opacity: 0;
   transform: translateY(14px);
   transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .reveal.active {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
 /* ============================================
@@ -1604,11 +1623,15 @@ body::before {
     padding: 1rem;
     gap: 0.85rem;
     border-radius: 14px;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
   }
   .hero-identity-row {
     flex-direction: row;
     align-items: center;
     gap: 0.85rem;
+    min-width: 0;
   }
   .hero-avatar-btn {
     width: 68px;
@@ -1622,9 +1645,11 @@ body::before {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.28rem;
+    min-width: 0;
+    flex: 1;
   }
   .hero-id-name {
-    font-size: 0.98rem;
+    font-size: 0.96rem;
     margin-bottom: 0;
   }
   .hero-id-sub {
@@ -1637,22 +1662,35 @@ body::before {
   .hero-index-box {
     padding: 0.7rem;
     gap: 0.45rem;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
   }
   .hero-index-list {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.4rem;
+    min-width: 0;
   }
   .hero-index-item {
-    padding: 0.44rem 0.55rem;
+    min-width: 0;
+    width: 100%;
+    padding: 0.46rem 0.52rem;
+    overflow: hidden;
+  }
+  .hero-index-left {
+    min-width: 0;
+    flex: 1;
+    gap: 0.4rem;
   }
   .hero-index-type {
     display: none;
   }
   .hero-index-name {
-    font-size: 0.76rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-size: 0.73rem;
+    white-space: normal;
+    line-height: 1.25;
+    overflow-wrap: break-word;
   }
 
   .hero-left-col {
@@ -1704,29 +1742,75 @@ body::before {
     display: none;
   }
   .pipeline-selector-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0.4rem;
   }
   .pipeline-node-btn {
+    min-width: 0;
     padding: 0.62rem 0.45rem;
     align-items: center;
     text-align: center;
+    gap: 0.22rem;
   }
   .pipeline-node-top {
     justify-content: center;
   }
-  .pipeline-node-domain,
-  .pipeline-node-desc {
+  .pipeline-node-top .pipeline-node-domain {
     display: none;
   }
+  .pipeline-node-desc {
+    font-size: 0.63rem;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
   .pipeline-node-name {
-    font-size: 0.76rem;
+    font-size: 0.78rem;
   }
 
   .inspector-panel,
   .timeline-card,
   .contact-card-clean {
-    padding: 1.2rem 1rem;
+    padding: 1.15rem 1rem;
+    min-width: 0;
+    max-width: 100%;
+  }
+  .inspector-body-grid {
+    gap: 1rem;
+  }
+  .inspector-headline {
+    font-size: 1.14rem;
+  }
+  .inspector-problem {
+    font-size: 0.86rem;
+    margin-bottom: 0.85rem;
+  }
+  .inspector-points {
+    gap: 0.38rem;
+    margin-bottom: 0.9rem;
+  }
+  .inspector-points li {
+    font-size: 0.82rem;
+  }
+  .flow-summary-card {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.45rem;
+    padding: 0.8rem;
+  }
+  .flow-summary-title {
+    grid-column: 1 / -1;
+    padding-bottom: 0.4rem;
+    margin-bottom: 0.1rem;
+  }
+  .flow-step-row {
+    padding: 0.5rem 0.6rem;
+  }
+  .flow-step-val {
+    font-size: 0.74rem;
+    line-height: 1.35;
   }
   .inspector-actions {
     flex-direction: column;
@@ -1739,6 +1823,7 @@ body::before {
   }
   .inspector-stepper-bar {
     gap: 0.4rem;
+    padding-top: 0.9rem;
   }
   .stepper-nav-btn {
     padding: 0.48rem 0.7rem;
@@ -1752,10 +1837,10 @@ body::before {
     gap: 0.5rem;
   }
   .floating-back-to-top {
-    right: 0.9rem;
-    bottom: calc(0.9rem + env(safe-area-inset-bottom, 0px));
-    padding: 0.5rem 0.85rem;
-    min-height: 40px;
+    right: 1rem;
+    bottom: calc(1.75rem + env(safe-area-inset-bottom, 0px));
+    padding: 0.55rem 0.95rem;
+    min-height: 42px;
   }
 }
 
