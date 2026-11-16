@@ -100,7 +100,7 @@ function extractJobDescription(url: string, html: string): string {
   // Simple regex-based extraction without cheerio dependency issues
   
   // Remove script and style tags with content
-  let text = html
+  const text = html
     .replace(/<script[\s\S]*?<\/script>/gi, " ")
     .replace(/<style[\s\S]*?<\/style>/gi, " ")
     .replace(/<nav[\s\S]*?<\/nav>/gi, " ")

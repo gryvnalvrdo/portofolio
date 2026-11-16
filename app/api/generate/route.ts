@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   try {
     const apiKey = process.env.GEMINI_API_KEY;
-    
+
     if (!apiKey) {
       return NextResponse.json(
         { error: "API Key belum dikonfigurasi di server (Vercel)." },
@@ -40,17 +40,16 @@ export async function POST(req: Request) {
 
     const data = await res.json();
     const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-    
+
     if (!text) {
       throw new Error("No response received from Gemini.");
     }
 
     return NextResponse.json({ result: text });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("CoverCraft API Error:", error);
-    return NextResponse.json(
-      { error: error.message || "Terjadi kesalahan internal." },
-      { status: 500 }
-    );
+    const message =
+      error instanceof Error ? error.message : "Terjadi kesalahan internal.";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

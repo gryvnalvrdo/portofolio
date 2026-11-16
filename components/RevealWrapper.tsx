@@ -9,10 +9,18 @@ interface RevealWrapperProps {
   style?: React.CSSProperties;
 }
 
-export default function RevealWrapper({ children, className = "", delay = 0, style }: RevealWrapperProps) {
+export default function RevealWrapper({
+  children,
+  className = "",
+  delay = 0,
+  style,
+}: RevealWrapperProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -27,14 +35,10 @@ export default function RevealWrapper({ children, className = "", delay = 0, sty
       { threshold: 0.1 }
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
+    observer.observe(el);
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
+      observer.unobserve(el);
     };
   }, [delay]);
 

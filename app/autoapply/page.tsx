@@ -2,10 +2,19 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { useLanguage } from "@/lib/useLanguage";
+
+interface LiveJobItem {
+  id: string;
+  companyName: string;
+  position: string;
+  status: string;
+  appliedDate: string;
+}
 
 export default function AutoApplyPage() {
-  const [lang, setLang] = useState("en");
-  const [liveJobs, setLiveJobs] = useState<any[]>([]);
+  const [lang, toggleLang] = useLanguage();
+  const [liveJobs, setLiveJobs] = useState<LiveJobItem[]>([]);
   const [isFetching, setIsFetching] = useState(true);
 
   useEffect(() => {
@@ -22,398 +31,373 @@ export default function AutoApplyPage() {
         setIsFetching(false);
       }
     };
-    
+
     fetchJobs();
-    const interval = setInterval(fetchJobs, 15000); // refresh every 15s
+    const interval = setInterval(fetchJobs, 15000);
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    const saved = localStorage.getItem("lang");
-    if (saved === "id" || saved === "en") setLang(saved);
-  }, []);
-
-  const toggleLang = () => {
-    const next = lang === "en" ? "id" : "en";
-    setLang(next);
-    localStorage.setItem("lang", next);
-  };
-
   const t = {
     en: {
-      back: "← Back to Portfolio",
-      chip: "🤖 n8n Workflow · Open Source · Import Ready",
-      title1: "Automate Your ",
-      title2: "Job Discovery",
-      desc: "An n8n workflow that monitors LinkedIn, Glints, and Kalibrr every 6 hours, filters jobs by your criteria, and automatically adds matching listings to JobTrail so you never miss a relevant opportunity.",
-      btn1: "📥 Download Workflow JSON",
-      btn2: "View in JobTrail ↗",
-      how: "How It Works",
-      pipe: "The Automation Pipeline",
-      pipeDesc: "Every 6 hours, the workflow runs automatically. Jobs flow from discovery to your JobTrail dashboard without you lifting a finger.",
-      tableTime: "Time",
+      back: "Portfolio",
+      chip: "STAGE 01: EVENT-DRIVEN INGESTION AGENT (N8N)",
+      title1: "Automated 24/7 ",
+      title2: "Job Discovery & Webhook Ingestion",
+      desc: "An n8n automation pipeline that polls remote engineering RSS feeds every 6 hours, filters listings via a JavaScript keyword matcher, deduplicates entries, and ingests matched jobs into JobTrail via authenticated HTTP POST webhooks.",
+      btn1: "Download workflow.json",
+      btn2: "Open JobTrail Public Board",
+      how: "SECTION 01: PIPELINE ARCHITECTURE",
+      pipe: "6-Node Execution Topology",
+      pipeDesc:
+        "Every 6 hours, the workflow executes autonomously, streaming filtered opportunities from RSS sources into your JobTrail PostgreSQL database and Telegram.",
+      tableTime: "Timestamp",
       tableCompany: "Company",
-      tablePosition: "Position Found",
-      tableStatus: "Status",
-      monitoring: "Monitoring 24/7",
-      liveActivity: "Live Agent Activity",
-      connecting: "Connecting to agent...",
-      noActivity: "No recent activity.",
-      scrollHint: "⇄ Scroll horizontally to view full feed",
-      
+      tablePosition: "Position Ingested",
+      tableStatus: "State",
+      monitoring: "POLLING ACTIVE (15S)",
+      liveActivity: "Live Agent Telemetry (JobTrail Public API)",
+      connecting: "Connecting to JobTrail telemetry endpoint...",
+      noActivity: "No recent automated ingestions.",
+
       flow1Title: "Schedule Trigger",
-      flow1Desc: "Runs every 6 hours automatically",
-      flow1Badge: "Cron",
+      flow1Desc: "Executes every 6 hours autonomously",
+      flow1Badge: "Cron (6h)",
       flow1Conn: "triggers",
-      flow2Title: "Fetch Jobs",
-      flow2Desc: "LinkedIn RSS + Glints + Kalibrr APIs",
-      flow2Badge: "HTTP Request",
-      flow2Conn: "raw data",
-      flow3Title: "Filter Jobs",
-      flow3Desc: "Keywords, location, salary range",
-      flow3Badge: "Code Node",
+      flow2Title: "Parallel RSS Fetch",
+      flow2Desc: "WeWorkRemotely Programming & Back-End feeds",
+      flow2Badge: "RSS Read",
+      flow2Conn: "raw items",
+      flow3Title: "Keyword Filter",
+      flow3Desc: "Matches Software Engineer, Next.js, Python, Full-Stack",
+      flow3Badge: "JS Code Node",
       flow3Conn: "matched",
-      flow4Title: "Add to JobTrail",
-      flow4Desc: "POST to JobTrail API endpoint",
-      flow4Badge: "API Integration",
-      flow4Conn: "notify",
-      flow5Title: "Telegram Alert",
-      flow5Desc: "Instant notification for each new job",
-      flow5Badge: "Telegram Bot",
+      flow4Title: "Ingest to JobTrail",
+      flow4Desc: "POST /api/auto-apply (X-AutoApply-Secret)",
+      flow4Badge: "HTTP Webhook",
+      flow4Conn: "alert",
+      flow5Title: "Telegram Push",
+      flow5Desc: "Instant Markdown alert per new listing",
+      flow5Badge: "Telegram API",
 
-      featLabel: "Features",
-      featTitle: "What the Workflow Does",
+      featLabel: "SECTION 02: CAPABILITIES",
+      featTitle: "Engineering Specifications",
       features: [
-        { icon: "🔄", title: "Multi-Source Monitoring", desc: "Simultaneously monitors LinkedIn RSS feed, Glints, and Kalibrr every 6 hours for new listings." },
-        { icon: "🎯", title: "Smart Keyword Filtering", desc: "Filters jobs by configurable keywords (Next.js, Python, TypeScript, etc.) and location (Indonesia + Remote)." },
-        { icon: "🔗", title: "JobTrail Integration", desc: "Automatically sends matched jobs to JobTrail via HTTP POST and displays them in your dashboard instantly." },
-        { icon: "📱", title: "Telegram Notifications", desc: "Sends a formatted Telegram message for every new match with job title, company, and direct link." },
-        { icon: "🔁", title: "Deduplication", desc: "Tracks job URLs already added to prevent duplicate entries in JobTrail across runs." },
-        { icon: "⚙️", title: "Easy Configuration", desc: "All settings (keywords, location, API endpoints) are environment variables with no code changes needed." },
+        {
+          code: "INGEST",
+          title: "Parallel Multi-Feed Polling",
+          desc: "Simultaneously reads Remote Programming and Back-End RSS streams every 6 hours without manual intervention.",
+        },
+        {
+          code: "FILTER",
+          title: "JavaScript Code Node Matching",
+          desc: "Evaluates job titles against configurable engineering keywords (Next.js, Python, TypeScript, Full-Stack, Backend).",
+        },
+        {
+          code: "WEBHOOK",
+          title: "Authenticated JobTrail Ingestion",
+          desc: "Pushes structured JSON payloads to JobTrail via HTTP POST secured by the X-AutoApply-Secret header.",
+        },
+        {
+          code: "DEDUP",
+          title: "Idempotent Database Deduplication",
+          desc: "Backed by Prisma $transaction and the ProcessedJob table so previously seen jobs are never duplicated across runs.",
+        },
+        {
+          code: "NOTIFY",
+          title: "Telegram Markdown Alerts",
+          desc: "Dispatches formatted push notifications with company, role, and direct application URL.",
+        },
+        {
+          code: "CONFIG",
+          title: "Environment-Driven Setup",
+          desc: "All secrets, target URLs, and Telegram chat IDs are externalized as environment variables.",
+        },
       ],
 
-      quickLabel: "Quick Start",
-      quickTitle: "Deploy in 10 Minutes",
-      quickDesc: "Import the workflow JSON into any n8n instance (cloud or self-hosted) and set your environment variables.",
-      comment1: "# 1. Clone the repo",
-      comment2: "# 2. Import workflow.json into n8n\n#    n8n → Workflows → Import → Select workflow.json",
-      comment3: "# 3. Set environment variables in n8n",
-      comment4: "# 4. Activate the workflow and watch jobs flow in!",
-      thVar: "Variable",
-      thDesc: "Description",
+      quickLabel: "SECTION 03: DEPLOYMENT",
+      quickTitle: "Self-Host or Import in n8n",
+      quickDesc:
+        "Import workflow.json into any n8n instance and configure the environment variables below.",
+      comment1: "# 1. Clone the repository",
+      comment2:
+        "# 2. Import workflow.json into n8n\n#    n8n > Workflows > Import from File > workflow.json",
+      comment3: "# 3. Configure environment variables",
+      comment4: "# 4. Activate workflow schedule trigger",
+      thVar: "Environment Variable",
+      thDesc: "Purpose",
       envVars: [
-        ["JOBTRAIL_API_URL", "Your JobTrail deployment URL + /api/auto-apply"],
-        ["AUTOAPPLY_SECRET", "Secret key to authenticate the incoming webhook"],
-        ["TELEGRAM_BOT_TOKEN", "From @BotFather on Telegram (optional)"],
-        ["TELEGRAM_CHAT_ID", "Your Telegram chat ID for notifications (optional)"],
-        ["KEYWORDS", "Comma-separated job keywords to filter by"],
+        ["JOBTRAIL_API_URL", "Target JobTrail endpoint (https://jobtracker-kjmw.vercel.app/api/auto-apply)"],
+        ["AUTOAPPLY_SECRET", "Shared secret validated against X-AutoApply-Secret header"],
+        ["TELEGRAM_BOT_TOKEN", "Telegram Bot token issued by @BotFather"],
+        ["TELEGRAM_CHAT_ID", "Destination Telegram chat ID for instant alerts"],
+        ["KEYWORDS", "Comma-separated role & stack keywords for filtering"],
       ],
 
-      ecoTitle: "🔗 Part of the Job Hunting Suite",
-      ecoDesc: "AutoApply Flow feeds job listings directly into JobTrail, which then connects to CoverCraft for AI-generated cover letters. Three tools, one seamless pipeline.",
-      ecoBtn1: "🤖 AutoApply Flow",
-      ecoBtn2: "📋 JobTrail",
-      ecoBtn3: "✨ CoverCraft",
-      ecoBtn4: "🎯 You Get Hired",
-      footerBuilt: "Built by",
-      footerPart: "Part of the Job Hunting Suite"
+      ecoTitle: "Connected Job Hunting Suite",
+      ecoDesc:
+        "AutoApply Flow is Stage 01 of the pipeline, ingesting listings into JobTrail (Stage 02), which deep-links into CoverCraft (Stage 03).",
+      ecoBtn1: "01: AutoApply Flow",
+      ecoBtn2: "02: JobTrail SaaS",
+      ecoBtn3: "03: CoverCraft AI",
     },
     id: {
-      back: "← Kembali ke Portofolio",
-      chip: "🤖 Workflow n8n · Open Source · Siap Pakai",
-      title1: "Otomatisasi ",
-      title2: "Pencarian Loker",
-      desc: "Alur kerja n8n yang memantau LinkedIn, Glints, dan Kalibrr setiap 6 jam, memfilter loker sesuai kriteria Anda, dan otomatis menambahkannya ke JobTrail agar tidak ada peluang yang terlewat.",
-      btn1: "📥 Unduh Workflow JSON",
-      btn2: "Lihat di JobTrail ↗",
-      how: "Cara Kerjanya",
-      pipe: "Pipa Otomatisasi",
-      pipeDesc: "Setiap 6 jam, alur kerja berjalan otomatis. Lowongan pekerjaan mengalir dari penemuan hingga ke dasbor JobTrail Anda tanpa perlu repot.",
+      back: "Portofolio",
+      chip: "TAHAP 01: AGEN INGESTI OTOMATIS (N8N)",
+      title1: "Otomasi 24/7 ",
+      title2: "Penemuan Loker & Ingesti Webhook",
+      desc: "Pipeline otomasi n8n yang memantau feed RSS lowongan engineering setiap 6 jam, menyaring posisi melalui JavaScript Code Node, mencegah duplikasi data, dan mengirim loker yang cocok ke JobTrail melalui webhook HTTP POST terautentikasi.",
+      btn1: "Unduh workflow.json",
+      btn2: "Buka Live Board JobTrail",
+      how: "BAGIAN 01: ARSITEKTUR PIPELINE",
+      pipe: "Topologi Eksekusi 6-Node",
+      pipeDesc:
+        "Setiap 6 jam, alur kerja berjalan mandiri, mengalirkan lowongan yang relevan dari sumber RSS langsung ke database PostgreSQL JobTrail dan Telegram.",
       tableTime: "Waktu",
       tableCompany: "Perusahaan",
-      tablePosition: "Posisi Ditemukan",
+      tablePosition: "Posisi Terdeteksi",
       tableStatus: "Status",
-      monitoring: "Memantau 24/7",
-      liveActivity: "Aktivitas Live Agent",
-      connecting: "Menghubungkan ke agent...",
-      noActivity: "Tidak ada aktivitas terbaru.",
-      scrollHint: "⇄ Geser secara horizontal untuk melihat data lengkap",
+      monitoring: "MEMANTAU AKTIF (15D)",
+      liveActivity: "Telemetri Agen Live (JobTrail Public API)",
+      connecting: "Menghubungkan ke endpoint telemetri JobTrail...",
+      noActivity: "Belum ada aktivitas ingesti terbaru.",
 
       flow1Title: "Pemicu Jadwal",
       flow1Desc: "Berjalan otomatis setiap 6 jam",
-      flow1Badge: "Cron",
+      flow1Badge: "Cron (6 Jam)",
       flow1Conn: "memicu",
-      flow2Title: "Ambil Lowongan",
-      flow2Desc: "API LinkedIn RSS + Glints + Kalibrr",
-      flow2Badge: "HTTP Request",
+      flow2Title: "Ambil RSS Paralel",
+      flow2Desc: "Feed WeWorkRemotely Programming & Back-End",
+      flow2Badge: "RSS Read",
       flow2Conn: "data mentah",
-      flow3Title: "Filter Lowongan",
-      flow3Desc: "Kata kunci, lokasi, rentang gaji",
-      flow3Badge: "Code Node",
+      flow3Title: "Filter Kata Kunci",
+      flow3Desc: "Mencocokkan Software Engineer, Next.js, Python, Full-Stack",
+      flow3Badge: "JS Code Node",
       flow3Conn: "cocok",
       flow4Title: "Kirim ke JobTrail",
-      flow4Desc: "POST ke endpoint API JobTrail",
-      flow4Badge: "Integrasi API",
+      flow4Desc: "POST /api/auto-apply (X-AutoApply-Secret)",
+      flow4Badge: "HTTP Webhook",
       flow4Conn: "notifikasi",
       flow5Title: "Notifikasi Telegram",
-      flow5Desc: "Pemberitahuan instan untuk setiap loker baru",
-      flow5Badge: "Bot Telegram",
+      flow5Desc: "Pesan instan Markdown untuk tiap loker baru",
+      flow5Badge: "Telegram API",
 
-      featLabel: "Fitur",
-      featTitle: "Cara Kerja Alur Otomasi",
+      featLabel: "BAGIAN 02: KAPABILITAS",
+      featTitle: "Spesifikasi Teknis",
       features: [
-        { icon: "🔄", title: "Pemantauan Multi Sumber", desc: "Secara bersamaan memantau feed RSS LinkedIn, Glints, dan Kalibrr setiap 6 jam untuk lowongan baru." },
-        { icon: "🎯", title: "Filter Kata Kunci Cerdas", desc: "Memfilter loker berdasarkan kata kunci yang dapat diatur (Next.js, Python, TypeScript, dll.) dan lokasi (Indonesia + Remote)." },
-        { icon: "🔗", title: "Integrasi JobTrail", desc: "Secara otomatis mengirimkan loker yang cocok ke JobTrail via HTTP POST dan langsung tampil di dasbor Anda." },
-        { icon: "📱", title: "Notifikasi Telegram", desc: "Mengirim pesan Telegram terformat untuk setiap lowongan baru lengkap dengan judul, perusahaan, dan tautan langsung." },
-        { icon: "🔁", title: "Pencegahan Duplikasi", desc: "Melacak URL pekerjaan yang sudah ditambahkan agar tidak ada data ganda di JobTrail." },
-        { icon: "⚙️", title: "Konfigurasi Mudah", desc: "Semua pengaturan (kata kunci, lokasi, endpoint API) berupa environment variables tanpa perlu ubah kode." },
+        {
+          code: "INGEST",
+          title: "Pemantauan Multi-Feed Paralel",
+          desc: "Membaca stream RSS Remote Programming dan Back-End secara bersamaan setiap 6 jam tanpa intervensi manual.",
+        },
+        {
+          code: "FILTER",
+          title: "Penyaringan JavaScript Code Node",
+          desc: "Mengevaluasi judul lowongan terhadap kata kunci stack (Next.js, Python, TypeScript, Full-Stack, Backend).",
+        },
+        {
+          code: "WEBHOOK",
+          title: "Ingesti Terautentikasi ke JobTrail",
+          desc: "Mengirim payload JSON terstruktur ke JobTrail melalui HTTP POST yang diamankan header X-AutoApply-Secret.",
+        },
+        {
+          code: "DEDUP",
+          title: "Deduplikasi Database Idempoten",
+          desc: "Didukung transaksi Prisma $transaction dan tabel ProcessedJob agar lowongan yang pernah diproses tidak pernah ganda.",
+        },
+        {
+          code: "NOTIFY",
+          title: "Peringatan Markdown Telegram",
+          desc: "Mengirimkan notifikasi push berisi nama perusahaan, posisi, dan tautan langsung.",
+        },
+        {
+          code: "CONFIG",
+          title: "Konfigurasi Berbasis Environment",
+          desc: "Seluruh kunci rahasia, URL endpoint, dan ID Telegram dikelola via environment variables.",
+        },
       ],
 
-      quickLabel: "Mulai Cepat",
-      quickTitle: "Pasang dalam 10 Menit",
-      quickDesc: "Impor file JSON alur kerja ke instans n8n mana pun (cloud atau self-hosted) dan atur environment variables Anda.",
+      quickLabel: "BAGIAN 03: DEPLOYMENT",
+      quickTitle: "Impor & Jalankan di n8n",
+      quickDesc:
+        "Impor file workflow.json ke instans n8n Anda dan atur variabel environment di bawah ini.",
       comment1: "# 1. Clone repositori",
-      comment2: "# 2. Impor workflow.json ke n8n\n#    n8n → Workflows → Import → Pilih workflow.json",
-      comment3: "# 3. Pasang environment variables di n8n",
-      comment4: "# 4. Aktifkan alur kerja dan amati lowongan masuk otomatis!",
-      thVar: "Variabel",
-      thDesc: "Deskripsi",
+      comment2:
+        "# 2. Impor workflow.json ke n8n\n#    n8n > Workflows > Import from File > workflow.json",
+      comment3: "# 3. Atur environment variables",
+      comment4: "# 4. Aktifkan trigger jadwal workflow",
+      thVar: "Variabel Environment",
+      thDesc: "Fungsi",
       envVars: [
-        ["JOBTRAIL_API_URL", "URL deployment JobTrail Anda + /api/auto-apply"],
-        ["AUTOAPPLY_SECRET", "Kunci rahasia untuk autentikasi webhook yang masuk"],
-        ["TELEGRAM_BOT_TOKEN", "Dari @BotFather di Telegram (opsional)"],
-        ["TELEGRAM_CHAT_ID", "ID obrolan Telegram Anda untuk notifikasi (opsional)"],
-        ["KEYWORDS", "Kata kunci pekerjaan dipisahkan koma untuk filter"],
+        ["JOBTRAIL_API_URL", "Endpoint JobTrail tujuan (https://jobtracker-kjmw.vercel.app/api/auto-apply)"],
+        ["AUTOAPPLY_SECRET", "Kunci rahasia yang divalidasi terhadap header X-AutoApply-Secret"],
+        ["TELEGRAM_BOT_TOKEN", "Token bot dari @BotFather di Telegram"],
+        ["TELEGRAM_CHAT_ID", "ID chat Telegram untuk menerima notifikasi"],
+        ["KEYWORDS", "Kata kunci posisi & teknologi dipisahkan koma"],
       ],
 
-      ecoTitle: "🔗 Bagian dari Job Hunting Suite",
-      ecoDesc: "AutoApply Flow menyalurkan lowongan kerja langsung ke JobTrail, yang kemudian terhubung ke CoverCraft untuk membuat cover letter berbasis AI. Tiga alat, satu alur kerja terpadu.",
-      ecoBtn1: "🤖 AutoApply Flow",
-      ecoBtn2: "📋 JobTrail",
-      ecoBtn3: "✨ CoverCraft",
-      ecoBtn4: "🎯 Anda Diterima",
-      footerBuilt: "Dibuat oleh",
-      footerPart: "Bagian dari Job Hunting Suite"
-    }
-  }[lang as "en" | "id"];
+      ecoTitle: "Ekosistem Job Hunting Suite",
+      ecoDesc:
+        "AutoApply Flow adalah Tahap 01 dari pipeline, mengirimkan lowongan ke JobTrail (Tahap 02), yang kemudian terhubung ke CoverCraft (Tahap 03).",
+      ecoBtn1: "01: AutoApply Flow",
+      ecoBtn2: "02: JobTrail SaaS",
+      ecoBtn3: "03: CoverCraft AI",
+    },
+  }[lang];
 
   return (
     <>
       <style>{`
-        .aa-body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; }
-        .aa-container { max-width:1000px; margin:0 auto; padding:0 1.5rem; position:relative; z-index:1; }
-        .aa-hero { padding:4rem 0 3rem; text-align:center; }
-        .aa-chip { display:inline-flex; align-items:center; gap:.45rem; background:var(--surface2); border:1px solid var(--border); border-radius:100px; padding:.35rem 1rem; font-size:.78rem; color:var(--text); font-weight:500; margin-bottom:1.25rem; }
-        .aa-hero h1 { font-family:'Space Grotesk',sans-serif; font-size:clamp(2rem,5vw,3rem); font-weight:700; line-height:1.1; margin-bottom:.9rem; color:var(--text); }
-        .aa-hero h1 span { background: linear-gradient(135deg, #ffffff 15%, #fbbf24 65%, #f59e0b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .aa-hero p { color:var(--muted); font-size:1rem; max-width:580px; margin:0 auto 2rem; line-height:1.75; }
-        .aa-hero-actions { display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; }
-        .aa-btn-primary { display:inline-flex; align-items:center; gap:.5rem; padding:.8rem 1.6rem; background:linear-gradient(135deg, #fbbf24 0%, #f59e0b 60%, #d97706 100%); border:none; border-radius:8px; color:#0d1117; font-family:'Space Grotesk',sans-serif; font-size:.9rem; font-weight:700; text-decoration:none; transition:all .2s; cursor:pointer; box-shadow:0 4px 18px -2px rgba(245, 158, 11, 0.35); }
-        .aa-btn-primary:hover { transform:translateY(-1px); box-shadow:0 8px 25px -4px rgba(245, 158, 11, 0.55); color:#0d1117; }
-        .aa-btn-outline { display:inline-flex; align-items:center; gap:.5rem; padding:.8rem 1.6rem; background:var(--surface); border:1px solid var(--border); border-radius:8px; color:var(--text); font-family:'Space Grotesk',sans-serif; font-size:.9rem; font-weight:600; text-decoration:none; transition:all .2s; box-shadow:0 2px 6px rgba(0,0,0,0.2); }
-        .aa-btn-outline:hover { background:var(--surface2); border-color:rgba(245, 158, 11, 0.4); color:#fbbf24; }
-        .aa-section { padding:3.5rem 0; }
-        .aa-section + .aa-section { border-top:1px solid var(--border); }
-        .aa-section-label { font-size:.68rem; font-weight:600; text-transform:uppercase; letter-spacing:.18em; color:var(--muted); margin-bottom:.65rem; display:flex; align-items:center; gap:.5rem; }
-        .aa-section-label::after { content:''; flex:1; height:1px; background:var(--border); max-width:60px; }
-        .aa-section-title { font-family:'Space Grotesk',sans-serif; font-size:clamp(1.5rem,3vw,2rem); font-weight:700; line-height:1.2; margin-bottom:.75rem; color:var(--text); }
-        .aa-section-desc { color:var(--muted); font-size:.9rem; line-height:1.75; max-width:620px; margin-bottom:2.5rem; }
+        .aa-body { background: var(--bg); color: var(--text); font-family: var(--font-sans); min-height: 100vh; }
+        .aa-container { max-width: 1000px; margin: 0 auto; padding: 0 1.5rem; position: relative; z-index: 1; }
+        .aa-hero { padding: 3.5rem 0 2.5rem; text-align: center; }
+        .aa-chip { display: inline-flex; align-items: center; gap: .45rem; background: var(--emerald-bg); border: 1px solid var(--emerald-bdr); border-radius: 6px; padding: .32rem .8rem; font-family: var(--font-mono); font-size: .72rem; color: var(--emerald-l); font-weight: 700; margin-bottom: 1.15rem; }
+        .aa-hero h1 { font-family: var(--font-display); font-size: clamp(1.9rem, 4.5vw, 2.85rem); font-weight: 700; line-height: 1.12; margin-bottom: .85rem; color: var(--text); letter-spacing: -0.025em; }
+        .aa-hero h1 span { color: var(--emerald-l); }
+        .aa-hero p { color: var(--muted); font-size: .96rem; max-width: 640px; margin: 0 auto 1.75rem; line-height: 1.7; }
+        .aa-hero-actions { display: flex; justify-content: center; gap: .75rem; flex-wrap: wrap; }
+        .aa-btn-primary { display: inline-flex; align-items: center; gap: .5rem; padding: .75rem 1.4rem; min-height: 44px; background: var(--emerald); border: none; border-radius: 9px; color: #04130d; font-family: var(--font-display); font-size: .88rem; font-weight: 700; text-decoration: none; transition: all .2s; cursor: pointer; }
+        .aa-btn-primary:hover { background: var(--emerald-l); transform: translateY(-1px); }
+        .aa-btn-outline { display: inline-flex; align-items: center; gap: .5rem; padding: .75rem 1.4rem; min-height: 44px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: 9px; color: var(--text); font-family: var(--font-display); font-size: .88rem; font-weight: 600; text-decoration: none; transition: all .2s; }
+        .aa-btn-outline:hover { background: var(--surface2); border-color: var(--emerald-bdr); color: var(--emerald-l); }
+        .aa-section { padding: 3rem 0; }
+        .aa-section + .aa-section { border-top: 1px solid var(--border); }
+        .aa-section-label { font-family: var(--font-mono); font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--emerald-l); margin-bottom: .45rem; }
+        .aa-section-title { font-family: var(--font-display); font-size: clamp(1.45rem, 3vw, 1.95rem); font-weight: 700; line-height: 1.2; margin-bottom: .6rem; color: var(--text); }
+        .aa-section-desc { color: var(--muted); font-size: .9rem; line-height: 1.7; max-width: 640px; margin-bottom: 2rem; }
 
-        /* WORKFLOW DIAGRAM */
-        .aa-flow { display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:0; margin:2.5rem 0; }
-        .aa-node { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.5rem 1.25rem; text-align:center; width:160px; flex-shrink:0; position:relative; transition:all .2s; }
-        .aa-node:hover { border-color:var(--border-hover); transform:translateY(-2px); }
-        .aa-node-icon { font-size:1.75rem; display:block; margin-bottom:.5rem; }
-        .aa-node h4 { font-family:'Inter',sans-serif; font-size:.85rem; font-weight:600; margin-bottom:.3rem; color:var(--text); }
-        .aa-node p { font-size:.75rem; color:var(--muted); line-height:1.4; }
-        .aa-node-badge { display:inline-block; margin-top:.6rem; padding:.15rem .5rem; border-radius:6px; font-size:.65rem; font-weight:600; background:var(--surface2); color:var(--text); border:1px solid var(--border); }
-        .aa-node.highlight { border-color:var(--primary); }
-        .aa-node.highlight .aa-node-badge { background:var(--primary); color:#0d1117; border-color:var(--primary); font-weight:700; }
-        .aa-connect { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0 .35rem; gap:.15rem; flex-shrink:0; }
-        .aa-connect-line { width:32px; height:2px; background:var(--border); position:relative; }
-        .aa-connect-line::after { content:''; position:absolute; right:-1px; top:50%; transform:translateY(-50%); width:0; height:0; border-left:5px solid var(--border); border-top:3px solid transparent; border-bottom:3px solid transparent; }
-        .aa-connect-label { font-size:.6rem; color:var(--muted); white-space:nowrap; text-align:center; }
-        @media (max-width:900px) { .aa-flow { flex-direction:column; align-items:center; } .aa-connect { flex-direction:column; padding:.35rem 0; } .aa-connect-line { width:2px; height:24px; background:var(--border); } .aa-connect-line::after { right:50%; top:auto; bottom:-1px; transform:translateX(50%); border-left:3px solid transparent; border-right:3px solid transparent; border-top:5px solid var(--border); border-bottom:none; } }
+        .aa-flow { display: flex; align-items: stretch; justify-content: center; flex-wrap: wrap; gap: 0; margin: 2rem 0; }
+        .aa-node { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.15rem 1rem; text-align: left; width: 162px; flex-shrink: 0; display: flex; flex-direction: column; justify-content: space-between; gap: .4rem; }
+        .aa-node.highlight { border-color: var(--emerald); background: linear-gradient(180deg, rgba(16,185,129,0.1) 0%, var(--surface) 100%); }
+        .aa-node-step { font-family: var(--font-mono); font-size: .68rem; font-weight: 700; color: var(--emerald-l); }
+        .aa-node h4 { font-family: var(--font-display); font-size: .88rem; font-weight: 700; color: var(--text); }
+        .aa-node p { font-size: .74rem; color: var(--muted); line-height: 1.4; }
+        .aa-node-badge { display: inline-block; width: fit-content; margin-top: .35rem; padding: .15rem .48rem; border-radius: 5px; font-family: var(--font-mono); font-size: .64rem; font-weight: 600; background: var(--surface2); color: var(--text-2); border: 1px solid var(--border); }
+        .aa-node.highlight .aa-node-badge { background: var(--emerald); color: #04130d; border-color: var(--emerald); font-weight: 700; }
+        .aa-connect { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 .3rem; gap: .15rem; flex-shrink: 0; }
+        .aa-connect-line { width: 26px; height: 2px; background: var(--border-strong); }
+        .aa-connect-label { font-family: var(--font-mono); font-size: .58rem; color: var(--muted-2); white-space: nowrap; }
+        @media (max-width: 900px) {
+          .aa-flow { flex-direction: column; align-items: center; }
+          .aa-node { width: 100%; max-width: 360px; }
+          .aa-connect { padding: .25rem 0; }
+          .aa-connect-line { width: 2px; height: 18px; }
+        }
 
-        /* FEATURES */
-        .aa-features-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:1rem; }
-        .aa-feature { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.4rem; transition:border-color .2s; }
-        .aa-feature:hover { border-color:var(--border-hover); }
-        .aa-feature-icon { font-size:1.5rem; margin-bottom:.75rem; display:block; }
-        .aa-feature h3 { font-family:'Inter',sans-serif; font-size:.95rem; font-weight:600; margin-bottom:.4rem; color:var(--text); }
-        .aa-feature p { font-size:.85rem; color:var(--muted); line-height:1.6; }
+        .aa-features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: .9rem; }
+        .aa-feature { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; }
+        .aa-feature-code { font-family: var(--font-mono); font-size: .68rem; font-weight: 700; color: var(--emerald-l); background: var(--emerald-bg); border: 1px solid var(--emerald-bdr); padding: .15rem .45rem; border-radius: 5px; display: inline-block; margin-bottom: .6rem; }
+        .aa-feature h3 { font-family: var(--font-display); font-size: .95rem; font-weight: 700; margin-bottom: .35rem; color: var(--text); }
+        .aa-feature p { font-size: .83rem; color: var(--muted); line-height: 1.55; }
 
-        /* CODE BLOCK */
-        .aa-code-block { background:#1e293b; border:1px solid var(--border); border-radius:12px; padding:1.25rem 1.5rem; font-family:'Courier New',monospace; font-size:.85rem; color:#e2e8f0; overflow-x:auto; line-height:1.7; }
-        .aa-code-block .comment { color:#94a3b8; }
-        .aa-code-block .key { color:#a5b4fc; }
-        .aa-code-block .val { color:#fbbf24; }
-        .aa-code-block .str { color:#34d399; }
+        .aa-code-block { background: #0d121d; border: 1px solid var(--border-strong); border-radius: 12px; padding: 1.15rem 1.35rem; font-family: var(--font-mono); font-size: .78rem; color: var(--text-2); overflow-x: auto; line-height: 1.7; }
+        .aa-code-block .comment { color: var(--muted-2); }
+        .aa-code-block .key { color: var(--indigo-l); }
+        .aa-code-block .str { color: var(--emerald-l); }
 
-        /* ENV VARS TABLE */
-        .aa-table { width:100%; border-collapse:collapse; margin-top:1rem; }
-        .aa-table th { text-align:left; padding:.65rem 1rem; font-size:.8rem; font-weight:600; color:var(--muted); border-bottom:1px solid var(--border); }
-        .aa-table td { padding:.65rem 1rem; font-size:.85rem; border-bottom:1px solid var(--border); }
-        .aa-table td:first-child { font-family:'Courier New',monospace; color:var(--text); }
-        .aa-table td:last-child { color:var(--muted); }
-        .aa-table tr:last-child td { border-bottom:none; }
+        .aa-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        .aa-table th { text-align: left; padding: .65rem 1rem; font-family: var(--font-mono); font-size: .74rem; font-weight: 600; color: var(--muted); border-bottom: 1px solid var(--border); }
+        .aa-table td { padding: .65rem 1rem; font-size: .83rem; border-bottom: 1px solid var(--border); }
+        .aa-table td:first-child { font-family: var(--font-mono); font-size: .76rem; color: var(--emerald-l); }
+        .aa-table td:last-child { color: var(--muted); }
 
-        /* LIVE FEED */
-        .live-feed-container { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; margin-top: 3rem; box-shadow: 0 4px 25px rgba(0,0,0,0.3); position: relative; overflow: hidden; }
-        .live-feed-container::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--primary), transparent); animation: scan 3s linear infinite; }
-        @keyframes scan { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
-        .live-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
-        .live-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 0.5rem; }
-        .live-indicator { display: inline-block; width: 10px; height: 10px; background-color: #ef4444; border-radius: 50%; box-shadow: 0 0 10px #ef4444; animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); } 70% { opacity: 0.5; box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); } 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
-        .live-status-text { font-size: 0.8rem; color: #f87171; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
-        
-        .live-table-wrapper { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        .live-table { width: 100%; min-width: 500px; border-collapse: collapse; font-family: 'Courier New', monospace; font-size: 0.85rem; }
-        .live-table th { text-align: left; padding: 0.75rem 1rem; color: var(--muted); font-weight: 600; border-bottom: 1px solid var(--border); }
-        .live-table td { padding: 1rem; color: var(--text-2); border-bottom: 1px solid var(--border); }
-        .live-table tr:hover td { background: var(--surface2); }
-        .live-company { color: var(--text); font-weight: 600; font-family: 'Inter', sans-serif; }
-        .live-position { color: var(--primary); }
-        .live-badge { display: inline-flex; align-items: center; padding: 0.25rem 0.6rem; border-radius: 100px; font-size: 0.75rem; font-weight: 600; font-family: 'Inter', sans-serif; }
-        .live-badge.saved { background: rgba(245, 158, 11, 0.12); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.25); }
-        .live-badge.applied { background: rgba(16, 185, 129, 0.12); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.25); }
+        .live-feed-container { background: var(--surface); border: 1px solid var(--emerald-bdr); border-radius: 14px; padding: 1.35rem; margin-bottom: 3rem; }
+        .live-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: .85rem; flex-wrap: wrap; gap: .5rem; }
+        .live-title { font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 0.5rem; }
+        .live-indicator { display: inline-block; width: 8px; height: 8px; background-color: var(--emerald); border-radius: 50%; box-shadow: 0 0 8px var(--emerald); animation: pulse-green 2s infinite; }
+        .live-status-text { font-family: var(--font-mono); font-size: 0.7rem; color: var(--emerald-l); font-weight: 700; letter-spacing: 0.06em; }
+        .live-table-wrapper { display: block; overflow-x: auto; }
+        .live-table { width: 100%; min-width: 500px; border-collapse: collapse; font-family: var(--font-mono); font-size: 0.78rem; }
+        .live-table th { text-align: left; padding: 0.65rem 0.85rem; color: var(--muted); font-weight: 600; border-bottom: 1px solid var(--border); }
+        .live-table td { padding: 0.8rem 0.85rem; color: var(--text-2); border-bottom: 1px solid var(--border); }
+        .live-company { color: var(--text); font-weight: 600; font-family: var(--font-sans); }
+        .live-position { color: var(--emerald-l); }
+        .live-badge { display: inline-flex; align-items: center; padding: 0.18rem 0.55rem; border-radius: 5px; font-family: var(--font-mono); font-size: 0.68rem; font-weight: 600; }
+        .live-badge.saved { background: var(--amber-bg); color: var(--amber-l); border: 1px solid var(--amber-bdr); }
+        .live-badge.applied { background: var(--emerald-bg); color: var(--emerald-l); border: 1px solid var(--emerald-bdr); }
         .live-badge.rejected { background: rgba(239, 68, 68, 0.12); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.25); }
-
         .live-mobile-cards { display: none; }
 
-        @media (max-width: 600px) {
+        @media (max-width: 640px) {
           .aa-container { padding: 0 1rem; }
-          .aa-hero { padding: 1.5rem 0 1rem; }
-          .aa-hero h1 { font-size: 1.55rem !important; line-height: 1.25 !important; margin-bottom: 0.75rem !important; }
-          .aa-hero p { font-size: 0.88rem !important; line-height: 1.55 !important; margin-bottom: 1.25rem !important; }
-          .aa-chip { font-size: 0.72rem; padding: 0.3rem 0.75rem; margin-bottom: 0.85rem; max-width: 100%; white-space: normal; text-align: center; }
-          .aa-section { padding: 2.25rem 0; }
-          .aa-section-title { font-size: 1.35rem !important; line-height: 1.25 !important; margin-bottom: 0.5rem; }
-          .aa-section-desc { font-size: 0.85rem; margin-bottom: 1.5rem; }
-          .aa-node { width: 100%; max-width: 320px; padding: 1.15rem 1rem; }
+          .aa-hero { padding: 1.75rem 0 1.25rem; }
           .aa-hero-actions { flex-direction: column; width: 100%; }
-          .aa-btn-primary, .aa-btn-outline { width: 100%; justify-content: center; text-align: center; }
-
-          /* Responsive Live Feed */
-          .live-feed-container { padding: 1rem 0.85rem; border-radius: 14px; margin-top: 2rem; }
-          .live-header { flex-direction: column; align-items: flex-start; gap: 0.4rem; margin-bottom: 1rem; padding-bottom: 0.75rem; }
+          .aa-btn-primary, .aa-btn-outline { width: 100%; justify-content: center; }
           .live-table-wrapper { display: none; }
-          .live-mobile-cards { display: flex; flex-direction: column; gap: 0.65rem; }
-          .live-mobile-item {
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 0.85rem 0.95rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.35rem;
-          }
-          .live-mobile-row-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 0.5rem;
-          }
-          .live-mobile-company {
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: #f1f5f9;
-          }
-          .live-mobile-pos {
-            font-size: 0.85rem;
-            color: var(--primary);
-            font-weight: 500;
-          }
-          .live-mobile-meta {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 0.74rem;
-            color: var(--muted);
-            margin-top: 0.2rem;
-            padding-top: 0.4rem;
-            border-top: 1px dashed var(--border);
-          }
-          .live-mobile-tag {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            padding: 0.1rem 0.45rem;
-            font-size: 0.68rem;
-            font-weight: 600;
-            color: var(--text-2);
-          }
-
-          /* Responsive Env Vars Table */
+          .live-mobile-cards { display: flex; flex-direction: column; gap: 0.6rem; }
+          .live-mobile-item { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 0.8rem; display: flex; flex-direction: column; gap: 0.3rem; }
+          .live-mobile-row-top { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+          .live-mobile-company { font-family: var(--font-display); font-weight: 700; font-size: 0.9rem; color: var(--text); }
+          .live-mobile-pos { font-family: var(--font-mono); font-size: 0.78rem; color: var(--emerald-l); }
+          .live-mobile-meta { display: flex; align-items: center; justify-content: space-between; font-family: var(--font-mono); font-size: 0.68rem; color: var(--muted); margin-top: 0.2rem; padding-top: 0.35rem; border-top: 1px dashed var(--border); }
           .aa-table thead { display: none; }
           .aa-table, .aa-table tbody, .aa-table tr, .aa-table td { display: block; width: 100%; }
-          .aa-table tr {
-            background: var(--surface2);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 0.75rem 0.85rem;
-            margin-bottom: 0.65rem;
-          }
-          .aa-table td { padding: 0.2rem 0; border: none; }
-          .aa-table td:first-child { font-size: 0.8rem; font-weight: 700; color: var(--primary); word-break: break-all; }
-          .aa-table td:last-child { font-size: 0.78rem; color: var(--muted); }
+          .aa-table tr { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 0.75rem; margin-bottom: 0.55rem; }
+          .aa-table td { padding: 0.15rem 0; border: none; }
         }
       `}</style>
 
       <div className="aa-body">
         <nav className="subpage-nav">
           <div className="subpage-nav-inner">
-            <Link href="/" className="subpage-back-link" aria-label={lang === 'en' ? 'Back to Portfolio' : 'Kembali ke Portofolio'}>
-              <span className="subpage-back-icon">←</span>
-              <span>{lang === 'en' ? 'Portfolio' : 'Portofolio'}</span>
+            <Link href="/" className="subpage-back-link">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                <path d="M19 12H5" />
+                <path d="m12 19-7-7 7-7" />
+              </svg>
+              <span>{t.back}</span>
             </Link>
 
             <div className="subpage-brand-badge">
-              <span>🤖</span>
+              <span style={{ color: "var(--emerald-l)" }}>01</span>
               <span>AutoApply Flow</span>
             </div>
 
             <div className="site-nav-right">
               <button onClick={toggleLang} className="lang-toggle" aria-label="Toggle language">
-                {lang === "en" ? "EN · ID" : "ID · EN"}
+                <span className={lang === "en" ? "lang-toggle-active" : ""}>EN</span>
+                <span>/</span>
+                <span className={lang === "id" ? "lang-toggle-active" : ""}>ID</span>
               </button>
             </div>
           </div>
         </nav>
 
         <div className="aa-container">
-          {/* HERO */}
           <section className="aa-hero">
             <div className="aa-chip">{t.chip}</div>
-            <h1>{t.title1} <span>{t.title2}</span></h1>
+            <h1>
+              {t.title1} <span>{t.title2}</span>
+            </h1>
             <p>{t.desc}</p>
             <div className="aa-hero-actions">
-              <a href="/autoapply-workflow.json" download="autoapply-workflow.json" className="aa-btn-primary">
-                {t.btn1}
+              <a
+                href="/autoapply-workflow.json"
+                download="autoapply-workflow.json"
+                className="aa-btn-primary"
+              >
+                <span>{t.btn1}</span>
               </a>
-              <a href="https://jobtracker-kjmw.vercel.app/public/live" target="_blank" rel="noopener" className="aa-btn-outline">
-                {t.btn2}
+              <a
+                href="https://jobtracker-kjmw.vercel.app/public/live"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="aa-btn-outline"
+              >
+                <span>{t.btn2}</span>
               </a>
             </div>
           </section>
 
-          {/* WORKFLOW DIAGRAM */}
           <section className="aa-section">
-            
-            {/* LIVE FEED WIDGET */}
             <div className="live-feed-container">
               <div className="live-header">
                 <div className="live-title">
-                  <span className="live-indicator"></span>
-                  {t.liveActivity}
+                  <span className="live-indicator" />
+                  <span>{t.liveActivity}</span>
                 </div>
                 <div className="live-status-text">{t.monitoring}</div>
               </div>
 
-              {/* Desktop Table View */}
               <div className="live-table-wrapper">
                 <table className="live-table">
                   <thead>
@@ -426,9 +410,17 @@ export default function AutoApplyPage() {
                   </thead>
                   <tbody>
                     {isFetching && liveJobs.length === 0 ? (
-                      <tr><td colSpan={4} style={{ textAlign: "center", padding: "2rem" }}>{t.connecting}</td></tr>
+                      <tr>
+                        <td colSpan={4} style={{ textAlign: "center", padding: "1.75rem" }}>
+                          {t.connecting}
+                        </td>
+                      </tr>
                     ) : liveJobs.length === 0 ? (
-                      <tr><td colSpan={4} style={{ textAlign: "center", padding: "2rem" }}>{t.noActivity}</td></tr>
+                      <tr>
+                        <td colSpan={4} style={{ textAlign: "center", padding: "1.75rem" }}>
+                          {t.noActivity}
+                        </td>
+                      </tr>
                     ) : (
                       liveJobs.map((job) => {
                         let displayCompany = job.companyName;
@@ -441,7 +433,10 @@ export default function AutoApplyPage() {
                         return (
                           <tr key={job.id}>
                             <td style={{ whiteSpace: "nowrap" }}>
-                              {new Date(job.appliedDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                              {new Date(job.appliedDate).toLocaleTimeString([], {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                              })}
                             </td>
                             <td className="live-company">{displayCompany}</td>
                             <td className="live-position">{displayPosition}</td>
@@ -458,14 +453,13 @@ export default function AutoApplyPage() {
                 </table>
               </div>
 
-              {/* Mobile Card Feed View */}
               <div className="live-mobile-cards">
                 {isFetching && liveJobs.length === 0 ? (
-                  <div style={{ textAlign: "center", padding: "1.5rem", color: "var(--muted)", fontSize: "0.85rem" }}>
+                  <div style={{ textAlign: "center", padding: "1.25rem", color: "var(--muted)", fontSize: "0.82rem" }}>
                     {t.connecting}
                   </div>
                 ) : liveJobs.length === 0 ? (
-                  <div style={{ textAlign: "center", padding: "1.5rem", color: "var(--muted)", fontSize: "0.85rem" }}>
+                  <div style={{ textAlign: "center", padding: "1.25rem", color: "var(--muted)", fontSize: "0.82rem" }}>
                     {t.noActivity}
                   </div>
                 ) : (
@@ -487,8 +481,13 @@ export default function AutoApplyPage() {
                         </div>
                         <div className="live-mobile-pos">{displayPosition}</div>
                         <div className="live-mobile-meta">
-                          <span>🕒 {new Date(job.appliedDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
-                          <span className="live-mobile-tag">Scraped & Logged</span>
+                          <span>
+                            {new Date(job.appliedDate).toLocaleTimeString([], {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })}
+                          </span>
+                          <span>WEBHOOK INGESTED</span>
                         </div>
                       </div>
                     );
@@ -497,55 +496,53 @@ export default function AutoApplyPage() {
               </div>
             </div>
 
-            <p className="aa-section-label" style={{ marginTop: "4rem" }}>{t.how}</p>
+            <p className="aa-section-label">{t.how}</p>
             <h2 className="aa-section-title">{t.pipe}</h2>
-            <p className="aa-section-desc">
-              {t.pipeDesc}
-            </p>
+            <p className="aa-section-desc">{t.pipeDesc}</p>
 
             <div className="aa-flow">
               <div className="aa-node">
-                <span className="aa-node-icon">⏰</span>
+                <span className="aa-node-step">NODE 01</span>
                 <h4>{t.flow1Title}</h4>
                 <p>{t.flow1Desc}</p>
                 <span className="aa-node-badge">{t.flow1Badge}</span>
               </div>
               <div className="aa-connect">
-                <div className="aa-connect-line"></div>
+                <div className="aa-connect-line" />
                 <span className="aa-connect-label">{t.flow1Conn}</span>
               </div>
               <div className="aa-node">
-                <span className="aa-node-icon">🔍</span>
+                <span className="aa-node-step">NODE 02</span>
                 <h4>{t.flow2Title}</h4>
                 <p>{t.flow2Desc}</p>
                 <span className="aa-node-badge">{t.flow2Badge}</span>
               </div>
               <div className="aa-connect">
-                <div className="aa-connect-line"></div>
+                <div className="aa-connect-line" />
                 <span className="aa-connect-label">{t.flow2Conn}</span>
               </div>
               <div className="aa-node">
-                <span className="aa-node-icon">🧹</span>
+                <span className="aa-node-step">NODE 03</span>
                 <h4>{t.flow3Title}</h4>
                 <p>{t.flow3Desc}</p>
                 <span className="aa-node-badge">{t.flow3Badge}</span>
               </div>
               <div className="aa-connect">
-                <div className="aa-connect-line"></div>
+                <div className="aa-connect-line" />
                 <span className="aa-connect-label">{t.flow3Conn}</span>
               </div>
               <div className="aa-node highlight">
-                <span className="aa-node-icon">📋</span>
+                <span className="aa-node-step">NODE 04</span>
                 <h4>{t.flow4Title}</h4>
                 <p>{t.flow4Desc}</p>
                 <span className="aa-node-badge">{t.flow4Badge}</span>
               </div>
               <div className="aa-connect">
-                <div className="aa-connect-line"></div>
+                <div className="aa-connect-line" />
                 <span className="aa-connect-label">{t.flow4Conn}</span>
               </div>
               <div className="aa-node">
-                <span className="aa-node-icon">📱</span>
+                <span className="aa-node-step">NODE 05</span>
                 <h4>{t.flow5Title}</h4>
                 <p>{t.flow5Desc}</p>
                 <span className="aa-node-badge">{t.flow5Badge}</span>
@@ -553,14 +550,13 @@ export default function AutoApplyPage() {
             </div>
           </section>
 
-          {/* FEATURES */}
           <section className="aa-section">
             <p className="aa-section-label">{t.featLabel}</p>
             <h2 className="aa-section-title">{t.featTitle}</h2>
             <div className="aa-features-grid">
               {t.features.map((f) => (
                 <div className="aa-feature" key={f.title}>
-                  <span className="aa-feature-icon">{f.icon}</span>
+                  <span className="aa-feature-code">{f.code}</span>
                   <h3>{f.title}</h3>
                   <p>{f.desc}</p>
                 </div>
@@ -568,25 +564,33 @@ export default function AutoApplyPage() {
             </div>
           </section>
 
-          {/* SETUP */}
           <section className="aa-section">
             <p className="aa-section-label">{t.quickLabel}</p>
             <h2 className="aa-section-title">{t.quickTitle}</h2>
             <p className="aa-section-desc">{t.quickDesc}</p>
 
             <div className="aa-code-block">
-              <span className="comment">{t.comment1}</span>{"\n"}
-              git clone https://github.com/gryvnalvrdo/autoapply-flow{"\n\n"}
-              <span className="comment">{t.comment2}</span>{"\n\n"}
-              <span className="comment">{t.comment3}</span>{"\n"}
-              <span className="key">JOBTRAIL_API_URL</span>=<span className="str">https://jobtracker-kjmw.vercel.app/api/auto-apply</span>{"\n"}
-              <span className="key">AUTOAPPLY_SECRET</span>=<span className="str">your-secret-key</span>{"\n"}
-              <span className="key">TELEGRAM_BOT_TOKEN</span>=<span className="str">your-bot-token</span>{"\n"}
-              <span className="key">TELEGRAM_CHAT_ID</span>=<span className="str">your-chat-id</span>{"\n\n"}
+              <span className="comment">{t.comment1}</span>
+              {"\n"}git clone https://github.com/gryvnalvrdo/autoapply-flow{"\n\n"}
+              <span className="comment">{t.comment2}</span>
+              {"\n\n"}
+              <span className="comment">{t.comment3}</span>
+              {"\n"}
+              <span className="key">JOBTRAIL_API_URL</span>=
+              <span className="str">https://jobtracker-kjmw.vercel.app/api/auto-apply</span>
+              {"\n"}
+              <span className="key">AUTOAPPLY_SECRET</span>=
+              <span className="str">your-secret-key</span>
+              {"\n"}
+              <span className="key">TELEGRAM_BOT_TOKEN</span>=
+              <span className="str">your-bot-token</span>
+              {"\n"}
+              <span className="key">TELEGRAM_CHAT_ID</span>=
+              <span className="str">your-chat-id</span>
+              {"\n\n"}
               <span className="comment">{t.comment4}</span>
             </div>
 
-            <br />
             <table className="aa-table">
               <thead>
                 <tr>
@@ -605,26 +609,22 @@ export default function AutoApplyPage() {
             </table>
           </section>
 
-          {/* ECOSYSTEM */}
           <div className="subpage-ecosystem">
-            <h3><span>⚡</span> {t.ecoTitle}</h3>
+            <h3>{t.ecoTitle}</h3>
             <p>{t.ecoDesc}</p>
             <div className="subpage-eco-flow">
-              <span className="subpage-eco-item active">
-                <span>🤖</span> {t.ecoBtn1}
-              </span>
-              <span className="subpage-eco-arrow">→</span>
-              <a href="https://jobtracker-kjmw.vercel.app/demo" target="_blank" rel="noopener noreferrer" className="subpage-eco-item">
-                <span>📋</span> {t.ecoBtn2}
+              <span className="subpage-eco-item active">{t.ecoBtn1}</span>
+              <a
+                href="https://jobtracker-kjmw.vercel.app/demo"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="subpage-eco-item"
+              >
+                {t.ecoBtn2}
               </a>
-              <span className="subpage-eco-arrow">→</span>
               <Link href="/covercraft" className="subpage-eco-item">
-                <span>✨</span> {t.ecoBtn3}
+                {t.ecoBtn3}
               </Link>
-              <span className="subpage-eco-arrow">→</span>
-              <span className="subpage-eco-item">
-                <span>🎯</span> {t.ecoBtn4}
-              </span>
             </div>
           </div>
         </div>
@@ -636,22 +636,24 @@ export default function AutoApplyPage() {
             </div>
             <p className="subpage-footer-desc">
               {lang === "en"
-                ? "Full-Stack Engineer & AI Automations Developer. Building high-impact production systems."
-                : "Software Engineer Full-Stack & Otomasi AI. Membangun sistem produksi nyata bernilai tinggi."}
+                ? "Full-Stack Software Engineer: Next.js, Laravel, and AI Automation Pipelines."
+                : "Full-Stack Software Engineer: Next.js, Laravel, dan Pipeline Otomasi AI."}
             </p>
             <div className="subpage-footer-links">
               <Link href="/" className="subpage-footer-link">
-                <span>←</span> {lang === "en" ? "Back to Portfolio" : "Ke Portofolio"}
+                {lang === "en" ? "Back to Portfolio" : "Kembali ke Portofolio"}
               </Link>
-              <a href="https://github.com/gryvnalvrdo/autoapply-flow" target="_blank" rel="noopener noreferrer" className="subpage-footer-link">
-                GitHub Repository ↗
-              </a>
-              <a href="https://www.linkedin.com/in/gryven-alverdo-gunawan-7283ab262/" target="_blank" rel="noopener noreferrer" className="subpage-footer-link">
-                LinkedIn ↗
+              <a
+                href="https://github.com/gryvnalvrdo/autoapply-flow"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="subpage-footer-link"
+              >
+                GitHub Repository
               </a>
             </div>
             <div className="subpage-footer-copy">
-              © {new Date().getFullYear()} Gryven Alverdo Gunawan. {lang === "en" ? "All rights reserved." : "Hak cipta dilindungi."}
+              © 2026 Gryven Alverdo Gunawan
             </div>
           </div>
         </footer>

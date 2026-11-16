@@ -6,18 +6,21 @@ export async function POST(req: Request) {
   try {
     const formData = await req.formData();
     const file = formData.get("cv") as File | null;
-    
+
     if (!file) {
       return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
     }
 
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
-    
+
     const text = await new Promise<string>((resolve, reject) => {
       const pdfParser = new PDFParser(null, 1);
-      pdfParser.on("pdfParser_dataError", (errData: any) => reject(errData.parserError));
-      pdfParser.on("pdfParser_dataReady", (pdfData: any) => {
+      pdfParser.on(
+        "pdfParser_dataError",
+        (errData: { parserError?: unknown }) => reject(errData.parserError)
+      );
+      pdfParser.on("pdfParser_dataReady", () => {
         resolve(pdfParser.getRawTextContent());
       });
       pdfParser.parseBuffer(buffer);
@@ -34,7 +37,15 @@ export async function POST(req: Request) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          contents: [{ parts: [{ text: `Extract the following from this CV text:\n1. The applicant's full name.\n2. A summary of their Skills and Experience (do not include the entire text, just the key skills and work experience summarized for a cover letter background).\n\nRespond ONLY with a valid JSON object in this format:\n{"name": "...", "background": "..."}\n\nCV Text:\n${text}` }] }],
+          contents: [
+            {
+              parts: [
+                {
+                  text: `Extract the following from this CV text:\n1. The applicant's full name.\n2. A summary of their Skills and Experience (do not include the entire text, just the key skills and work experience summarized for a cover letter background).\n\nRespond ONLY with a valid JSON object in this format:\n{"name": "...", "background": "..."}\n\nCV Text:\n${text}`,
+                },
+              ],
+            },
+          ],
           generationConfig: { temperature: 0.2, maxOutputTokens: 2048 },
         }),
       }
@@ -47,14 +58,21 @@ export async function POST(req: Request) {
       if (jsonMatch) {
         try {
           const parsed = JSON.parse(jsonMatch[0]);
-          return NextResponse.json({ success: true, text: parsed.background, name: parsed.name }, { status: 200 });
-        } catch (e) {}
+          return NextResponse.json(
+            { success: true, text: parsed.background, name: parsed.name },
+            { status: 200 }
+          );
+        } catch {
+          // Fallback to raw text
+        }
       }
     }
-    
+
     return NextResponse.json({ success: true, text }, { status: 200 });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("PDF Parse Error:", error);
-    return NextResponse.json({ error: error?.message || error || "Failed to parse PDF" }, { status: 500 });
+    const message =
+      error instanceof Error ? error.message : "Failed to parse PDF";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
