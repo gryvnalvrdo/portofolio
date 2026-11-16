@@ -13,9 +13,13 @@
 
 ## 1. Penyempurnaan Berdasarkan Evaluasi UX & Screenshot
 
-1. **Hero & Header yang Bersih (Tanpa Widget "Profil / Full-Stack / Siap Kerja")**:
-   - Menghapus badge `Siap Kerja (SE)` di header, badge `Full-Stack Software Engineer` di atas judul Hero, serta kotak sidebar `Profil` di sisi kanan Hero.
-   - Hero langsung menampilkan nama, ringkasan peran dengan bahasa yang alami dan jelas, serta tombol CTA utama untuk melihat proyek.
+1. **Hero 2 Kolom Seimbang (Tanpa Status "Siap Kerja", "Full-Stack", "Remote/Relokasi", maupun IPK)**:
+   - Kolom kiri dan kanan Hero dibuat berukuran seimbang (`1fr 1fr`, `align-items: stretch`).
+   - Menghapus badge `Siap Kerja (SE)`, `Full-Stack Software Engineer`, `Siap Remote & Relokasi`, serta angka `IPK` dari Hero, kartu profil, dan bagian pendidikan. Identitas cukup menampilkan `Universitas Atma Jaya Makassar` dan `Makassar, Indonesia`.
+2. **Penghapusan Duplikasi Website Hotel Claro**:
+   - Karena Website Hotel Claro Makassar merupakan karya dari masa magang, maka ditampilkan **1 kali secara utuh di bagian Pengalaman Kerja**, sementara bagian Proyek menampilkan **Job Hunting Suite** (`AutoApply Flow`, `JobTrail`, `CoverCraft`) dan **Melody Similarity Detector**.
+3. **Navigasi Stepper Dua Arah (`Sebelumnya` & `Berikutnya`)**:
+   - Pada panel inspektor *Job Hunting Suite*, ditambahkan tombol navigasi **Sebelumnya** dan **Berikutnya** beserta indikator posisi tahap (`01 / 03`).
 2. **Pilihan Mode Dark & Light**:
    - Menambahkan tombol ganti tema (Gelap / Terang) di header yang berlaku di halaman utama maupun subpage `/autoapply` dan `/covercraft`.
 3. **Navigasi Mobile (Hamburger Top-Left + Floating Back-to-Top)**:

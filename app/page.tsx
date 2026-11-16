@@ -15,6 +15,7 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState<SectionId>("suite");
   const [activeSystem, setActiveSystem] = useState<SuiteSystemKey>("autoapply");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isPhotoPopupOpen, setIsPhotoPopupOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [emailCopied, setEmailCopied] = useState(false);
 
@@ -37,7 +38,10 @@ export default function Home() {
     };
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setMobileMenuOpen(false);
+      if (e.key === "Escape") {
+        setMobileMenuOpen(false);
+        setIsPhotoPopupOpen(false);
+      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -49,11 +53,11 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
+    document.body.style.overflow = mobileMenuOpen || isPhotoPopupOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
-  }, [mobileMenuOpen]);
+  }, [mobileMenuOpen, isPhotoPopupOpen]);
 
   const copyEmailToClipboard = () => {
     if (typeof navigator !== "undefined" && navigator.clipboard) {
@@ -83,17 +87,25 @@ export default function Home() {
       ? "https://drive.google.com/file/d/1uL_tACRRxVAA1-R53nNOybsOGDPXvhVg/view?usp=drive_link"
       : "https://drive.google.com/file/d/1zX5yMg_YAA_XN-gP7eA7DFYSzin1OQuq/view?usp=drive_link";
 
+  const totalStages = t.suite.systems.length;
   const currentSystemIndex = t.suite.systems.findIndex(
     (s) => s.id === activeSystem
   );
-  const currentSystem =
-    t.suite.systems[currentSystemIndex] || t.suite.systems[0];
-  const nextSystem =
-    t.suite.systems[(currentSystemIndex + 1) % t.suite.systems.length];
+  const safeIndex = currentSystemIndex >= 0 ? currentSystemIndex : 0;
+  const currentSystem = t.suite.systems[safeIndex];
+  const prevSystem =
+    t.suite.systems[(safeIndex - 1 + totalStages) % totalStages];
+  const nextSystem = t.suite.systems[(safeIndex + 1) % totalStages];
 
   const closeAndNavigate = (id: SectionId) => {
     setMobileMenuOpen(false);
     const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleQuickJump = (target: string, system?: SuiteSystemKey) => {
+    if (system) setActiveSystem(system);
+    const el = document.getElementById(target);
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -299,32 +311,100 @@ export default function Home() {
 
       <main className="portfolio-wrapper">
         {/* ============================================
-            HERO SECTION (DIRECT, CLEAN, ZERO CLUTTER)
+            HERO SECTION (EQUAL-HEIGHT 2-COLUMN SYMMETRIC GRID)
         ============================================= */}
         <section className="hero-section">
-          <RevealWrapper delay={0}>
-            <h1 className="hero-name">{t.hero.name}</h1>
-            <p className="hero-headline">{t.hero.headline}</p>
-            <p className="hero-desc">{t.hero.sub}</p>
+          <RevealWrapper delay={0} style={{ height: "100%" }}>
+            <div className="hero-left-col" style={{ height: "100%" }}>
+              <div>
+                <h1 className="hero-name">{t.hero.name}</h1>
+                <p className="hero-headline">{t.hero.headline}</p>
+                <p className="hero-desc">{t.hero.sub}</p>
+              </div>
 
-            <div className="hero-actions">
-              <a href="#suite" className="btn-primary">
-                <span>{t.hero.exploreCta}</span>
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3">
-                  <path d="M12 5v14" />
-                  <path d="m19 12-7 7-7-7" />
-                </svg>
-              </a>
+              <div>
+                <div className="hero-metrics-row">
+                  {t.hero.highlights.map((m) => (
+                    <div className="hero-metric-box" key={m.label}>
+                      <div className="hero-metric-val">{m.value}</div>
+                      <div className="hero-metric-lbl">{m.label}</div>
+                    </div>
+                  ))}
+                </div>
 
-              <a href="#contact" className="btn-secondary">
-                <span>{t.hero.contactCta}</span>
-              </a>
+                <div className="hero-actions">
+                  <a href="#suite" className="btn-primary">
+                    <span>{t.hero.exploreCta}</span>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3">
+                      <path d="M12 5v14" />
+                      <path d="m19 12-7 7-7-7" />
+                    </svg>
+                  </a>
+
+                  <a href="#contact" className="btn-secondary">
+                    <span>{t.hero.contactCta}</span>
+                  </a>
+                </div>
+              </div>
             </div>
+          </RevealWrapper>
+
+          <RevealWrapper delay={60} style={{ height: "100%" }}>
+            <aside className="hero-right-col" style={{ height: "100%" }}>
+              <div className="hero-identity-row">
+                <button
+                  type="button"
+                  className="hero-avatar-btn"
+                  onClick={() => setIsPhotoPopupOpen(true)}
+                  aria-label="Enlarge profile photo"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/photo.jpeg"
+                    alt="Gryven Alverdo Gunawan"
+                    className="hero-avatar-img"
+                  />
+                </button>
+
+                <div>
+                  <div className="hero-id-name">{t.hero.name}</div>
+                  <div className="hero-id-sub">{t.hero.profileSubtitle}</div>
+                  <div className="hero-id-loc">{t.hero.profileLocation}</div>
+                </div>
+              </div>
+
+              <div className="hero-index-box">
+                <div className="hero-index-hdr">
+                  <span>{t.hero.quickIndexTitle}</span>
+                  <span>{t.hero.quickIndexCount}</span>
+                </div>
+
+                <div className="hero-index-list">
+                  {t.hero.quickIndex.map((item) => (
+                    <button
+                      type="button"
+                      key={item.code}
+                      onClick={() => handleQuickJump(item.target, item.system)}
+                      className="hero-index-item"
+                    >
+                      <div className="hero-index-left">
+                        <span className={`hero-index-code ${item.theme}`}>
+                          {item.code}
+                        </span>
+                        <span className="hero-index-name">{item.name}</span>
+                      </div>
+                      <span className="hero-index-type">{item.type}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </aside>
           </RevealWrapper>
         </section>
 
         {/* ============================================
-            SECTION 1: PROJECTS & CONNECTED SYSTEMS
+            SECTION 1: PERSONAL & RESEARCH PROJECTS
+            (Hotel Claro lives cleanly in Experience to avoid duplication!)
         ============================================= */}
         <section id="suite" className="portfolio-section">
           <RevealWrapper delay={0}>
@@ -384,136 +464,163 @@ export default function Home() {
               data-theme={currentSystem.theme}
               role="tabpanel"
             >
-              <div>
-                <span className={`inspector-domain-pill ${currentSystem.theme}`}>
-                  {currentSystem.index}: {currentSystem.category}
-                </span>
+              <div className="inspector-body-grid">
+                <div>
+                  <span className={`inspector-domain-pill ${currentSystem.theme}`}>
+                    {currentSystem.index}: {currentSystem.category}
+                  </span>
 
-                <h3 className="inspector-headline">
-                  {currentSystem.name}: {currentSystem.headline}
-                </h3>
+                  <h3 className="inspector-headline">
+                    {currentSystem.name}: {currentSystem.headline}
+                  </h3>
 
-                <p className="inspector-problem">{currentSystem.overview}</p>
+                  <p className="inspector-problem">{currentSystem.overview}</p>
 
-                <ul className="inspector-points">
-                  {currentSystem.highlights.map((pt, i) => (
-                    <li key={i}>{pt}</li>
-                  ))}
-                </ul>
+                  <ul className="inspector-points">
+                    {currentSystem.highlights.map((pt, i) => (
+                      <li key={i}>{pt}</li>
+                    ))}
+                  </ul>
 
-                <div className="inspector-stack-row">
-                  {currentSystem.tools.map((tech) => (
-                    <span className="inspector-stack-tag" key={tech}>
-                      {tech}
-                    </span>
-                  ))}
+                  <div className="inspector-stack-row">
+                    {currentSystem.tools.map((tech) => (
+                      <span className="inspector-stack-tag" key={tech}>
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="inspector-actions">
+                    {currentSystem.primaryBtn.external ? (
+                      <a
+                        href={currentSystem.primaryBtn.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`btn-theme-primary ${currentSystem.theme}`}
+                      >
+                        <span>{currentSystem.primaryBtn.label}</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3">
+                          <path d="M7 17L17 7" />
+                          <path d="M7 7h10v10" />
+                        </svg>
+                      </a>
+                    ) : (
+                      <Link
+                        href={currentSystem.primaryBtn.href}
+                        className={`btn-theme-primary ${currentSystem.theme}`}
+                      >
+                        <span>{currentSystem.primaryBtn.label}</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3">
+                          <path d="M5 12h14" />
+                          <path d="m12 5 7 7-7 7" />
+                        </svg>
+                      </Link>
+                    )}
+
+                    {currentSystem.secondaryBtn && (
+                      <a
+                        href={currentSystem.secondaryBtn.href}
+                        target={currentSystem.secondaryBtn.external ? "_blank" : undefined}
+                        rel={
+                          currentSystem.secondaryBtn.external
+                            ? "noopener noreferrer"
+                            : undefined
+                        }
+                        className="btn-outline"
+                      >
+                        <span>{currentSystem.secondaryBtn.label}</span>
+                      </a>
+                    )}
+                  </div>
                 </div>
 
-                <div className="inspector-actions">
-                  {currentSystem.primaryBtn.external ? (
-                    <a
-                      href={currentSystem.primaryBtn.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`btn-theme-primary ${currentSystem.theme}`}
-                    >
-                      <span>{currentSystem.primaryBtn.label}</span>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3">
-                        <path d="M7 17L17 7" />
-                        <path d="M7 7h10v10" />
-                      </svg>
-                    </a>
-                  ) : (
-                    <Link
-                      href={currentSystem.primaryBtn.href}
-                      className={`btn-theme-primary ${currentSystem.theme}`}
-                    >
-                      <span>{currentSystem.primaryBtn.label}</span>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3">
-                        <path d="M5 12h14" />
-                        <path d="m12 5 7 7-7 7" />
-                      </svg>
-                    </Link>
-                  )}
-
-                  {currentSystem.secondaryBtn && (
-                    <a
-                      href={currentSystem.secondaryBtn.href}
-                      target={currentSystem.secondaryBtn.external ? "_blank" : undefined}
-                      rel={
-                        currentSystem.secondaryBtn.external
-                          ? "noopener noreferrer"
-                          : undefined
-                      }
-                      className="btn-outline"
-                    >
-                      <span>{currentSystem.secondaryBtn.label}</span>
-                    </a>
-                  )}
-
-                  <button
-                    type="button"
-                    className="inspector-next-btn"
-                    onClick={() => setActiveSystem(nextSystem.id)}
-                  >
-                    {t.suite.nextStepPrefix} {nextSystem.index} {nextSystem.name}
-                  </button>
+                <div className="flow-summary-card">
+                  <div className="flow-summary-title">{currentSystem.flowTitle}</div>
+                  {currentSystem.flowSteps.map((step) => (
+                    <div className="flow-step-row" key={step.label}>
+                      <span className="flow-step-label">{step.label}</span>
+                      <span className="flow-step-val">{step.value}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              <div className="flow-summary-card">
-                <div className="flow-summary-title">{currentSystem.flowTitle}</div>
-                {currentSystem.flowSteps.map((step) => (
-                  <div className="flow-step-row" key={step.label}>
-                    <span className="flow-step-label">{step.label}</span>
-                    <span className="flow-step-val">{step.value}</span>
-                  </div>
-                ))}
+              {/* Clean Previous / Next Stage Stepper Bar */}
+              <div className="inspector-stepper-bar">
+                <button
+                  type="button"
+                  className="stepper-nav-btn"
+                  onClick={() => setActiveSystem(prevSystem.id)}
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                    <path d="M19 12H5" />
+                    <path d="m12 19-7-7 7-7" />
+                  </svg>
+                  <span>
+                    {t.suite.prevStepLabel}: {prevSystem.index} {prevSystem.name}
+                  </span>
+                </button>
+
+                <span className="stepper-dots">
+                  {currentSystem.index} / 0{totalStages}
+                </span>
+
+                <button
+                  type="button"
+                  className="stepper-nav-btn"
+                  onClick={() => setActiveSystem(nextSystem.id)}
+                >
+                  <span>
+                    {t.suite.nextStepLabel}: {nextSystem.index} {nextSystem.name}
+                  </span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                    <path d="M5 12h14" />
+                    <path d="m12 5 7 7-7 7" />
+                  </svg>
+                </button>
               </div>
             </div>
           </RevealWrapper>
 
+          {/* AI AUDIO RESEARCH PROJECT: MELODY SIMILARITY DETECTOR */}
           <RevealWrapper delay={80}>
-            <div className="subsection-bar">
-              <span className="subsection-label">{t.suite.otherSubheader}</span>
-            </div>
+            <div id="melody-project">
+              <div className="subsection-bar">
+                <span className="subsection-label">{t.suite.melody.sectionHeader}</span>
+              </div>
 
-            <div className="featured-apps-grid">
-              {t.suite.featuredApps.map((app) => (
-                <article
-                  key={app.id}
-                  className="featured-app-card"
-                  data-theme={app.theme}
-                >
+              <div className="inspector-panel" data-theme={t.suite.melody.theme}>
+                <div className="inspector-body-grid">
                   <div>
-                    <span className={`inspector-domain-pill ${app.theme}`}>
-                      {app.category}
+                    <span className={`inspector-domain-pill ${t.suite.melody.theme}`}>
+                      {t.suite.melody.category}
                     </span>
-                    <h3 className="featured-app-title">{app.name}</h3>
-                    <p className="inspector-problem">{app.summary}</p>
+
+                    <h3 className="inspector-headline">{t.suite.melody.name}</h3>
+                    <p className="inspector-problem">{t.suite.melody.summary}</p>
+
                     <ul className="inspector-points">
-                      {app.highlights.map((hl, idx) => (
+                      {t.suite.melody.highlights.map((hl, idx) => (
                         <li key={idx}>{hl}</li>
                       ))}
                     </ul>
-                  </div>
 
-                  <div>
                     <div className="inspector-stack-row">
-                      {app.tools.map((tech) => (
+                      {t.suite.melody.tools.map((tech) => (
                         <span className="inspector-stack-tag" key={tech}>
                           {tech}
                         </span>
                       ))}
                     </div>
+
                     <div className="inspector-actions">
                       <a
-                        href={app.primaryBtn.href}
+                        href={t.suite.melody.primaryBtn.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`btn-theme-primary ${app.theme}`}
+                        className={`btn-theme-primary ${t.suite.melody.theme}`}
                       >
-                        <span>{app.primaryBtn.label}</span>
+                        <span>{t.suite.melody.primaryBtn.label}</span>
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3">
                           <path d="M7 17L17 7" />
                           <path d="M7 7h10v10" />
@@ -521,14 +628,24 @@ export default function Home() {
                       </a>
                     </div>
                   </div>
-                </article>
-              ))}
+
+                  <div className="flow-summary-card">
+                    <div className="flow-summary-title">{t.suite.melody.stepsTitle}</div>
+                    {t.suite.melody.steps.map((step) => (
+                      <div className="flow-step-row" key={step.label}>
+                        <span className="flow-step-label">{step.label}</span>
+                        <span className="flow-step-val">{step.value}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </RevealWrapper>
         </section>
 
         {/* ============================================
-            SECTION 2: EXPERIENCE & EDUCATION
+            SECTION 2: EXPERIENCE, INTERNSHIP WORK (HOTEL CLARO) & EDUCATION
         ============================================= */}
         <section id="experience" className="portfolio-section">
           <RevealWrapper delay={0}>
@@ -542,7 +659,9 @@ export default function Home() {
           <div className="timeline-list">
             {t.experience.items.map((item, idx) => (
               <RevealWrapper delay={idx * 60} key={item.role}>
-                <article className="timeline-card">
+                <article
+                  className={`timeline-card ${item.isFeaturedHotel ? "featured-hotel" : ""}`}
+                >
                   <div className="timeline-top">
                     <h3 className="timeline-role">{item.role}</h3>
                     <span className="timeline-period">{item.period}</span>
@@ -573,10 +692,10 @@ export default function Home() {
                         href={item.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="timeline-demo-link"
+                        className="btn-theme-primary gold"
                       >
                         <span>{t.experience.liveDemo}</span>
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
                           <path d="M7 17L17 7" />
                           <path d="M7 7h10v10" />
                         </svg>
@@ -590,7 +709,7 @@ export default function Home() {
         </section>
 
         {/* ============================================
-            SECTION 3: UNIFIED CONTACT & FOOTER (EMAIL, WHATSAPP, LINKEDIN, GITHUB)
+            SECTION 3: UNIFIED CONTACT & FOOTER
         ============================================= */}
         <section id="contact" className="unified-contact-section">
           <RevealWrapper delay={0}>
@@ -697,6 +816,31 @@ export default function Home() {
         </svg>
         <span>{t.nav.top}</span>
       </button>
+
+      {/* PHOTO POPUP MODAL */}
+      <div
+        className={`photo-popup-overlay ${isPhotoPopupOpen ? "active" : ""}`}
+        onClick={() => setIsPhotoPopupOpen(false)}
+      >
+        <div
+          className="photo-popup-content"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <button
+            className="photo-popup-close"
+            onClick={() => setIsPhotoPopupOpen(false)}
+            aria-label="Close photo"
+          >
+            ×
+          </button>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/photo.jpeg"
+            alt="Gryven Alverdo Gunawan"
+            className="photo-popup-img"
+          />
+        </div>
+      </div>
     </>
   );
 }

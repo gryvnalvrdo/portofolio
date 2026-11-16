@@ -6,10 +6,12 @@
 
 ## 1. Larangan UI Generik, Label Jabatan di Depan, dan Simbol AI
 
-1. **Jangan Memasang Widget "Profil / Full-Stack / Siap Kerja" di Header atau Awal Hero**:
-   - Dilarang memasang badge status seperti `Siap Kerja (SE)` atau `Available for Work` di navbar.
-   - Dilarang memasang pill/eyebrow seperti `Full-Stack Software Engineer (IPK...)` tepat di atas judul utama.
-   - Dilarang menambah kotak sidebar "Profil / Telemetri" yang tidak perlu di Hero. Biarkan bagian pembuka bersih, lugas, dan langsung menuju inti karya.
+1. **Jangan Memasang Label "Full-Stack / Siap Kerja / Remote & Relokasi" atau IPK di Tampilan Depan**:
+   - Dilarang memasang badge status seperti `Siap Kerja (SE)`, `Available for Work`, atau `Siap Remote & Relokasi` di header maupun kartu Hero.
+   - Dilarang menampilkan label `Full-Stack Software Engineer` atau angka `IPK 3.88 / 4.00` di atas judul maupun di kartu profil depan. Cukup tampilkan identitas bersih (`Gryven Alverdo Gunawan`, `Universitas Atma Jaya Makassar`, `Makassar, Indonesia`).
+   - Pastikan dua kolom Hero (`kiri` dan `kanan`) memiliki tinggi dan proporsi ukuran yang seimbang (`align-items: stretch`, `grid-template-columns: 1fr 1fr`).
+   - Jangan menduplikasi proyek magang (**Hotel Claro Makassar**) di bagian Proyek sekaligus di bagian Pengalaman: tempatkan karya magang hotel secara utuh di bagian **Pengalaman**, sedangkan bagian **Proyek** difokuskan pada proyek pribadi dan riset (**Job Hunting Suite** dan **Melody Similarity Detector**).
+   - Pada inspektor pipeline bertahap, sediakan navigasi dua arah (**Sebelumnya** dan **Berikutnya**) yang rapi.
 2. **Bahasa Umum yang Mudah Dimengerti Semua Orang**:
    - Dilarang menulis nama fungsi internal (`getAvailableStock`, `AdminAuth`), kode hex CSS (`#0C1526`), atau nama operator database (`Prisma $transaction`) di dalam deskripsi portofolio utama.
    - Jelaskan manfaat, fungsi nyata, dan hasil setiap sistem dengan bahasa yang langsung dipahami oleh HR, manajer proyek, klien bisnis, maupun developer.
