@@ -82,3 +82,21 @@ Di dalam portofolio, setiap proyek memiliki **Domain Signature Accent** yang men
   - Top bar ringkas: `Gryven Alverdo.`, toggle `EN / ID`, dan tombol **`CV`** yang tetap tampil.
   - **Bottom Floating Glass Dock**: Navigasi `Systems`, `Experience`, `Architecture`, `Contact` + tombol `Top` (saat scroll) di area *thumb zone* bawah layar dengan dukungan `env(safe-area-inset-bottom)`.
   - **Mobile Hero**: Kartu identitas horizontal di atas Hero menampilkan foto proporsional, nama, role, dan lokasi `Makassar, Indonesia (Open to Remote & Relocation)` tanpa terpotong.
+
+---
+
+## 3. Keamanan Hosting, Penanganan Error & Skalabilitas Traffic Tinggi
+
+1. **HTTP Security Headers (Next.js & Laravel)**:
+   - Mengaktifkan `poweredByHeader: false` dan header keamanan (`X-Content-Type-Options: nosniff`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, `Strict-Transport-Security`) di `portfolio/next.config.ts`, `job tracker/next.config.ts`, dan `hotel-claro/app/Http/Middleware/SecurityHeaders.php`.
+   - Menonaktifkan `APP_DEBUG` (`"false"`) pada `hotel-claro/vercel.json` agar stack trace maupun variabel `.env` tidak pernah bocor ke publik saat terjadi error.
+2. **Proteksi API, SSRF & Validasi Server-Side**:
+   - **SSRF Guard (`/api/scrape`)**: Validasi URL melalui `validateExternalUrl()` di `lib/security.ts` untuk memblokir skema non-HTTP/HTTPS serta IP internal/metadata cloud (`localhost`, `127.0.0.1`, `169.254.169.254`, `10.x`, `172.16-31.x`, `192.168.x`), termasuk re-validasi tujuan redirect.
+   - **Validasi File & Payload (`/api/parse-cv`, `/api/generate`)**: Pembatasan ukuran PDF maks 4 MB, pengecekan magic bytes `%PDF-`, batas panjang prompt (15.000 karakter), serta `AbortSignal.timeout`.
+   - **Proteksi Webhook & IDOR (`job tracker` & `hotel-claro`)**: Menghapus fallback secret hardcoded di `/api/auto-apply` (memakai `crypto.timingSafeEqual`), membatasi endpoint publik CoverCraft sync hanya untuk akun demo/owner, menghitung ulang harga kamar dan jumlah malam di server pada `BookingController::store()` (tidak mempercayai `price` dari JSON client), dan verifikasi signature Midtrans dengan `hash_equals()` yang idempoten.
+3. **Resilience & Pemulihan Error (*Error Boundaries*)**:
+   - Menyediakan `app/error.tsx`, `app/global-error.tsx`, dan `app/not-found.tsx` pada Next.js serta `resources/views/errors/404.blade.php` dan `500.blade.php` pada Laravel agar kegagalan runtime/jaringan menampilkan halaman pemulihan yang bersih dan ramah pengguna.
+4. **Ketahanan Saat Traffic Tinggi (*High Concurrency*)**:
+   - **Rate Limiting**: Pembatasan request per IP pada endpoint AI/PDF/Scraper (`portfolio`) serta `throttle` middleware pada booking dan login admin (`hotel-claro`).
+   - **Edge CDN Caching & Polling Hemat Resource**: Endpoint telemetri publik JobTrail (`/api/public/jobs` & `/api/public/stats`) memakai `Cache-Control: public, s-maxage=30, stale-while-revalidate=60` agar lonjakan pengunjung ditangani Vercel Edge CDN tanpa membebani Neon PostgreSQL, sementara `/autoapply` mem-pause polling (interval 60 detik) saat tab browser tidak aktif.
+   - **Pencegahan Double Booking**: `BookingController::store()` memakai `DB::transaction` dengan `lockForUpdate()` saat mengecek stok kamar agar tidak terjadi *overbooking* ketika banyak tamu memesan kamar terakhir bersamaan.

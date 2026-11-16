@@ -1,20 +1,60 @@
 import { NextResponse } from "next/server";
+import { checkRateLimit, getClientIp } from "@/lib/security";
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const PDFParser = require("pdf2json");
 
+const MAX_PDF_BYTES = 4 * 1024 * 1024; // 4 MB
+const MAX_TEXT_CHARS = 12000;
+
 export async function POST(req: Request) {
   try {
+    const ip = getClientIp(req);
+    const rate = checkRateLimit("parse-cv", ip, 8, 60_000);
+    if (!rate.allowed) {
+      return NextResponse.json(
+        { error: "Too many PDF uploads. Please wait a moment and try again." },
+        {
+          status: 429,
+          headers: { "Retry-After": String(rate.retryAfterSeconds) },
+        }
+      );
+    }
+
     const formData = await req.formData();
     const file = formData.get("cv") as File | null;
 
     if (!file) {
-      return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
+      return NextResponse.json({ error: "No file uploaded." }, { status: 400 });
+    }
+
+    if (file.size === 0 || file.size > MAX_PDF_BYTES) {
+      return NextResponse.json(
+        { error: "PDF file must be between 1 byte and 4 MB." },
+        { status: 400 }
+      );
+    }
+
+    const isPdfName = file.name.toLowerCase().endsWith(".pdf");
+    const isPdfMime = !file.type || file.type === "application/pdf";
+    if (!isPdfName || !isPdfMime) {
+      return NextResponse.json(
+        { error: "Invalid file type. Only PDF files are accepted." },
+        { status: 400 }
+      );
     }
 
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    const text = await new Promise<string>((resolve, reject) => {
+    // Verify PDF magic bytes (%PDF-)
+    if (buffer.subarray(0, 5).toString("ascii") !== "%PDF-") {
+      return NextResponse.json(
+        { error: "Uploaded file is not a valid PDF document." },
+        { status: 400 }
+      );
+    }
+
+    const rawExtracted = await new Promise<string>((resolve, reject) => {
       const pdfParser = new PDFParser(null, 1);
       pdfParser.on(
         "pdfParser_dataError",
@@ -25,6 +65,8 @@ export async function POST(req: Request) {
       });
       pdfParser.parseBuffer(buffer);
     });
+
+    const text = rawExtracted.slice(0, MAX_TEXT_CHARS);
 
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
@@ -48,6 +90,7 @@ export async function POST(req: Request) {
           ],
           generationConfig: { temperature: 0.2, maxOutputTokens: 2048 },
         }),
+        signal: AbortSignal.timeout(20_000),
       }
     );
 
@@ -58,12 +101,18 @@ export async function POST(req: Request) {
       if (jsonMatch) {
         try {
           const parsed = JSON.parse(jsonMatch[0]);
-          return NextResponse.json(
-            { success: true, text: parsed.background, name: parsed.name },
-            { status: 200 }
-          );
+          if (typeof parsed?.background === "string") {
+            return NextResponse.json(
+              {
+                success: true,
+                text: parsed.background,
+                name: typeof parsed.name === "string" ? parsed.name : undefined,
+              },
+              { status: 200 }
+            );
+          }
         } catch {
-          // Fallback to raw text
+          // Fallback to extracted raw text
         }
       }
     }
@@ -71,8 +120,9 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: true, text }, { status: 200 });
   } catch (error: unknown) {
     console.error("PDF Parse Error:", error);
-    const message =
-      error instanceof Error ? error.message : "Failed to parse PDF";
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json(
+      { error: "Unable to parse the uploaded PDF. Please paste your resume text manually." },
+      { status: 500 }
+    );
   }
 }

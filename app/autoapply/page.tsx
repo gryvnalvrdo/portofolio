@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useLanguage } from "@/lib/useLanguage";
 
 interface LiveJobItem {
@@ -16,26 +16,41 @@ export default function AutoApplyPage() {
   const [lang, toggleLang] = useLanguage();
   const [liveJobs, setLiveJobs] = useState<LiveJobItem[]>([]);
   const [isFetching, setIsFetching] = useState(true);
+  const [fetchError, setFetchError] = useState(false);
+
+  const fetchJobs = useCallback(async () => {
+    try {
+      const res = await fetch("https://jobtracker-kjmw.vercel.app/api/public/jobs", {
+        signal: AbortSignal.timeout(8000),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      setFetchError(false);
+      if (data.success && Array.isArray(data.jobs)) {
+        setLiveJobs(data.jobs);
+      }
+    } catch (err) {
+      console.error("Failed to fetch live jobs:", err);
+      setFetchError(true);
+    } finally {
+      setIsFetching(false);
+    }
+  }, []);
 
   useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        const res = await fetch("https://jobtracker-kjmw.vercel.app/api/public/jobs");
-        const data = await res.json();
-        if (data.success && data.jobs) {
-          setLiveJobs(data.jobs);
-        }
-      } catch (err) {
-        console.error("Failed to fetch live jobs:", err);
-      } finally {
-        setIsFetching(false);
+    const initialTimer = setTimeout(() => {
+      void fetchJobs();
+    }, 0);
+    const interval = setInterval(() => {
+      if (typeof document !== "undefined" && document.visibilityState === "visible") {
+        void fetchJobs();
       }
+    }, 60_000);
+    return () => {
+      clearTimeout(initialTimer);
+      clearInterval(interval);
     };
-
-    fetchJobs();
-    const interval = setInterval(fetchJobs, 15000);
-    return () => clearInterval(interval);
-  }, []);
+  }, [fetchJobs]);
 
   const t = {
     en: {
@@ -54,10 +69,12 @@ export default function AutoApplyPage() {
       tableCompany: "Company",
       tablePosition: "Position Ingested",
       tableStatus: "State",
-      monitoring: "POLLING ACTIVE (15S)",
+      monitoring: "CACHED TELEMETRY (60S)",
       liveActivity: "Live Agent Telemetry (JobTrail Public API)",
       connecting: "Connecting to JobTrail telemetry endpoint...",
       noActivity: "No recent automated ingestions.",
+      errorLoad: "Telemetry service is temporarily unreachable. Showing cached or fallback state.",
+      refreshBtn: "Refresh",
 
       flow1Title: "Schedule Trigger",
       flow1Desc: "Executes every 6 hours autonomously",
@@ -156,10 +173,12 @@ export default function AutoApplyPage() {
       tableCompany: "Perusahaan",
       tablePosition: "Posisi Terdeteksi",
       tableStatus: "Status",
-      monitoring: "MEMANTAU AKTIF (15D)",
+      monitoring: "TELEMETRI CACHE (60D)",
       liveActivity: "Telemetri Agen Live (JobTrail Public API)",
       connecting: "Menghubungkan ke endpoint telemetri JobTrail...",
       noActivity: "Belum ada aktivitas ingesti terbaru.",
+      errorLoad: "Layanan telemetri sementara tidak dapat dijangkau.",
+      refreshBtn: "Muat Ulang",
 
       flow1Title: "Pemicu Jadwal",
       flow1Desc: "Berjalan otomatis setiap 6 jam",
@@ -395,8 +414,42 @@ export default function AutoApplyPage() {
                   <span className="live-indicator" />
                   <span>{t.liveActivity}</span>
                 </div>
-                <div className="live-status-text">{t.monitoring}</div>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.65rem" }}>
+                  <div className="live-status-text">{t.monitoring}</div>
+                  <button
+                    type="button"
+                    onClick={() => void fetchJobs()}
+                    style={{
+                      background: "var(--surface2)",
+                      border: "1px solid var(--border-strong)",
+                      color: "var(--text-2)",
+                      fontFamily: "var(--font-mono)",
+                      fontSize: "0.68rem",
+                      padding: "0.25rem 0.6rem",
+                      borderRadius: "6px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    {t.refreshBtn}
+                  </button>
+                </div>
               </div>
+              {fetchError && liveJobs.length === 0 && (
+                <div
+                  style={{
+                    marginBottom: "1rem",
+                    padding: "0.75rem 1rem",
+                    borderRadius: "8px",
+                    background: "var(--amber-bg)",
+                    border: "1px solid var(--amber-bdr)",
+                    color: "var(--amber-l)",
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "0.76rem",
+                  }}
+                >
+                  {t.errorLoad}
+                </div>
+              )}
 
               <div className="live-table-wrapper">
                 <table className="live-table">

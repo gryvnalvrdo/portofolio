@@ -1,22 +1,43 @@
 import { NextResponse } from "next/server";
+import { checkRateLimit, getClientIp } from "@/lib/security";
+
+const MAX_PROMPT_LENGTH = 15000;
 
 export async function POST(req: Request) {
   try {
-    const apiKey = process.env.GEMINI_API_KEY;
-
-    if (!apiKey) {
+    const ip = getClientIp(req);
+    const rate = checkRateLimit("generate", ip, 10, 60_000);
+    if (!rate.allowed) {
       return NextResponse.json(
-        { error: "API Key belum dikonfigurasi di server (Vercel)." },
-        { status: 500 }
+        { error: "Too many requests. Please wait a moment before generating again." },
+        {
+          status: 429,
+          headers: { "Retry-After": String(rate.retryAfterSeconds) },
+        }
       );
     }
 
-    const body = await req.json();
-    const prompt = body.prompt;
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      return NextResponse.json(
+        { error: "AI generation service is currently unavailable." },
+        { status: 503 }
+      );
+    }
+
+    const body = await req.json().catch(() => null);
+    const prompt = typeof body?.prompt === "string" ? body.prompt.trim() : "";
 
     if (!prompt) {
       return NextResponse.json(
-        { error: "Prompt tidak boleh kosong." },
+        { error: "Prompt cannot be empty." },
+        { status: 400 }
+      );
+    }
+
+    if (prompt.length > MAX_PROMPT_LENGTH) {
+      return NextResponse.json(
+        { error: "Input exceeds the maximum allowed length." },
         { status: 400 }
       );
     }
@@ -28,28 +49,41 @@ export async function POST(req: Request) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { temperature: 0.8, maxOutputTokens: 8192 },
+          generationConfig: { temperature: 0.8, maxOutputTokens: 4096 },
         }),
+        signal: AbortSignal.timeout(25_000),
       }
     );
 
     if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err.error?.message || `API Error ${res.status}`);
+      const status = res.status === 429 ? 429 : 502;
+      return NextResponse.json(
+        {
+          error:
+            status === 429
+              ? "AI service is experiencing high demand. Please retry shortly."
+              : "Failed to reach AI generation service.",
+        },
+        { status }
+      );
     }
 
     const data = await res.json();
     const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
 
     if (!text) {
-      throw new Error("No response received from Gemini.");
+      return NextResponse.json(
+        { error: "AI service returned an empty response. Please try again." },
+        { status: 502 }
+      );
     }
 
     return NextResponse.json({ result: text });
   } catch (error: unknown) {
     console.error("CoverCraft API Error:", error);
-    const message =
-      error instanceof Error ? error.message : "Terjadi kesalahan internal.";
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json(
+      { error: "An unexpected error occurred while generating your cover letter." },
+      { status: 500 }
+    );
   }
 }

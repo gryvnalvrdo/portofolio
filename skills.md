@@ -88,7 +88,21 @@ Portofolio ini menaungi **4 sistem berbeda** yang dibangun untuk domain yang ber
 
 ---
 
-## 5. Checklist Verifikasi Wajib
+## 5. Standar Keamanan Hosting, Error Handling & Traffic Tinggi
+
+1. **Zero Secret & Stack Trace Leakage**:
+   - Jangan pernah membiarkan `APP_DEBUG=true` di konfigurasi produksi (`vercel.json`) atau fallback secret hardcoded (seperti `|| "my-secret-key"`).
+   - Selalu sertakan `SecurityHeaders` (`X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Strict-Transport-Security`, `Permissions-Policy`) dan `poweredByHeader: false`.
+2. **Proteksi Endpoint Publik & Anti-Abuse**:
+   - Endpoint yang memanggil AI/LLM berbayar, parser PDF, atau scraper wajib menerapkan **Rate Limiting per IP** (`429 Retry-After`), batas ukuran payload/file, magic-byte check (`%PDF-`), dan **SSRF URL Guard** (`validateExternalUrl`).
+   - Endpoint transaksional (seperti booking hotel atau webhook) wajib menghitung total harga di server dari database, menggunakan `DB::transaction` dengan `lockForUpdate()` untuk mencegah *race condition*, serta `hash_equals` / `timingSafeEqual` untuk verifikasi token/signature.
+3. **Graceful Error Recovery & Scalability**:
+   - Wajib memiliki `error.tsx` / `not-found.tsx` (Next.js) dan custom `404.blade.php` / `500.blade.php` (Laravel).
+   - Endpoint telemetri publik wajib menggunakan Edge CDN caching (`s-maxage` + `stale-while-revalidate`) agar database tidak tumbang saat traffic tinggi, dan UI polling di client wajib berhenti saat tab tidak terlihat (`document.visibilityState === "visible"`).
+
+---
+
+## 6. Checklist Verifikasi Wajib
 
 - [ ] Apakah seluruh teks bebas dari tanda hubung AI (*em-dash* / *en-dash*), bebas simbol `//`, bebas panah ASCII, dan bebas emoji dekoratif?
 - [ ] Apakah setiap web (`AutoApply`, `JobTrail`, `CoverCraft`, `Hotel Claro`) sudah memiliki warna aksen, deskripsi arsitektur, dan daftar keahlian spesifik sesuai kode sumber aslinya?
