@@ -64,8 +64,8 @@ export const dict = {
     },
     suite: {
       label: "Projects",
-      title: "Personal & Research Applications",
-      desc: "Applications I built to solve everyday problems, from an interconnected three-part job search suite to an AI audio similarity search system.",
+      title: "Personal & Thesis Projects",
+      desc: "Applications I built to solve everyday problems, from an interconnected three-part job search suite to my undergraduate thesis project in audio AI.",
       suiteSubheader: "Job Hunting Suite (3 Connected Tools)",
       suiteInstruction: "Select a stage below to inspect how each application works:",
       prevStepLabel: "Previous",
@@ -167,10 +167,10 @@ export const dict = {
         },
       ] as SuiteSystemItem[],
       melody: {
-        sectionHeader: "AI Audio Research Project",
+        sectionHeader: "Undergraduate Thesis Project",
         id: "melody-similarity",
         theme: "sky" as AccentTheme,
-        category: "AI Audio & Plagiarism Search",
+        category: "Thesis (Skripsi) - Audio AI",
         name: "Melody Similarity Detector",
         summary:
           "An AI-powered audio search web application that analyzes uploaded songs or YouTube links and finds tracks with similar melodies. Built to stay accurate even across different keys, tempos, or instruments, while showing clear visual pitch comparisons that anyone can inspect.",
@@ -276,8 +276,8 @@ export const dict = {
     },
     suite: {
       label: "Proyek",
-      title: "Aplikasi Pribadi & Proyek Riset",
-      desc: "Berbagai aplikasi yang saya bangun untuk menyelesaikan kebutuhan nyata, mulai dari ekosistem pencarian kerja tiga tahap hingga sistem deteksi kemiripan melodi berbasis AI.",
+      title: "Proyek Pribadi & Skripsi",
+      desc: "Berbagai aplikasi yang saya bangun untuk menyelesaikan kebutuhan nyata, mulai dari ekosistem pencarian kerja tiga tahap hingga sistem deteksi kemiripan melodi untuk tugas akhir (skripsi).",
       suiteSubheader: "Job Hunting Suite (3 Aplikasi Terhubung)",
       suiteInstruction: "Pilih salah satu tahap di bawah ini untuk melihat cara kerja dan fungsinya:",
       prevStepLabel: "Sebelumnya",
@@ -379,10 +379,10 @@ export const dict = {
         },
       ] as SuiteSystemItem[],
       melody: {
-        sectionHeader: "Proyek Riset Audio AI",
+        sectionHeader: "Proyek Skripsi",
         id: "melody-similarity",
         theme: "sky" as AccentTheme,
-        category: "Pencarian Kemiripan Melodi AI",
+        category: "Skripsi - Audio AI",
         name: "Melody Similarity Detector",
         summary:
           "Aplikasi web berbasis AI yang menganalisis file audio atau link YouTube untuk menemukan lagu dengan melodi yang mirip. Dirancang agar tetap akurat meskipun lagu memiliki kunci nada, tempo, atau instrumen yang berbeda, disertai grafik perbandingan nada yang mudah dipahami.",

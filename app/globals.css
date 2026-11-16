@@ -821,6 +821,7 @@ body::before {
 .mobile-project-card[data-theme="emerald"] { border-color: var(--emerald-bdr); }
 .mobile-project-card[data-theme="indigo"]  { border-color: var(--indigo-bdr); }
 .mobile-project-card[data-theme="amber"]   { border-color: var(--amber-bdr); }
+.mobile-project-card[data-theme="sky"]     { border-color: var(--sky-bdr); }
 .mobile-project-top {
   display: flex;
   align-items: center;
@@ -1809,13 +1810,20 @@ body::before {
   }
   .hero-actions {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem;
+    align-items: stretch;
     width: 100%;
   }
   .hero-actions .btn-primary,
   .hero-actions .btn-secondary {
     width: 100%;
-    font-size: 0.84rem;
+    height: 46px;
+    min-height: 46px;
+    padding: 0.6rem 0.75rem;
+    font-size: 0.81rem;
+    white-space: nowrap;
+    gap: 0.35rem;
   }
 
   .portfolio-section {

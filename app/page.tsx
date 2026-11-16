@@ -14,7 +14,7 @@ export default function Home() {
   const [theme, toggleTheme] = useTheme();
   const [activeSection, setActiveSection] = useState<SectionId>("suite");
   const [activeSystem, setActiveSystem] = useState<SuiteSystemKey>("autoapply");
-  const [expandedMobileSys, setExpandedMobileSys] = useState<SuiteSystemKey | null>("autoapply");
+  const [expandedMobileSys, setExpandedMobileSys] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isPhotoPopupOpen, setIsPhotoPopupOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -721,9 +721,9 @@ export default function Home() {
             </div>
           </RevealWrapper>
 
-          {/* AI AUDIO RESEARCH PROJECT: MELODY SIMILARITY DETECTOR */}
+          {/* DESKTOP ONLY: MELODY SIMILARITY DETECTOR */}
           <RevealWrapper delay={80}>
-            <div id="melody-project">
+            <div id="melody-project" className="suite-desktop-view">
               <div className="subsection-bar">
                 <span className="subsection-label">{t.suite.melody.sectionHeader}</span>
               </div>
@@ -779,6 +779,104 @@ export default function Home() {
                   </div>
                 </div>
               </div>
+            </div>
+
+            {/* MOBILE ONLY: MELODY SIMILARITY ACCORDION CARD (DEFAULT HIDDEN DETAILS) */}
+            <div className="suite-mobile-view" style={{ marginTop: "0.5rem" }}>
+              <div className="subsection-bar">
+                <span className="subsection-label">{t.suite.melody.sectionHeader}</span>
+              </div>
+
+              <article
+                id="mobile-card-melody"
+                className="mobile-project-card"
+                data-theme={t.suite.melody.theme}
+              >
+                <div className="mobile-project-top">
+                  <span className={`inspector-domain-pill ${t.suite.melody.theme}`} style={{ marginBottom: 0 }}>
+                    {t.suite.melody.category}
+                  </span>
+                </div>
+
+                <h3 className="mobile-project-title">{t.suite.melody.name}</h3>
+                <p className="mobile-project-summary">{t.suite.melody.summary}</p>
+
+                <div className="mobile-project-cta-row">
+                  <a
+                    href={t.suite.melody.primaryBtn.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`btn-theme-primary ${t.suite.melody.theme}`}
+                  >
+                    <span>{t.suite.melody.primaryBtn.label}</span>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3">
+                      <path d="M7 17L17 7" />
+                      <path d="M7 7h10v10" />
+                    </svg>
+                  </a>
+
+                  <button
+                    type="button"
+                    className="mobile-project-toggle-btn"
+                    onClick={() =>
+                      setExpandedMobileSys(
+                        expandedMobileSys === "melody" ? null : "melody"
+                      )
+                    }
+                    aria-expanded={expandedMobileSys === "melody"}
+                  >
+                    <span>
+                      {expandedMobileSys === "melody"
+                        ? t.suite.hideDetailsLabel
+                        : t.suite.showDetailsLabel}
+                    </span>
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.2"
+                      style={{
+                        transform:
+                          expandedMobileSys === "melody"
+                            ? "rotate(180deg)"
+                            : "rotate(0deg)",
+                        transition: "transform 0.22s ease",
+                      }}
+                    >
+                      <path d="m6 9 6 6 6-6" />
+                    </svg>
+                  </button>
+                </div>
+
+                {expandedMobileSys === "melody" && (
+                  <div className="mobile-project-details inspector-animate-content">
+                    <ul className="inspector-points">
+                      {t.suite.melody.highlights.map((hl, idx) => (
+                        <li key={idx}>{hl}</li>
+                      ))}
+                    </ul>
+
+                    <div className="mobile-flow-mini-grid">
+                      {t.suite.melody.steps.map((step) => (
+                        <div className="flow-step-row" key={step.label}>
+                          <span className="flow-step-label">{step.label}</span>
+                          <span className="flow-step-val">{step.value}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="inspector-stack-row" style={{ marginBottom: 0 }}>
+                      {t.suite.melody.tools.map((tech) => (
+                        <span className="inspector-stack-tag" key={tech}>
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </article>
             </div>
           </RevealWrapper>
         </section>
