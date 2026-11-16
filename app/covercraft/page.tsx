@@ -3,8 +3,10 @@
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/lib/useLanguage";
+import { useTheme } from "@/lib/useTheme";
 
 export default function CoverCraftPage() {
+  const [theme, toggleTheme] = useTheme();
   const [jobTitle, setJobTitle] = useState("");
   const [company, setCompany] = useState("");
   const [jobDesc, setJobDesc] = useState("");
@@ -32,84 +34,84 @@ export default function CoverCraftPage() {
   const t = {
     en: {
       back: "Portfolio",
-      chip: "STAGE 03: AI DOCUMENT & SCRAPER STUDIO (GEMINI API)",
-      title1: "Context-Aware ",
-      title2: "Cover Letter Synthesis",
-      desc: "Scrapes target job URLs, extracts candidate background from PDF resumes, and generates ATS-ready cover letters via Google Gemini AI. Synchronizes directly with JobTrail applications.",
-      sampleBtn: "Load Sample Engineering Role",
-      note: "Integrated with Stage 02 of the suite:",
+      chip: "Stage 03: AI Cover Letter Studio",
+      title1: "Personalized ",
+      title2: "Cover Letters in Seconds",
+      desc: "Paste a job description or link, upload your PDF resume, and generate a tailored cover letter ready for applications. Syncs directly with JobTrail.",
+      sampleBtn: "Load Sample Job",
+      note: "Connected with Stage 02:",
       prefilled:
-        "Application parameters received from JobTrail. Review details below and click Generate.",
-      step1: "STEP 01: TARGET JOB CONTEXT",
+        "Job details received from JobTrail. Review below and click Generate.",
+      step1: "Step 1: Job Details",
       jobTitleLabel: "Job Title",
-      jobTitlePh: "e.g. Full-Stack Software Engineer",
+      jobTitlePh: "e.g. Software Engineer",
       companyLabel: "Company Name",
-      companyPh: "e.g. Linear / Vercel",
+      companyPh: "e.g. Tech Company",
       jobDescLabel: "Job Description",
-      scraping: "Scraping job URL via Cheerio...",
-      scrapingPh: "Extracting job requirements from URL...",
-      jobDescPh: "Paste the job description or open via JobTrail deep-link...",
-      step2: "STEP 02: CANDIDATE PROFILE & PDF PARSER",
-      nameLabel: "Candidate Name",
+      scraping: "Reading job description from link...",
+      scrapingPh: "Fetching job details...",
+      jobDescPh: "Paste the job description here...",
+      step2: "Step 2: Your Resume & Background",
+      nameLabel: "Your Name",
       namePh: "e.g. Gryven Alverdo Gunawan",
-      roleLabel: "Target Role Title",
+      roleLabel: "Target Role",
       rolePh: "Software Engineer",
-      bgLabel: "Technical Background & Key Achievements",
-      parsing: "Parsing PDF Buffer...",
-      upload: "Upload Resume (PDF)",
-      bgPh: "Paste resume summary here, or upload a PDF resume above...",
-      step3: "STEP 03: TONE CALIBRATION",
+      bgLabel: "Background & Key Experience",
+      parsing: "Reading PDF file...",
+      upload: "Upload CV (PDF)",
+      bgPh: "Paste your resume summary here, or upload a PDF CV above...",
+      step3: "Step 3: Writing Style",
       btnGen: "Generate Cover Letter",
-      btnLoading: "Synthesizing with Gemini AI...",
-      loadingMsg: "Analyzing job requirements and structuring cover letter...",
-      resReady: "GENERATED COVER LETTER",
+      btnLoading: "Writing your cover letter...",
+      loadingMsg: "Reviewing job requirements and drafting your letter...",
+      resReady: "Your Cover Letter is Ready",
       copy: "Copy Text",
       copied: "Copied",
       download: "Download .txt",
-      saveBtn: "Sync to JobTrail",
-      savingBtn: "Syncing...",
-      savedBtn: "Synced to JobTrail",
+      saveBtn: "Save to JobTrail",
+      savingBtn: "Saving...",
+      savedBtn: "Saved to JobTrail",
       regen: "Regenerate",
       ecoTitle: "Connected Job Hunting Suite",
       ecoDesc:
-        "CoverCraft is Stage 03 of the pipeline, receiving deep-linked job context from JobTrail (Stage 02) and syncing finished letters back to the database.",
+        "CoverCraft receives job details from JobTrail (02) and saves finished cover letters right back to your tracker.",
       ecoBtn1: "01: AutoApply Flow",
-      ecoBtn2: "02: JobTrail SaaS",
-      ecoBtn3: "03: CoverCraft AI",
+      ecoBtn2: "02: JobTrail",
+      ecoBtn3: "03: CoverCraft",
     },
     id: {
       back: "Portofolio",
-      chip: "TAHAP 03: STUDIO DOKUMEN AI & SCRAPER (GEMINI API)",
-      title1: "Sintesis ",
-      title2: "Cover Letter Kontekstual",
-      desc: "Men-scrape URL lowongan kerja, mengekstrak latar belakang kandidat dari CV PDF, dan menyusun cover letter ramah ATS menggunakan Google Gemini AI. Tersinkronisasi langsung dengan JobTrail.",
-      sampleBtn: "Isi Contoh Posisi Software Engineer",
-      note: "Terintegrasi dengan Tahap 02 dari ekosistem:",
+      chip: "Tahap 03: Studio Cover Letter AI",
+      title1: "Buat Cover Letter ",
+      title2: "dalam Hitungan Detik",
+      desc: "Tempelkan deskripsi lowongan, unggah CV PDF Anda, dan hasilkan surat lamaran personalisasi yang siap kirim. Terhubung langsung dengan JobTrail.",
+      sampleBtn: "Isi Contoh Loker",
+      note: "Terhubung dengan Tahap 02:",
       prefilled:
-        "Parameter lamaran diterima dari JobTrail. Periksa detail di bawah lalu klik Buat Cover Letter.",
-      step1: "LANGKAH 01: KONTEKS LOWONGAN KERJA",
+        "Detail lowongan diterima dari JobTrail. Periksa di bawah lalu klik Buat Cover Letter.",
+      step1: "Langkah 1: Detail Pekerjaan",
       jobTitleLabel: "Posisi Pekerjaan",
-      jobTitlePh: "contoh: Full-Stack Software Engineer",
+      jobTitlePh: "contoh: Software Engineer",
       companyLabel: "Nama Perusahaan",
-      companyPh: "contoh: Tokopedia / GoTo",
+      companyPh: "contoh: Perusahaan Teknologi",
       jobDescLabel: "Deskripsi Pekerjaan",
-      scraping: "Mengambil teks loker via Cheerio...",
-      scrapingPh: "Mengekstrak kualifikasi dari URL...",
-      jobDescPh: "Tempel deskripsi pekerjaan atau buka melalui deep-link JobTrail...",
-      step2: "LANGKAH 02: PROFIL KANDIDAT & PARSER PDF",
-      nameLabel: "Nama Kandidat",
+      scraping: "Mengambil detail loker dari tautan...",
+      scrapingPh: "Mengambil teks lowongan...",
+      jobDescPh: "Tempelkan deskripsi pekerjaan di sini...",
+      step2: "Langkah 2: CV & Latar Belakang Anda",
+      nameLabel: "Nama Anda",
       namePh: "contoh: Gryven Alverdo Gunawan",
       roleLabel: "Peran yang Dituju",
       rolePh: "Software Engineer",
-      bgLabel: "Latar Belakang Teknis & Pencapaian Utama",
-      parsing: "Membaca Buffer PDF...",
+      bgLabel: "Ringkasan Pengalaman & Keahlian",
+      parsing: "Membaca file PDF...",
       upload: "Unggah CV (PDF)",
       bgPh: "Tempel ringkasan CV di sini, atau unggah file PDF di atas...",
-      step3: "LANGKAH 03: KALIBRASI NADA BAHASA",
+      step3: "Langkah 3: Gaya Penulisan",
       btnGen: "Buat Cover Letter",
-      btnLoading: "Menyusun dengan Gemini AI...",
-      loadingMsg: "Menganalisis deskripsi pekerjaan dan merangkai surat lamaran...",
-      resReady: "HASIL COVER LETTER",
+      btnLoading: "Menyusun surat lamaran...",
+      loadingMsg: "Memahami kebutuhan lowongan dan menyusun surat Anda...",
+      resReady: "Cover Letter Anda Siap",
       copy: "Salin Teks",
       copied: "Tersalin",
       download: "Unduh .txt",
@@ -119,10 +121,10 @@ export default function CoverCraftPage() {
       regen: "Buat Ulang",
       ecoTitle: "Ekosistem Job Hunting Suite",
       ecoDesc:
-        "CoverCraft adalah Tahap 03 dari pipeline, menerima parameter lowongan dari JobTrail (Tahap 02) dan menyimpan surat yang selesai kembali ke database.",
+        "CoverCraft menerima detail lowongan dari JobTrail (02) dan menyimpan surat yang selesai kembali ke pelacak lamaran Anda.",
       ecoBtn1: "01: AutoApply Flow",
-      ecoBtn2: "02: JobTrail SaaS",
-      ecoBtn3: "03: CoverCraft AI",
+      ecoBtn2: "02: JobTrail",
+      ecoBtn3: "03: CoverCraft",
     },
   }[lang];
 
@@ -466,6 +468,28 @@ RULES:
             </div>
 
             <div className="site-nav-right">
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="icon-toggle-btn"
+                aria-label="Toggle color theme"
+              >
+                {theme === "dark" ? (
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="12" cy="12" r="5" />
+                    <line x1="12" y1="1" x2="12" y2="3" />
+                    <line x1="12" y1="21" x2="12" y2="23" />
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                    <line x1="1" y1="12" x2="3" y2="12" />
+                    <line x1="21" y1="12" x2="23" y2="12" />
+                  </svg>
+                ) : (
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                  </svg>
+                )}
+              </button>
               <button onClick={toggleLang} className="lang-toggle" aria-label="Toggle language">
                 <span className={lang === "en" ? "lang-toggle-active" : ""}>EN</span>
                 <span>/</span>

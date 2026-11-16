@@ -3,17 +3,18 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import RevealWrapper from "@/components/RevealWrapper";
-import { dict, SuiteSystemKey, StackDomainKey } from "../lib/dictionary";
+import { dict, SuiteSystemKey } from "../lib/dictionary";
 import { useLanguage } from "../lib/useLanguage";
+import { useTheme } from "../lib/useTheme";
 
-type SectionId = "suite" | "experience" | "skills" | "contact";
+type SectionId = "suite" | "experience" | "contact";
 
 export default function Home() {
   const [lang, toggleLang] = useLanguage();
+  const [theme, toggleTheme] = useTheme();
   const [activeSection, setActiveSection] = useState<SectionId>("suite");
   const [activeSystem, setActiveSystem] = useState<SuiteSystemKey>("autoapply");
-  const [activeStackDomain, setActiveStackDomain] = useState<StackDomainKey>("all");
-  const [isPhotoPopupOpen, setIsPhotoPopupOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [emailCopied, setEmailCopied] = useState(false);
 
@@ -21,9 +22,9 @@ export default function Home() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 360);
+      setShowScrollTop(window.scrollY > 320);
 
-      const sectionIds: SectionId[] = ["suite", "experience", "skills", "contact"];
+      const sectionIds: SectionId[] = ["suite", "experience", "contact"];
       const triggerLine = window.scrollY + 240;
 
       for (let i = sectionIds.length - 1; i >= 0; i--) {
@@ -35,30 +36,34 @@ export default function Home() {
       }
     };
 
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMobileMenuOpen(false);
+    };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, []);
 
   useEffect(() => {
-    if (isPhotoPopupOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
-  }, [isPhotoPopupOpen]);
+  }, [mobileMenuOpen]);
 
   const copyEmailToClipboard = () => {
     if (typeof navigator !== "undefined" && navigator.clipboard) {
       navigator.clipboard.writeText("gryvnalvrdo@gmail.com").catch(() => {});
       setEmailCopied(true);
-      setTimeout(() => setEmailCopied(false), 2600);
+      setTimeout(() => setEmailCopied(false), 2500);
     }
   };
 
-  const handleComposeEmail = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleEmailAction = (e: React.MouseEvent<HTMLAnchorElement>) => {
     copyEmailToClipboard();
     const isMobile =
       typeof navigator !== "undefined" &&
@@ -78,44 +83,50 @@ export default function Home() {
       ? "https://drive.google.com/file/d/1uL_tACRRxVAA1-R53nNOybsOGDPXvhVg/view?usp=drive_link"
       : "https://drive.google.com/file/d/1zX5yMg_YAA_XN-gP7eA7DFYSzin1OQuq/view?usp=drive_link";
 
-  const currentSystemIndex = t.suite.systems.findIndex((s) => s.id === activeSystem);
-  const currentSystem = t.suite.systems[currentSystemIndex] || t.suite.systems[0];
+  const currentSystemIndex = t.suite.systems.findIndex(
+    (s) => s.id === activeSystem
+  );
+  const currentSystem =
+    t.suite.systems[currentSystemIndex] || t.suite.systems[0];
   const nextSystem =
     t.suite.systems[(currentSystemIndex + 1) % t.suite.systems.length];
 
-  const filteredStack =
-    activeStackDomain === "all"
-      ? t.skills.items
-      : t.skills.items.filter((item) => item.domain === activeStackDomain);
-
-  const countByDomain = (domain: StackDomainKey) =>
-    domain === "all"
-      ? t.skills.items.length
-      : t.skills.items.filter((item) => item.domain === domain).length;
-
-  const jumpToSystem = (code: string) => {
-    if (code === "01") setActiveSystem("autoapply");
-    if (code === "02") setActiveSystem("jobtrail");
-    if (code === "03") setActiveSystem("covercraft");
-    if (code === "04") {
-      const claroEl = document.getElementById("claro-spotlight");
-      if (claroEl) {
-        claroEl.scrollIntoView({ behavior: "smooth" });
-        return;
-      }
-    }
-    const suiteEl = document.getElementById("suite");
-    if (suiteEl) suiteEl.scrollIntoView({ behavior: "smooth" });
+  const closeAndNavigate = (id: SectionId) => {
+    setMobileMenuOpen(false);
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
     <>
       {/* ============================================
-          ADAPTIVE STICKY HEADER (DESKTOP + MOBILE TOP BAR)
+          CLEAN STICKY HEADER (WITH TOP-LEFT HAMBURGER ON MOBILE)
       ============================================= */}
       <header className="site-header-fixed">
         <div className="site-header-inner">
-          <div className="site-brand-group">
+          <div className="site-header-left">
+            <button
+              type="button"
+              className="mobile-menu-trigger"
+              onClick={() => setMobileMenuOpen(true)}
+              aria-label="Open navigation menu"
+              aria-expanded={mobileMenuOpen}
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+              >
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <line x1="3" y1="12" x2="21" y2="12" />
+                <line x1="3" y1="18" x2="21" y2="18" />
+              </svg>
+            </button>
+
             <a
               href="#"
               className="site-nav-brand"
@@ -123,17 +134,10 @@ export default function Home() {
                 e.preventDefault();
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
-              aria-label="Gryven Alverdo Gunawan"
             >
-              <span className="site-brand-monogram">GA</span>
               <span>Gryven Alverdo</span>
               <span className="site-brand-dot">.</span>
             </a>
-
-            <div className="header-status-pill">
-              <span className="header-status-dot" />
-              <span>{t.nav.status}</span>
-            </div>
           </div>
 
           <nav className="site-nav-links" aria-label="Primary Navigation">
@@ -141,34 +145,51 @@ export default function Home() {
               href="#suite"
               className={`site-nav-link ${activeSection === "suite" ? "active" : ""}`}
             >
-              <span className="site-nav-link-idx">01</span>
-              <span>{t.nav.systems}</span>
+              {t.nav.projects}
             </a>
             <a
               href="#experience"
               className={`site-nav-link ${activeSection === "experience" ? "active" : ""}`}
             >
-              <span className="site-nav-link-idx">02</span>
-              <span>{t.nav.journey}</span>
-            </a>
-            <a
-              href="#skills"
-              className={`site-nav-link ${activeSection === "skills" ? "active" : ""}`}
-            >
-              <span className="site-nav-link-idx">03</span>
-              <span>{t.nav.stack}</span>
+              {t.nav.experience}
             </a>
             <a
               href="#contact"
               className={`site-nav-link ${activeSection === "contact" ? "active" : ""}`}
             >
-              <span className="site-nav-link-idx">04</span>
-              <span>{t.nav.contact}</span>
+              {t.nav.contact}
             </a>
           </nav>
 
           <div className="site-nav-right">
             <button
+              type="button"
+              onClick={toggleTheme}
+              className="icon-toggle-btn"
+              aria-label={theme === "dark" ? t.nav.themeLight : t.nav.themeDark}
+              title={theme === "dark" ? t.nav.themeLight : t.nav.themeDark}
+            >
+              {theme === "dark" ? (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="5" />
+                  <line x1="12" y1="1" x2="12" y2="3" />
+                  <line x1="12" y1="21" x2="12" y2="23" />
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                  <line x1="1" y1="12" x2="3" y2="12" />
+                  <line x1="21" y1="12" x2="23" y2="12" />
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </svg>
+              ) : (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                </svg>
+              )}
+            </button>
+
+            <button
+              type="button"
               onClick={toggleLang}
               className="lang-toggle"
               aria-label="Toggle language"
@@ -185,16 +206,7 @@ export default function Home() {
               className="site-header-cv-btn"
             >
               <span>{t.nav.resume}</span>
-              <svg
-                width="13"
-                height="13"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
                 <path d="M7 17L17 7" />
                 <path d="M7 7h10v10" />
               </svg>
@@ -203,187 +215,116 @@ export default function Home() {
         </div>
       </header>
 
+      {/* MOBILE LEFT SLIDE-IN DRAWER */}
+      <div
+        className={`mobile-drawer-overlay ${mobileMenuOpen ? "open" : ""}`}
+        onClick={() => setMobileMenuOpen(false)}
+      />
+      <aside
+        className={`mobile-drawer ${mobileMenuOpen ? "open" : ""}`}
+        aria-label="Mobile Navigation"
+      >
+        <div className="mobile-drawer-hdr">
+          <span className="site-nav-brand">
+            <span>Gryven Alverdo</span>
+            <span className="site-brand-dot">.</span>
+          </span>
+          <button
+            type="button"
+            className="mobile-drawer-close"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-label="Close navigation menu"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+
+        <nav className="mobile-drawer-nav">
+          <a
+            href="#suite"
+            onClick={(e) => {
+              e.preventDefault();
+              closeAndNavigate("suite");
+            }}
+            className={`mobile-drawer-link ${activeSection === "suite" ? "active" : ""}`}
+          >
+            <span>{t.nav.projects}</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </a>
+          <a
+            href="#experience"
+            onClick={(e) => {
+              e.preventDefault();
+              closeAndNavigate("experience");
+            }}
+            className={`mobile-drawer-link ${activeSection === "experience" ? "active" : ""}`}
+          >
+            <span>{t.nav.experience}</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </a>
+          <a
+            href="#contact"
+            onClick={(e) => {
+              e.preventDefault();
+              closeAndNavigate("contact");
+            }}
+            className={`mobile-drawer-link ${activeSection === "contact" ? "active" : ""}`}
+          >
+            <span>{t.nav.contact}</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </a>
+        </nav>
+
+        <div className="mobile-drawer-footer">
+          <a
+            href={resumeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-primary"
+            style={{ width: "100%" }}
+          >
+            <span>{t.nav.resume} (PDF)</span>
+          </a>
+        </div>
+      </aside>
+
       <main className="portfolio-wrapper">
         {/* ============================================
-            HERO SECTION (SUBSTANCE + TELEMETRY, NO DUPLICATE SOCIALS)
+            HERO SECTION (DIRECT, CLEAN, ZERO CLUTTER)
         ============================================= */}
         <section className="hero-section">
-          <div className="hero-content">
-            {/* Mobile-First Identity Header (Visible on < 768px) */}
-            <div className="hero-mobile-identity">
-              <div
-                className="hero-mobile-avatar"
-                onClick={() => setIsPhotoPopupOpen(true)}
-                role="button"
-                tabIndex={0}
-                aria-label="Open profile photo"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") setIsPhotoPopupOpen(true);
-                }}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/photo.jpeg" alt="Gryven Alverdo Gunawan" />
-              </div>
-              <div className="hero-mobile-meta">
-                <div className="hero-mobile-name">{t.hero.name}</div>
-                <div className="hero-mobile-role">{t.hero.role}</div>
-                <div className="hero-mobile-loc">
-                  <span className="header-status-dot" />
-                  <span>{t.hero.location}</span>
-                </div>
-              </div>
+          <RevealWrapper delay={0}>
+            <h1 className="hero-name">{t.hero.name}</h1>
+            <p className="hero-headline">{t.hero.headline}</p>
+            <p className="hero-desc">{t.hero.sub}</p>
+
+            <div className="hero-actions">
+              <a href="#suite" className="btn-primary">
+                <span>{t.hero.exploreCta}</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3">
+                  <path d="M12 5v14" />
+                  <path d="m19 12-7 7-7-7" />
+                </svg>
+              </a>
+
+              <a href="#contact" className="btn-secondary">
+                <span>{t.hero.contactCta}</span>
+              </a>
             </div>
-
-            <RevealWrapper delay={0}>
-              <div className="hero-eyebrow">
-                <span className="header-status-dot" />
-                <span>{t.hero.eyebrow}</span>
-              </div>
-
-              <h1 className="hero-title">
-                <span className="hero-title-name">{t.hero.name}</span>
-                <span className="hero-title-lead">{t.hero.headlineLead} </span>
-                <span className="hero-title-accent">{t.hero.headlineAccent}</span>
-              </h1>
-
-              <p className="hero-desc">{t.hero.sub}</p>
-            </RevealWrapper>
-
-            <RevealWrapper delay={60}>
-              <div className="hero-metrics-grid">
-                {t.hero.metrics.map((m) => (
-                  <div className="hero-metric-card" key={m.label}>
-                    <div className="hero-metric-val">{m.value}</div>
-                    <div className="hero-metric-lbl">{m.label}</div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="hero-actions">
-                <a href="#suite" className="btn-primary">
-                  <span>{t.hero.exploreCta}</span>
-                  <svg
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.3"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M12 5v14" />
-                    <path d="m19 12-7 7-7-7" />
-                  </svg>
-                </a>
-
-                <button
-                  type="button"
-                  onClick={copyEmailToClipboard}
-                  className={`btn-secondary ${emailCopied ? "copied" : ""}`}
-                >
-                  {emailCopied ? (
-                    <>
-                      <svg
-                        width="15"
-                        height="15"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.4"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <polyline points="20 6 9 17 4 12" />
-                      </svg>
-                      <span>{t.hero.emailCopied}</span>
-                    </>
-                  ) : (
-                    <>
-                      <svg
-                        width="15"
-                        height="15"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                      </svg>
-                      <span>{t.hero.copyEmail}</span>
-                    </>
-                  )}
-                </button>
-              </div>
-            </RevealWrapper>
-          </div>
-
-          {/* Desktop Right Column: Profile + Clickable Ecosystem Index */}
-          <RevealWrapper delay={100}>
-            <aside className="hero-profile-panel">
-              <div className="hero-profile-top">
-                <div
-                  className="hero-avatar-trigger"
-                  onClick={() => setIsPhotoPopupOpen(true)}
-                  title={lang === "id" ? "Klik untuk memperbesar foto" : "Click to enlarge photo"}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") setIsPhotoPopupOpen(true);
-                  }}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src="/photo.jpeg"
-                    alt="Gryven Alverdo Gunawan"
-                    className="hero-avatar-img"
-                  />
-                </div>
-                <div className="hero-profile-meta">
-                  <div className="hero-profile-name">{t.hero.name}</div>
-                  <div className="hero-profile-role">{t.hero.role}</div>
-                  <div className="hero-location-badge">
-                    <span className="hero-location-dot" />
-                    <span>{t.hero.location}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="hero-telemetry-box">
-                <div className="hero-telemetry-hdr">
-                  <span>{t.hero.telemetryTitle}</span>
-                  <span>4 / 4 LIVE</span>
-                </div>
-                <div className="hero-telemetry-list">
-                  {t.hero.telemetryItems.map((item) => (
-                    <button
-                      type="button"
-                      key={item.code}
-                      onClick={() => jumpToSystem(item.code)}
-                      className="hero-telemetry-item"
-                    >
-                      <div className="hero-telemetry-left">
-                        <span className={`hero-telemetry-code ${item.theme}`}>
-                          {item.code}
-                        </span>
-                        <span className="hero-telemetry-name">{item.name}</span>
-                      </div>
-                      <span className="hero-telemetry-type">{item.type}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </aside>
           </RevealWrapper>
         </section>
 
         {/* ============================================
-            SECTION 1: ENGINEERED SYSTEMS (#suite)
-            Part A: Interactive Job Hunting Suite Inspector (01 -> 02 -> 03)
-            Part B: Enterprise & Hospitality ERP Spotlight (04 Hotel Claro)
+            SECTION 1: PROJECTS & CONNECTED SYSTEMS
         ============================================= */}
         <section id="suite" className="portfolio-section">
           <RevealWrapper delay={0}>
@@ -400,8 +341,11 @@ export default function Home() {
               <span className="subsection-hint">{t.suite.suiteInstruction}</span>
             </div>
 
-            {/* 3-Stage Interactive Pipeline Selector (No Duplicate Cards Below!) */}
-            <div className="pipeline-selector-grid" role="tablist" aria-label="Job Hunting Suite Pipeline">
+            <div
+              className="pipeline-selector-grid"
+              role="tablist"
+              aria-label="Job Hunting Suite"
+            >
               {t.suite.systems.map((sys, idx) => {
                 const isActive = sys.id === activeSystem;
                 return (
@@ -416,7 +360,7 @@ export default function Home() {
                     >
                       <div className="pipeline-node-top">
                         <span className="pipeline-node-idx">{sys.index}</span>
-                        <span className="pipeline-node-domain">{sys.domainBadge}</span>
+                        <span className="pipeline-node-domain">{sys.category}</span>
                       </div>
                       <div className="pipeline-node-name">{sys.name}</div>
                       <div className="pipeline-node-desc">{sys.shortDesc}</div>
@@ -424,15 +368,10 @@ export default function Home() {
 
                     {idx < t.suite.systems.length - 1 && (
                       <div className="pipeline-connector" aria-hidden="true">
-                        <span className="pipeline-connector-protocol">
-                          {idx === 0 ? t.suite.protocol1 : t.suite.protocol2}
-                        </span>
-                        <span className="pipeline-connector-line">
-                          <svg width="20" height="12" viewBox="0 0 20 12" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M1 6h18" />
-                            <path d="m14 1 5 5-5 5" />
-                          </svg>
-                        </span>
+                        <svg width="20" height="14" viewBox="0 0 20 14" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M2 7h15" />
+                          <path d="m12 2 5 5-5 5" />
+                        </svg>
                       </div>
                     )}
                   </React.Fragment>
@@ -440,30 +379,30 @@ export default function Home() {
               })}
             </div>
 
-            {/* Active System Master-Detail Inspector Panel */}
-            <div className="inspector-panel" data-theme={currentSystem.theme} role="tabpanel">
-              <div className="inspector-left">
-                <div className="inspector-top-badges">
-                  <span className={`inspector-domain-pill ${currentSystem.theme}`}>
-                    {currentSystem.index}: {currentSystem.domainBadge}
-                  </span>
-                  <span className="inspector-runtime-pill">{currentSystem.runtimeTag}</span>
-                </div>
+            <div
+              className="inspector-panel"
+              data-theme={currentSystem.theme}
+              role="tabpanel"
+            >
+              <div>
+                <span className={`inspector-domain-pill ${currentSystem.theme}`}>
+                  {currentSystem.index}: {currentSystem.category}
+                </span>
 
                 <h3 className="inspector-headline">
                   {currentSystem.name}: {currentSystem.headline}
                 </h3>
 
-                <p className="inspector-problem">{currentSystem.problemSolved}</p>
+                <p className="inspector-problem">{currentSystem.overview}</p>
 
                 <ul className="inspector-points">
-                  {currentSystem.architecturePoints.map((pt, i) => (
+                  {currentSystem.highlights.map((pt, i) => (
                     <li key={i}>{pt}</li>
                   ))}
                 </ul>
 
                 <div className="inspector-stack-row">
-                  {currentSystem.stack.map((tech) => (
+                  {currentSystem.tools.map((tech) => (
                     <span className="inspector-stack-tag" key={tech}>
                       {tech}
                     </span>
@@ -479,14 +418,7 @@ export default function Home() {
                       className={`btn-theme-primary ${currentSystem.theme}`}
                     >
                       <span>{currentSystem.primaryBtn.label}</span>
-                      <svg
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.4"
-                      >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3">
                         <path d="M7 17L17 7" />
                         <path d="M7 7h10v10" />
                       </svg>
@@ -497,14 +429,7 @@ export default function Home() {
                       className={`btn-theme-primary ${currentSystem.theme}`}
                     >
                       <span>{currentSystem.primaryBtn.label}</span>
-                      <svg
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.4"
-                      >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3">
                         <path d="M5 12h14" />
                         <path d="m12 5 7 7-7 7" />
                       </svg>
@@ -515,21 +440,14 @@ export default function Home() {
                     <a
                       href={currentSystem.secondaryBtn.href}
                       target={currentSystem.secondaryBtn.external ? "_blank" : undefined}
-                      rel={currentSystem.secondaryBtn.external ? "noopener noreferrer" : undefined}
+                      rel={
+                        currentSystem.secondaryBtn.external
+                          ? "noopener noreferrer"
+                          : undefined
+                      }
                       className="btn-outline"
                     >
                       <span>{currentSystem.secondaryBtn.label}</span>
-                      <svg
-                        width="13"
-                        height="13"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.2"
-                      >
-                        <path d="M7 17L17 7" />
-                        <path d="M7 7h10v10" />
-                      </svg>
                     </a>
                   )}
 
@@ -543,116 +461,74 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="contract-terminal">
-                <div>
-                  <div className="contract-terminal-hdr">
-                    <div className="contract-terminal-title">
-                      {currentSystem.contractTitle}
-                    </div>
-                    <div className="contract-terminal-meta">
-                      {currentSystem.contractMeta}
-                    </div>
+              <div className="flow-summary-card">
+                <div className="flow-summary-title">{currentSystem.flowTitle}</div>
+                {currentSystem.flowSteps.map((step) => (
+                  <div className="flow-step-row" key={step.label}>
+                    <span className="flow-step-label">{step.label}</span>
+                    <span className="flow-step-val">{step.value}</span>
                   </div>
-
-                  <div className="contract-rows">
-                    {currentSystem.contractLines.map((row) => (
-                      <div className="contract-row" key={row.label}>
-                        <span className="contract-key">{row.label}</span>
-                        <span className="contract-val">{row.value}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </RevealWrapper>
 
-          {/* PART B: ENTERPRISE & HOSPITALITY PRODUCTION SYSTEM (HOTEL CLARO MAKASSAR) */}
           <RevealWrapper delay={80}>
-            <div id="claro-spotlight">
-              <div className="subsection-bar">
-                <span className="subsection-label">{t.suite.claro.sectionHeader}</span>
-              </div>
+            <div className="subsection-bar">
+              <span className="subsection-label">{t.suite.otherSubheader}</span>
+            </div>
 
-              <div className="claro-spotlight-card">
-                <div className="inspector-left">
-                  <div className="inspector-top-badges">
-                    <span className="inspector-domain-pill gold">
-                      {t.suite.claro.index}: {t.suite.claro.domainBadge}
-                    </span>
-                    <span className="inspector-runtime-pill">
-                      {t.suite.claro.runtimeTag}
-                    </span>
-                  </div>
-
-                  <h3 className="inspector-headline">{t.suite.claro.name}</h3>
-                  <p className="inspector-problem">{t.suite.claro.desc}</p>
-
-                  <ul className="inspector-points">
-                    {t.suite.claro.highlights.map((hl, i) => (
-                      <li key={i}>{hl}</li>
-                    ))}
-                  </ul>
-
-                  <div className="inspector-stack-row">
-                    {t.suite.claro.stack.map((tech) => (
-                      <span className="inspector-stack-tag" key={tech}>
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="inspector-actions">
-                    <a
-                      href={t.suite.claro.primaryBtn.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-theme-primary gold"
-                    >
-                      <span>{t.suite.claro.primaryBtn.label}</span>
-                      <svg
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.4"
-                      >
-                        <path d="M7 17L17 7" />
-                        <path d="M7 7h10v10" />
-                      </svg>
-                    </a>
-                  </div>
-                </div>
-
-                <div className="contract-terminal">
+            <div className="featured-apps-grid">
+              {t.suite.featuredApps.map((app) => (
+                <article
+                  key={app.id}
+                  className="featured-app-card"
+                  data-theme={app.theme}
+                >
                   <div>
-                    <div className="contract-terminal-hdr">
-                      <div className="contract-terminal-title">
-                        {t.suite.claro.contractTitle}
-                      </div>
-                      <div className="contract-terminal-meta">
-                        {t.suite.claro.contractMeta}
-                      </div>
-                    </div>
+                    <span className={`inspector-domain-pill ${app.theme}`}>
+                      {app.category}
+                    </span>
+                    <h3 className="featured-app-title">{app.name}</h3>
+                    <p className="inspector-problem">{app.summary}</p>
+                    <ul className="inspector-points">
+                      {app.highlights.map((hl, idx) => (
+                        <li key={idx}>{hl}</li>
+                      ))}
+                    </ul>
+                  </div>
 
-                    <div className="contract-rows">
-                      {t.suite.claro.contractLines.map((row) => (
-                        <div className="contract-row" key={row.label}>
-                          <span className="contract-key">{row.label}</span>
-                          <span className="contract-val">{row.value}</span>
-                        </div>
+                  <div>
+                    <div className="inspector-stack-row">
+                      {app.tools.map((tech) => (
+                        <span className="inspector-stack-tag" key={tech}>
+                          {tech}
+                        </span>
                       ))}
                     </div>
+                    <div className="inspector-actions">
+                      <a
+                        href={app.primaryBtn.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`btn-theme-primary ${app.theme}`}
+                      >
+                        <span>{app.primaryBtn.label}</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3">
+                          <path d="M7 17L17 7" />
+                          <path d="M7 7h10v10" />
+                        </svg>
+                      </a>
+                    </div>
                   </div>
-                </div>
-              </div>
+                </article>
+              ))}
             </div>
           </RevealWrapper>
         </section>
 
         {/* ============================================
-            SECTION 2: EXPERIENCE & EDUCATION (#experience)
+            SECTION 2: EXPERIENCE & EDUCATION
         ============================================= */}
         <section id="experience" className="portfolio-section">
           <RevealWrapper delay={0}>
@@ -665,7 +541,7 @@ export default function Home() {
 
           <div className="timeline-list">
             {t.experience.items.map((item, idx) => (
-              <RevealWrapper delay={idx * 70} key={item.role}>
+              <RevealWrapper delay={idx * 60} key={item.role}>
                 <article className="timeline-card">
                   <div className="timeline-top">
                     <h3 className="timeline-role">{item.role}</h3>
@@ -675,7 +551,6 @@ export default function Home() {
                   <div className="timeline-meta-row">
                     <span className="timeline-org">{item.org}</span>
                     <span className="timeline-loc">{item.location}</span>
-                    <span className="timeline-domain-badge">{item.badge}</span>
                   </div>
 
                   <ul className="timeline-bullets">
@@ -701,14 +576,7 @@ export default function Home() {
                         className="timeline-demo-link"
                       >
                         <span>{t.experience.liveDemo}</span>
-                        <svg
-                          width="12"
-                          height="12"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2.4"
-                        >
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
                           <path d="M7 17L17 7" />
                           <path d="M7 7h10v10" />
                         </svg>
@@ -722,210 +590,94 @@ export default function Home() {
         </section>
 
         {/* ============================================
-            SECTION 3: DOMAIN-SPECIFIC ARCHITECTURE STACK (#skills)
-        ============================================= */}
-        <section id="skills" className="portfolio-section">
-          <RevealWrapper delay={0}>
-            <div className="section-header">
-              <div className="section-eyebrow">{t.skills.label}</div>
-              <h2 className="section-title">{t.skills.title}</h2>
-              <p className="section-desc">{t.skills.desc}</p>
-            </div>
-          </RevealWrapper>
-
-          <RevealWrapper delay={40}>
-            <div className="stack-filter-bar" role="tablist" aria-label="Filter technologies by domain">
-              {t.skills.categories.map((cat) => {
-                const isSelected = activeStackDomain === cat.id;
-                return (
-                  <button
-                    type="button"
-                    role="tab"
-                    aria-selected={isSelected}
-                    key={cat.id}
-                    onClick={() => setActiveStackDomain(cat.id)}
-                    className={`stack-filter-btn ${isSelected ? "active" : ""}`}
-                  >
-                    <span>{cat.label}</span>
-                    <span className="stack-filter-count">
-                      {countByDomain(cat.id)}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="stack-domain-grid">
-              {filteredStack.map((skill) => (
-                <div className="stack-skill-card" key={skill.name}>
-                  <div className="stack-skill-top">
-                    <span className="stack-skill-name">{skill.name}</span>
-                    <span className={`stack-skill-project ${skill.theme}`}>
-                      {skill.project}
-                    </span>
-                  </div>
-                  <p className="stack-skill-role">{skill.role}</p>
-                </div>
-              ))}
-            </div>
-          </RevealWrapper>
-        </section>
-
-        {/* ============================================
-            SECTION 4: UNIFIED TERMINAL CONTACT & FOOTER (#contact)
-            Single-Source-of-Truth for Email, GitHub, LinkedIn, Resume
+            SECTION 3: UNIFIED CONTACT & FOOTER (EMAIL, WHATSAPP, LINKEDIN, GITHUB)
         ============================================= */}
         <section id="contact" className="unified-contact-section">
           <RevealWrapper delay={0}>
-            <div className="contact-command-card">
-              <div className="contact-status-bar">
-                <span className="header-status-dot" />
-                <span>{t.contact.availability}</span>
-              </div>
-
-              <h2 className="contact-title">{t.contact.title}</h2>
-              <p className="contact-desc">{t.contact.desc}</p>
-
-              <div className="contact-email-terminal">
-                <div className="contact-email-address">
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="var(--amber-l)"
-                    strokeWidth="2"
-                  >
-                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                    <polyline points="22,6 12,13 2,6" />
-                  </svg>
-                  <span>gryvnalvrdo@gmail.com</span>
+            <div className="contact-card-clean">
+              <div className="contact-header-row">
+                <div>
+                  <div className="section-eyebrow">{t.contact.label}</div>
+                  <h2 className="contact-title">{t.contact.title}</h2>
+                  <p className="contact-desc">{t.contact.desc}</p>
                 </div>
 
-                <div className="contact-email-actions">
-                  <button
-                    type="button"
-                    onClick={copyEmailToClipboard}
-                    className={`btn-secondary ${emailCopied ? "copied" : ""}`}
-                  >
-                    {emailCopied ? (
-                      <>
-                        <svg
-                          width="15"
-                          height="15"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2.4"
-                        >
-                          <polyline points="20 6 9 17 4 12" />
-                        </svg>
-                        <span>{t.contact.copiedBtn}</span>
-                      </>
-                    ) : (
-                      <>
-                        <svg
-                          width="15"
-                          height="15"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                        >
-                          <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                        </svg>
-                        <span>{t.contact.copyBtn}</span>
-                      </>
-                    )}
-                  </button>
+                <button
+                  type="button"
+                  onClick={copyEmailToClipboard}
+                  className={`btn-secondary ${emailCopied ? "copied" : ""}`}
+                >
+                  {emailCopied ? t.contact.copiedBtn : t.contact.copyBtn}
+                </button>
+              </div>
 
-                  <a
-                    href="mailto:gryvnalvrdo@gmail.com"
-                    onClick={handleComposeEmail}
-                    className="btn-primary"
-                  >
-                    <svg
-                      width="15"
-                      height="15"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.2"
-                    >
+              <div className="contact-channels-grid">
+                <a
+                  href="mailto:gryvnalvrdo@gmail.com"
+                  onClick={handleEmailAction}
+                  className="contact-channel-card"
+                >
+                  <div className="contact-channel-top">
+                    <span>{t.contact.emailLabel}</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                       <polyline points="22,6 12,13 2,6" />
                     </svg>
-                    <span>{t.contact.composeBtn}</span>
-                  </a>
-                </div>
+                  </div>
+                  <div className="contact-channel-value">gryvnalvrdo@gmail.com</div>
+                </a>
+
+                <a
+                  href="https://wa.me/6281258576431"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="contact-channel-card"
+                >
+                  <div className="contact-channel-top">
+                    <span>{t.contact.whatsappLabel}</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+                    </svg>
+                  </div>
+                  <div className="contact-channel-value">+62 812-5857-6431</div>
+                </a>
+
+                <a
+                  href="https://www.linkedin.com/in/gryven-alverdo-7283ab262/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="contact-channel-card"
+                >
+                  <div className="contact-channel-top">
+                    <span>{t.contact.linkedinLabel}</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                      <rect x="2" y="9" width="4" height="12" />
+                      <circle cx="4" cy="4" r="2" />
+                    </svg>
+                  </div>
+                  <div className="contact-channel-value">gryven-alverdo-7283ab262</div>
+                </a>
+
+                <a
+                  href="https://github.com/gryvnalvrdo"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="contact-channel-card"
+                >
+                  <div className="contact-channel-top">
+                    <span>{t.contact.githubLabel}</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                    </svg>
+                  </div>
+                  <div className="contact-channel-value">github.com/gryvnalvrdo</div>
+                </a>
               </div>
 
               <footer className="contact-footer-bar">
                 <div className="contact-copyright">
                   © 2026 {t.contact.copyright}
-                </div>
-
-                <div className="contact-external-links">
-                  <a
-                    href="https://github.com/gryvnalvrdo"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="contact-ext-link"
-                  >
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.1"
-                    >
-                      <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-                    </svg>
-                    <span>GitHub</span>
-                  </a>
-
-                  <a
-                    href="https://www.linkedin.com/in/gryven-alverdo-gunawan-7283ab262/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="contact-ext-link"
-                  >
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.1"
-                    >
-                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-                      <rect x="2" y="9" width="4" height="12" />
-                      <circle cx="4" cy="4" r="2" />
-                    </svg>
-                    <span>LinkedIn</span>
-                  </a>
-
-                  <a
-                    href={resumeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="contact-ext-link"
-                  >
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.1"
-                    >
-                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                      <polyline points="14 2 14 8 20 8" />
-                    </svg>
-                    <span>{t.nav.resume} PDF</span>
-                  </a>
                 </div>
               </footer>
             </div>
@@ -933,129 +685,18 @@ export default function Home() {
         </section>
       </main>
 
-      {/* ============================================
-          MOBILE FLOATING BOTTOM DOCK (< 768px Thumb Zone)
-      ============================================= */}
-      <nav className="mobile-bottom-dock" aria-label="Mobile Bottom Navigation">
-        <a
-          href="#suite"
-          className={`mobile-dock-link ${activeSection === "suite" ? "active" : ""}`}
-        >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <polygon points="12 2 2 7 12 12 22 7 12 2" />
-            <polyline points="2 17 12 22 22 17" />
-            <polyline points="2 12 12 17 22 12" />
-          </svg>
-          <span>{t.nav.systems}</span>
-        </a>
-
-        <a
-          href="#experience"
-          className={`mobile-dock-link ${activeSection === "experience" ? "active" : ""}`}
-        >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
-            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-          </svg>
-          <span>{t.nav.journey}</span>
-        </a>
-
-        <a
-          href="#skills"
-          className={`mobile-dock-link ${activeSection === "skills" ? "active" : ""}`}
-        >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <polyline points="16 18 22 12 16 6" />
-            <polyline points="8 6 2 12 8 18" />
-          </svg>
-          <span>{t.nav.stack}</span>
-        </a>
-
-        <a
-          href="#contact"
-          className={`mobile-dock-link ${activeSection === "contact" ? "active" : ""}`}
-        >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-            <polyline points="22,6 12,13 2,6" />
-          </svg>
-          <span>{t.nav.contact}</span>
-        </a>
-
-        {showScrollTop && (
-          <button
-            type="button"
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="mobile-dock-top-btn"
-            aria-label="Scroll to top"
-          >
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-            >
-              <path d="M18 15l-6-6-6 6" />
-            </svg>
-            <span>{t.nav.top}</span>
-          </button>
-        )}
-      </nav>
-
-      {/* PHOTO POPUP MODAL */}
-      <div
-        className={`photo-popup-overlay ${isPhotoPopupOpen ? "active" : ""}`}
-        onClick={() => setIsPhotoPopupOpen(false)}
+      {/* FLOATING BACK TO TOP BUTTON */}
+      <button
+        type="button"
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        className={`floating-back-to-top ${showScrollTop ? "visible" : ""}`}
+        aria-label="Back to top"
       >
-        <div
-          className="photo-popup-content"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <button
-            className="photo-popup-close"
-            onClick={() => setIsPhotoPopupOpen(false)}
-            aria-label="Close photo"
-          >
-            ×
-          </button>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/photo.jpeg"
-            alt="Gryven Alverdo Gunawan"
-            className="photo-popup-img"
-          />
-        </div>
-      </div>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
+          <path d="M18 15l-6-6-6 6" />
+        </svg>
+        <span>{t.nav.top}</span>
+      </button>
     </>
   );
 }
